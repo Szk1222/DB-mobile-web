@@ -4,170 +4,819 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>关于我们 · 标贝科技</title>
-<meta name="description" content="标贝科技成立于 2016 年，专注智能语音交互与 AI 数据服务，提供语音合成、语音识别、声音复刻及多模态数据采集标注的全栈能力。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="_shared.css" />
 <style>
-/* ── 公司简介 ── */
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-.about-copy h2 { font-family: var(--font-display); font-size: clamp(1.7rem,3vw,2.4rem); font-weight: 600; margin: 0 0 18px; line-height: 1.16; }
-.about-copy > p { color: var(--text-mute); font-size: 0.96rem; line-height: 1.9; margin: 0 0 18px; }
-.about-copy > p b { color: var(--text-hi); font-weight: 600; }
-.about-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; border-top: 1px solid var(--line); padding-top: 22px; margin-top: 26px; }
-.about-stats b { font-family: var(--font-tech); font-size: 1.7rem; color: var(--text-hi); display: block; line-height: 1; }
-.about-stats span { color: var(--text-mute); font-size: 0.78rem; }
-.biz-panel { border: 1px solid var(--line-strong); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(10,20,46,0.85),rgba(7,13,32,0.85)); padding: 26px; position: relative; box-shadow: var(--shadow-card); }
-.biz-bar { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 18px; }
-.biz-bar i { width: 8px; height: 8px; border-radius: 50%; }
-.biz-line { border: 1px solid var(--line); border-radius: var(--r); padding: 16px 16px 14px; margin-bottom: 12px; background: rgba(13,26,58,0.5); }
-.biz-line:last-child { margin-bottom: 0; }
-.biz-line h4 { font-family: var(--font-display); font-size: 1.04rem; font-weight: 600; margin: 0 0 10px; display: flex; align-items: center; gap: 9px; }
-.biz-line h4 .bd { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; background: rgba(76,201,240,0.1); border: 1px solid var(--line-strong); color: var(--brand-hi); }
-.biz-line h4 .bd svg { width: 15px; height: 15px; }
-.biz-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.biz-chip { padding: 3px 9px; border-radius: 5px; font-size: 11px; color: var(--text-mute); border: 1px solid var(--line); background: rgba(76,201,240,0.04); }
-
-/* ── 示例标记 ── */
-.demo-note { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 99px; border: 1px dashed rgba(255,200,80,0.45); background: rgba(255,200,80,0.07); color: #ffc850; font-size: 11px; font-family: var(--font-mono); letter-spacing: 0.03em; margin-top: 14px; }
-.demo-note svg { width: 13px; height: 13px; }
-
-/* ── 发展历程 时间轴 ── */
-.timeline { position: relative; max-width: 980px; margin: 0 auto; }
-.timeline::before { content:""; position:absolute; left:50%; top:6px; bottom:6px; width:2px; transform:translateX(-50%); background:linear-gradient(180deg,transparent,rgba(76,201,240,0.55) 7%,rgba(177,77,255,0.55) 93%,transparent); }
-.tl-item { position:relative; width:50%; padding:14px 42px; box-sizing:border-box; }
-.tl-item:nth-child(odd) { left:0; text-align:right; }
-.tl-item:nth-child(even) { left:50%; text-align:left; }
-.tl-node { position:absolute; top:26px; width:16px; height:16px; border-radius:50%; background:var(--bg-1); border:2px solid var(--brand-hi); box-shadow:0 0 12px rgba(76,201,240,0.6); }
-.tl-item:nth-child(odd) .tl-node { right:-8px; }
-.tl-item:nth-child(even) .tl-node { left:-8px; }
-.tl-card { border:1px solid var(--line); border-radius:var(--r-lg); background:linear-gradient(180deg,rgba(13,26,58,0.6),rgba(10,20,46,0.6)); padding:18px 22px; transition:all 240ms ease; }
-.tl-card:hover { border-color:rgba(76,201,240,0.4); transform:translateY(-3px); box-shadow:0 14px 32px rgba(4,105,207,0.18); }
-.tl-year { font-family:var(--font-tech); font-size:1.5rem; font-weight:800; color:var(--brand-hi); line-height:1; margin-bottom:7px; }
-.tl-card h4 { font-family:var(--font-display); font-size:1.04rem; font-weight:600; margin:0 0 6px; color:var(--text-hi); }
-.tl-card p { color:var(--text-mute); font-size:0.85rem; line-height:1.72; margin:0; }
-
-/* ── 核心理念 ── */
-.val-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-.val-card { padding: 28px 24px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.55),rgba(10,20,46,0.55)); text-align: center; transition: all 240ms ease; }
-.val-card:hover { border-color: rgba(76,201,240,0.4); transform: translateY(-4px); }
-.val-card .icb { margin: 0 auto 16px; }
-.val-card h3 { font-family: var(--font-display); font-size: 1.12rem; font-weight: 600; margin: 0 0 8px; }
-.val-card p { color: var(--text-mute); font-size: 0.88rem; margin: 0; line-height: 1.72; }
-
-/* ── 荣誉资质 ── */
-.honor-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
-.honor-card { padding: 26px 20px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.55),rgba(10,20,46,0.55)); text-align: center; transition: all 240ms ease; }
-.honor-card:hover { border-color: rgba(255,200,80,0.4); transform: translateY(-4px); box-shadow: 0 14px 32px rgba(255,200,80,0.1); }
-.honor-medal { width: 56px; height: 56px; margin: 0 auto 14px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,200,80,0.1); border: 1px solid rgba(255,200,80,0.32); color: #ffc850; }
-.honor-medal svg { width: 26px; height: 26px; }
-.honor-card h4 { font-family: var(--font-display); font-size: 0.98rem; font-weight: 600; margin: 0 0 6px; color: var(--text-hi); }
-.honor-card p { color: var(--text-mute); font-size: 0.79rem; margin: 0; line-height: 1.6; }
-
-/* ── 最新动态 ── */
-.news-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-.news-card { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: linear-gradient(180deg,rgba(13,26,58,0.55),rgba(10,20,46,0.55)); transition: all 240ms ease; display: flex; flex-direction: column; }
-.news-card:hover { border-color: rgba(76,201,240,0.4); transform: translateY(-4px); box-shadow: 0 16px 36px rgba(4,105,207,0.18); }
-.news-thumb { height: 124px; background: linear-gradient(135deg,rgba(76,201,240,0.16),rgba(177,77,255,0.16)); display: grid; place-items: center; color: var(--brand-hi); position: relative; overflow: hidden; }
-.news-thumb::before { content:""; position:absolute; inset:0; background-image:repeating-linear-gradient(45deg,rgba(76,201,240,0.06) 0 6px,transparent 6px 12px); }
-.news-thumb svg { width: 38px; height: 38px; opacity: 0.55; position: relative; }
-.news-body { padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-.news-meta { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.05em; }
-.news-tag { padding: 2px 8px; border-radius: 4px; background: rgba(76,201,240,0.1); color: var(--brand-hi); border: 1px solid rgba(76,201,240,0.25); }
-.news-card h4 { font-family: var(--font-display); font-size: 1.04rem; font-weight: 600; margin: 0; line-height: 1.42; color: var(--text-hi); }
-.news-card > .news-body > p { color: var(--text-mute); font-size: 0.85rem; line-height: 1.72; margin: 0; flex: 1; }
-.news-more { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-hi); display: inline-flex; align-items: center; gap: 5px; }
-.news-more svg { width: 12px; height: 12px; transition: transform 200ms ease; }
-.news-card:hover .news-more svg { transform: translateX(3px); }
-
-/* ── 合作伙伴 ── */
-.partner-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 28px; }
-.partner-tag { padding: 6px 15px; border-radius: 99px; border: 1px solid var(--line); background: rgba(10,20,46,0.5); color: var(--text-mute); font-size: 0.84rem; }
-.partner-tag b { color: var(--brand-hi); font-weight: 600; }
-.logo-wall { display: grid; grid-template-columns: repeat(6,1fr); gap: 14px; }
-.logo-tile { aspect-ratio: 16/7; border: 1px solid var(--line); border-radius: var(--r); background: rgba(10,20,46,0.4); display: grid; place-items: center; transition: all 200ms ease; }
-.logo-tile:hover { border-color: rgba(76,201,240,0.35); background: rgba(76,201,240,0.05); transform: translateY(-2px); }
-.logo-tile svg { width: 46px; height: 26px; color: var(--text-dim); transition: color 200ms ease; }
-.logo-tile:hover svg { color: var(--brand-hi); }
-
-/* ── 联系我们 ── */
-.contact-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; max-width: 920px; margin: 0 auto; }
-.contact-card { padding: 26px 24px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.55),rgba(10,20,46,0.55)); transition: all 240ms ease; }
-.contact-card:hover { border-color: rgba(76,201,240,0.4); transform: translateY(-3px); }
-.contact-card .icb { margin-bottom: 14px; }
-.contact-card h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin: 0 0 6px; }
-.contact-card p { color: var(--text-mute); font-size: 0.88rem; margin: 0; line-height: 1.7; }
-
-@media (max-width: 1024px) {
-  .about-grid { grid-template-columns: 1fr; gap: 36px; }
-  .honor-grid { grid-template-columns: 1fr 1fr; }
-  .logo-wall { grid-template-columns: repeat(4,1fr); }
+/* =========================================================
+   ABOUT · Slogan Hero
+   ========================================================= */
+.slogan-hero {
+  position: relative;
+  padding: 180px 0 130px;
+  overflow: hidden;
+  isolation: isolate;
 }
-@media (max-width: 760px) {
-  .timeline::before { left: 19px; }
-  .tl-item, .tl-item:nth-child(even) { width: 100%; left: 0; text-align: left; padding: 12px 0 12px 50px; }
-  .tl-item:nth-child(odd) { text-align: left; }
-  .tl-item:nth-child(odd) .tl-node, .tl-item:nth-child(even) .tl-node { left: 11px; right: auto; }
-  .val-grid, .news-grid, .contact-grid { grid-template-columns: 1fr; }
-  .honor-grid { grid-template-columns: 1fr 1fr; }
-  .logo-wall { grid-template-columns: repeat(3,1fr); }
-  .about-stats { grid-template-columns: 1fr 1fr; }
+/* 接口：替换背景图 —— 改 src 或拖拽即可 */
+.slogan-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: -2;
+  border-radius: 0;
+  --slot-radius: 0;
+}
+.slogan-bg::part(frame),
+.slogan-bg::part(ring) { border-radius: 0 !important; }
+.slogan-bg::part(image) { filter: saturate(1.05) brightness(0.62); }
+.slogan-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(900px 600px at 25% 40%, rgba(4,105,207,0.55), transparent 60%),
+    radial-gradient(800px 600px at 80% 30%, rgba(177,77,255,0.35), transparent 60%),
+    linear-gradient(180deg, rgba(5,8,19,0.55) 0%, rgba(5,8,19,0.85) 60%, rgba(5,8,19,1) 100%);
+}
+.slogan-hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background-image:
+    linear-gradient(rgba(143,214,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143,214,255,0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 30%, transparent 90%);
+}
+.slogan-inner { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+.slogan-tag {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--brand-hi); margin-bottom: 24px;
+}
+.slogan-tag::before { content: ""; width: 36px; height: 1px; background: var(--brand-hi); }
+.slogan-text {
+  font-family: var(--font-cn);
+  font-size: clamp(2.6rem, 6vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0 0 28px;
+  color: var(--text-hi);
+  text-wrap: balance;
+  text-shadow: 0 6px 30px rgba(0,0,0,0.45);
+}
+.slogan-text em {
+  font-style: normal;
+  background: var(--grad-cyber);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  background-size: 220% auto;
+  animation: hue-shift 8s linear infinite;
+}
+.slogan-sub {
+  color: var(--text); font-size: clamp(1rem,1.2vw,1.18rem); line-height: 1.85;
+  max-width: 720px; margin: 0 0 36px;
+}
+.slogan-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* 上传/替换提示，仅在编辑模式下可见 */
+.slogan-bg-hint {
+  position: absolute; right: 24px; bottom: 24px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(7,13,32,0.7); backdrop-filter: blur(8px);
+  color: var(--text-mute); font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  pointer-events: none;
+}
+.slogan-bg-hint svg { width: 12px; height: 12px; color: var(--brand-hi); }
+
+/* =========================================================
+   ABOUT · Company intro + stats
+   ========================================================= */
+.intro-wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 80px; align-items: center; margin-bottom: 80px; }
+.intro-copy h2 {
+  font-family: var(--font-cn); font-size: clamp(2rem, 3.4vw, 2.7rem); font-weight: 700;
+  line-height: 1.18; margin: 18px 0 24px;
+}
+.intro-copy h2 em { font-style: normal; }
+.intro-copy h2 em.glow-text { background: var(--grad-cyber); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 220% auto; animation: hue-shift 8s linear infinite; }
+.intro-copy p { color: var(--text-mute); font-size: 1rem; line-height: 1.96; margin: 0 0 18px; }
+.intro-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+
+/* viz frame on the right of intro */
+.intro-viz {
+  position: relative; border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: linear-gradient(180deg, rgba(13,26,58,0.7), rgba(7,13,32,0.7));
+  padding: 28px; min-height: 460px;
+  box-shadow: var(--shadow-card);
+}
+.intro-viz::before { content: ""; position: absolute; top: -1px; left: 32px; right: 32px; height: 2px; background: var(--grad-line); }
+.viz-rings { position: absolute; inset: 0; pointer-events: none; opacity: 0.5; }
+.viz-rings::before, .viz-rings::after {
+  content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+  border-radius: 50%; border: 1px dashed rgba(76,201,240,0.25);
+}
+.viz-rings::before { width: 300px; height: 300px; animation: spin 30s linear infinite; }
+.viz-rings::after { width: 460px; height: 460px; animation: spin 60s linear infinite reverse; border-color: rgba(177,77,255,0.18); }
+@keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+.viz-orbits {
+  position: relative; height: 380px;
+  display: grid; place-items: center;
+}
+.orbit-core {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(76,201,240,0.55), rgba(4,105,207,0.3) 60%, transparent 80%);
+  display: grid; place-items: center;
+  border: 1px solid rgba(76,201,240,0.4);
+  box-shadow: 0 0 60px rgba(76,201,240,0.4), inset 0 0 20px rgba(76,201,240,0.3);
+}
+.orbit-core span {
+  font-family: var(--font-display); font-weight: 700; color: var(--text-hi);
+  font-size: 1rem; letter-spacing: 0.05em; text-align: center; line-height: 1.25;
+}
+.orbit-pill {
+  position: absolute;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(7,13,32,0.88); backdrop-filter: blur(6px);
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-hi); white-space: nowrap;
+}
+.orbit-pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--brand-hi); box-shadow: 0 0 8px var(--brand-hi); }
+.orbit-pill.violet::before { background: var(--violet-hi); box-shadow: 0 0 8px var(--violet-hi); }
+.orbit-pill.cyan::before   { background: var(--cyan-hi);   box-shadow: 0 0 8px var(--cyan-hi); }
+.orbit-pill.green::before  { background: #44e08a;          box-shadow: 0 0 8px #44e08a; }
+
+.stats-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: linear-gradient(180deg, rgba(13,26,58,0.55), rgba(10,20,46,0.55));
+  overflow: hidden; position: relative;
+}
+.stats-bar::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--grad-line); }
+.stat-cell {
+  padding: 30px 28px; border-right: 1px solid var(--line); position: relative;
+  display: grid; gap: 6px;
+}
+.stat-cell:last-child { border-right: 0; }
+.stat-cell .stat-num {
+  font-family: var(--font-tech); font-weight: 700;
+  font-size: clamp(2.2rem, 3.4vw, 3rem); color: var(--text-hi); line-height: 1;
+}
+.stat-cell .stat-num sup { font-size: 0.55em; color: var(--brand-hi); margin-left: 4px; font-weight: 600; }
+.stat-cell .stat-label { color: var(--text-mute); font-size: 0.88rem; }
+.stat-cell .stat-mono { color: var(--text-dim); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* =========================================================
+   ABOUT · Timeline · 5-column vertical
+   ========================================================= */
+.timeline-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px;
+  position: relative;
+}
+/* shared horizontal "spine" line behind the column heads */
+.timeline-grid::before {
+  content: ""; position: absolute; left: 1.5%; right: 1.5%; top: 96px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(76,201,240,0.4), rgba(177,77,255,0.4), transparent);
+  z-index: 0;
+}
+
+.tl-col {
+  position: relative; padding: 22px 18px 24px;
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: linear-gradient(180deg, rgba(13,26,58,0.55), rgba(7,13,32,0.55));
+  display: grid; gap: 0;
+  transition: border-color 240ms ease, transform 240ms ease;
+}
+.tl-col:hover { border-color: rgba(76,201,240,0.4); }
+
+.tl-col-head {
+  text-align: center; padding-bottom: 18px; margin-bottom: 6px;
+  border-bottom: 1px solid var(--line); position: relative;
+}
+.tl-col-head small {
+  display: block; color: var(--text-dim);
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; margin-bottom: 6px;
+}
+.tl-col-head h3 {
+  font-family: var(--font-cn); font-size: 1.06rem; font-weight: 700;
+  color: var(--text-hi); margin: 0; letter-spacing: 0.04em;
+}
+.tl-col-head .tl-dot-big {
+  position: absolute; left: 50%; bottom: -7px; transform: translateX(-50%);
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 3px solid var(--bg-0);
+  background: var(--brand-hi); box-shadow: 0 0 16px var(--brand-hi);
+}
+
+.tl-col[data-phase="p1"] .tl-dot-big { background: #44e08a;        box-shadow: 0 0 16px #44e08a; }
+.tl-col[data-phase="p2"] .tl-dot-big { background: var(--brand-hi); box-shadow: 0 0 16px var(--brand-hi); }
+.tl-col[data-phase="p3"] .tl-dot-big { background: var(--cyan-hi);  box-shadow: 0 0 16px var(--cyan-hi); }
+.tl-col[data-phase="p4"] .tl-dot-big { background: var(--violet-hi);box-shadow: 0 0 16px var(--violet-hi); }
+.tl-col[data-phase="p5"] .tl-dot-big { background: var(--magenta);  box-shadow: 0 0 16px var(--magenta); }
+
+.tl-col-line {
+  position: absolute; left: 50%; top: 102px; bottom: 28px; width: 1px;
+  background: linear-gradient(180deg, rgba(76,201,240,0.45), rgba(76,201,240,0.04));
+  transform: translateX(-50%);
+}
+.tl-col[data-phase="p1"] .tl-col-line { background: linear-gradient(180deg, rgba(68,224,138,0.45), rgba(68,224,138,0.04)); }
+.tl-col[data-phase="p3"] .tl-col-line { background: linear-gradient(180deg, rgba(103,232,249,0.45), rgba(103,232,249,0.04)); }
+.tl-col[data-phase="p4"] .tl-col-line { background: linear-gradient(180deg, rgba(177,77,255,0.45), rgba(177,77,255,0.04)); }
+.tl-col[data-phase="p5"] .tl-col-line { background: linear-gradient(180deg, rgba(255,77,203,0.45), rgba(255,77,203,0.04)); }
+
+.tl-events { display: grid; gap: 6px; margin-top: 22px; }
+
+.tl-event {
+  position: relative; padding: 8px 8px 8px 22px;
+  border-radius: 8px;
+  transition: background 200ms ease;
+}
+.tl-event:hover { background: rgba(76,201,240,0.05); }
+.tl-event::before {
+  content: ""; position: absolute; left: 50%; top: 14px;
+  width: 8px; height: 8px; border-radius: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-0);
+  border: 1.5px solid var(--brand-hi);
+  box-shadow: 0 0 0 2px rgba(76,201,240,0.12);
+}
+.tl-col[data-phase="p1"] .tl-event::before { border-color: #44e08a;          box-shadow: 0 0 0 2px rgba(68,224,138,0.12); }
+.tl-col[data-phase="p3"] .tl-event::before { border-color: var(--cyan-hi);   box-shadow: 0 0 0 2px rgba(103,232,249,0.12); }
+.tl-col[data-phase="p4"] .tl-event::before { border-color: var(--violet-hi); box-shadow: 0 0 0 2px rgba(177,77,255,0.12); }
+.tl-col[data-phase="p5"] .tl-event::before { border-color: var(--magenta);   box-shadow: 0 0 0 2px rgba(255,77,203,0.12); }
+
+/* even-indexed events float to the left, odd to the right of the spine */
+.tl-event { width: calc(50% - 4px); }
+.tl-event:nth-child(odd)  { margin-right: auto; text-align: right; padding: 8px 22px 8px 8px; }
+.tl-event:nth-child(even) { margin-left: auto;  text-align: left;  padding: 8px 8px 8px 22px; }
+.tl-event:nth-child(odd)::before  { left: auto; right: -4px; }
+.tl-event:nth-child(even)::before { left: -4px; right: auto; }
+
+.tl-event .tl-when {
+  color: var(--brand-hi); font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.1em; display: block; margin-bottom: 4px;
+}
+.tl-col[data-phase="p1"] .tl-event .tl-when { color: #44e08a; }
+.tl-col[data-phase="p3"] .tl-event .tl-when { color: var(--cyan-hi); }
+.tl-col[data-phase="p4"] .tl-event .tl-when { color: var(--violet-hi); }
+.tl-col[data-phase="p5"] .tl-event .tl-when { color: var(--magenta); }
+
+.tl-event ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 3px; }
+.tl-event li { color: var(--text); font-size: 0.82rem; line-height: 1.5; }
+
+@media (max-width: 1280px) {
+  .timeline-grid { grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .tl-col { padding: 18px 10px 22px; }
+  .tl-event { padding: 6px 12px 6px 4px; }
+  .tl-event:nth-child(odd)  { padding: 6px 16px 6px 4px; }
+  .tl-event:nth-child(even) { padding: 6px 4px 6px 16px; }
+  .tl-event li { font-size: 0.78rem; }
+}
+@media (max-width: 980px) {
+  .timeline-grid { grid-template-columns: 1fr 1fr; }
+  .timeline-grid::before { display: none; }
+  .tl-col { padding: 22px 18px 24px; }
+}
+@media (max-width: 640px) {
+  .timeline-grid { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   ABOUT · World map · Mercator · China-focused
+   ========================================================= */
+.map-wrap {
+  position: relative; border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: linear-gradient(180deg, rgba(7,13,32,0.85), rgba(5,8,19,0.85));
+  padding: 32px 36px 36px; overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.map-wrap::before { content: ""; position: absolute; top: -1px; left: 32px; right: 32px; height: 2px; background: var(--grad-line); }
+.map-head { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 18px; margin-bottom: 22px; }
+.map-head h3 { font-family: var(--font-cn); font-size: 1.4rem; font-weight: 600; color: var(--text-hi); margin: 0 0 4px; }
+.map-head p { color: var(--text-mute); font-size: 0.92rem; margin: 0; max-width: 560px; }
+.map-stats { display: flex; gap: 22px; }
+.map-stat b { font-family: var(--font-tech); font-size: 1.5rem; color: var(--text-hi); display: block; line-height: 1; }
+.map-stat span { color: var(--text-dim); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+
+.map-body { display: block; }
+.map-canvas {
+  position: relative;
+  aspect-ratio: 1600 / 700;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background:
+    radial-gradient(circle at 20% 45%, rgba(76,201,240,0.12), transparent 55%),
+    radial-gradient(circle at 80% 45%, rgba(103,232,249,0.08), transparent 55%);
+  overflow: hidden;
+}
+.map-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* lat/lon grid */
+.map-svg .grat        { stroke: rgba(143,214,255,0.08); stroke-width: 0.6; fill: none; }
+.map-svg .grat-bold   { stroke: rgba(143,214,255,0.16); stroke-width: 0.6; fill: none; stroke-dasharray: 2 4; }
+.map-svg .grat-label  { fill: rgba(143,214,255,0.35); font: 9px/1 "JetBrains Mono", monospace; letter-spacing: 0.08em; }
+.map-svg .country     { fill: rgba(76,201,240,0.06); stroke: rgba(76,201,240,0.6); stroke-width: 1.2; stroke-linejoin: round; }
+.map-svg .country.cn  { fill: url(#cnFill); stroke: rgba(76,201,240,0.9); stroke-width: 1.5; filter: drop-shadow(0 0 8px rgba(76,201,240,0.35)); }
+.map-svg .country.ctx { fill: rgba(143,214,255,0.04); stroke: rgba(143,214,255,0.22); stroke-width: 0.8; stroke-dasharray: 3 3; }
+.map-svg .route       { fill: none; stroke: rgba(76,201,240,0.55); stroke-width: 0.9; stroke-dasharray: 3 4; }
+.map-svg .route.dim   { stroke: rgba(177,77,255,0.45); }
+
+/* pins absolutely positioned over the canvas */
+.map-pin-layer { position: absolute; inset: 0; pointer-events: none; }
+.map-pin {
+  position: absolute; transform: translate(-50%,-50%);
+  pointer-events: auto;
+}
+.map-pin .dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--brand-hi); box-shadow: 0 0 0 3px rgba(76,201,240,0.25), 0 0 14px var(--brand-hi);
+  position: relative;
+}
+.map-pin.is-hq .dot { background: var(--magenta); box-shadow: 0 0 0 3px rgba(255,77,203,0.3), 0 0 18px var(--magenta); width: 14px; height: 14px; }
+.map-pin.is-overseas .dot { background: var(--cyan-hi); box-shadow: 0 0 0 3px rgba(103,232,249,0.25), 0 0 14px var(--cyan-hi); }
+.map-pin .dot::before {
+  content: ""; position: absolute; inset: -8px; border-radius: 50%;
+  border: 1px solid currentColor; opacity: 0.4;
+  animation: pulse 2.4s ease-out infinite;
+}
+.map-pin .dot::after {
+  content: ""; position: absolute; inset: -14px; border-radius: 50%;
+  border: 1px solid currentColor; opacity: 0;
+  animation: pulse 2.4s ease-out 1.2s infinite;
+}
+@keyframes pulse {
+  0%   { transform: scale(0.6); opacity: 0.7; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.map-pin .label {
+  position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 9px; border-radius: 4px;
+  background: rgba(7,13,32,0.92);
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-cn); font-size: 0.78rem; color: var(--text-hi);
+  white-space: nowrap;
+}
+.map-pin .label small {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em;
+  color: var(--text-dim); text-transform: uppercase;
+}
+.map-pin.is-hq .label small { color: var(--magenta); }
+.map-pin.is-overseas .label small { color: var(--cyan-hi); }
+.map-pin.is-hq .label { border-color: rgba(255,77,203,0.4); }
+.map-pin.is-overseas .label { border-color: rgba(103,232,249,0.4); }
+.map-pin.label-left .label { left: auto; right: 16px; }
+.map-pin.label-below .label { left: 50%; top: 16px; transform: translateX(-50%); }
+.map-pin.label-above .label { left: 50%; top: auto; bottom: 16px; transform: translateX(-50%); }
+
+/* overseas pins are now placed directly on the wider map */
+
+@media (max-width: 980px) {
+  .map-canvas { aspect-ratio: 1600 / 900; }
+}
+
+.map-legend {
+  display: flex; gap: 22px; padding-top: 18px; margin-top: 22px;
+  border-top: 1px solid var(--line); flex-wrap: wrap;
+}
+.map-legend span { color: var(--text-mute); font-family: var(--font-mono); font-size: 11px; display: inline-flex; align-items: center; gap: 8px; letter-spacing: 0.04em; }
+.map-legend span::before { content: ""; width: 10px; height: 10px; border-radius: 50%; }
+.map-legend .lg-hq::before     { background: var(--magenta); box-shadow: 0 0 8px var(--magenta); }
+.map-legend .lg-base::before   { background: var(--brand-hi); box-shadow: 0 0 8px var(--brand-hi); }
+.map-legend .lg-office::before { background: var(--cyan-hi);  box-shadow: 0 0 8px var(--cyan-hi); }
+
+
+
+/* =========================================================
+   Carousels (荣誉资质 / 合作伙伴)
+   ========================================================= */
+.carousel {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: linear-gradient(180deg, rgba(13,26,58,0.45), rgba(7,13,32,0.6));
+  padding: 28px 0;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.carousel-track {
+  display: flex; gap: 18px;
+  width: max-content;
+  animation: scroll-x var(--dur, 60s) linear infinite;
+}
+.carousel:hover .carousel-track { animation-play-state: paused; }
+@keyframes scroll-x { to { transform: translateX(calc(-50% - 9px)); } }
+
+/* honors */
+.honor-card {
+  flex: 0 0 280px;
+  position: relative; padding: 22px 22px 20px;
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: linear-gradient(180deg, rgba(20,36,72,0.7), rgba(10,20,46,0.7));
+  transition: all 240ms ease;
+  display: grid; grid-template-columns: 64px 1fr; gap: 16px; align-items: center;
+}
+.honor-card:hover { border-color: rgba(76,201,240,0.5); transform: translateY(-4px); }
+.honor-badge {
+  width: 64px; height: 72px; border-radius: 8px;
+  background: linear-gradient(160deg, rgba(76,201,240,0.18), rgba(177,77,255,0.18));
+  border: 1px solid var(--line-strong);
+  display: grid; place-items: center; position: relative;
+}
+.honor-badge::before, .honor-badge::after {
+  content: ""; position: absolute; left: 50%; transform: translateX(-50%);
+  border-left: 12px solid transparent; border-right: 12px solid transparent;
+  width: 0; height: 0;
+}
+.honor-badge::before { bottom: -10px; border-top: 12px solid rgba(76,201,240,0.5); }
+.honor-badge svg { width: 28px; height: 28px; color: var(--brand-hi); }
+.honor-card h4 { font-family: var(--font-cn); font-size: 0.92rem; font-weight: 600; color: var(--text-hi); margin: 0 0 4px; line-height: 1.3; }
+.honor-card small { color: var(--text-dim); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; }
+
+/* partners */
+.partner-card {
+  flex: 0 0 200px; height: 100px;
+  border: 1px solid var(--line); border-radius: var(--r);
+  background: linear-gradient(180deg, rgba(20,36,72,0.55), rgba(10,20,46,0.55));
+  position: relative; overflow: hidden;
+  transition: all 240ms ease;
+}
+.partner-card:hover {
+  border-color: rgba(76,201,240,0.5);
+  background: linear-gradient(180deg, rgba(76,201,240,0.08), rgba(177,77,255,0.06));
+  transform: translateY(-3px);
+}
+/* image-slot fills the card; user drops a logo in -> swaps the text */
+.partner-card image-slot {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block; background: transparent;
+  z-index: 1;
+}
+.partner-card image-slot::part(frame) { background: transparent; border-radius: var(--r); }
+.partner-card image-slot::part(image) { padding: 14px; box-sizing: border-box; }
+.partner-card image-slot:not([data-filled])::part(ring) { display: none; }
+.partner-card image-slot[data-filled]::part(ring)       { display: none; }
+.partner-card image-slot::part(empty) {
+  opacity: 0; transition: opacity 200ms ease;
+  background: rgba(7,13,32,0.6); color: var(--text-mute);
+}
+.partner-card:hover image-slot:not([data-filled])::part(empty) { opacity: 1; }
+/* fallback text shows through when slot is empty; hidden once filled */
+.partner-card .pn-text {
+  position: absolute; inset: 0; z-index: 0;
+  display: grid; place-items: center;
+  text-align: center; line-height: 1.15;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+.partner-card image-slot[data-filled] ~ .pn-text { opacity: 0; }
+.partner-card .pn-text b {
+  display: block; color: var(--text-hi);
+  font-family: var(--font-cn); font-size: 1.02rem; font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.partner-card .pn-text small {
+  display: block; color: var(--text-mute); font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 4px;
+}
+
+/* =========================================================
+   News
+   ========================================================= */
+.news-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.news-card {
+  position: relative; padding: 28px 26px 24px;
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: linear-gradient(180deg, rgba(13,26,58,0.55), rgba(10,20,46,0.55));
+  transition: all 240ms ease;
+  display: grid; gap: 14px; align-content: start;
+}
+.news-card:hover { border-color: rgba(76,201,240,0.4); transform: translateY(-4px); }
+.news-card::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--grad-line); transform: scaleX(0); transform-origin: left; transition: transform 500ms ease; }
+.news-card:hover::after { transform: scaleX(1); }
+.news-date { display: flex; align-items: baseline; gap: 10px; }
+.news-date b { font-family: var(--font-tech); font-size: 2rem; color: var(--text-hi); line-height: 1; }
+.news-date small { color: var(--text-mute); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; }
+.news-card h4 { font-family: var(--font-cn); font-size: 1rem; font-weight: 600; color: var(--text-hi); margin: 0; line-height: 1.5; }
+.news-card p { color: var(--text-mute); font-size: 0.86rem; line-height: 1.7; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.news-card .news-more {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--brand-hi); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+}
+
+/* =========================================================
+   Section spacing
+   ========================================================= */
+.about-section { padding: 100px 0; position: relative; }
+.about-section + .about-section { padding-top: 0; }
+
+@media (max-width: 1100px) {
+  .intro-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .stats-bar { grid-template-columns: repeat(2,1fr); }
+  .stat-cell:nth-child(2) { border-right: 0; }
+  .stat-cell:nth-child(1), .stat-cell:nth-child(2) { border-bottom: 1px solid var(--line); }
+  .news-grid { grid-template-columns: 1fr 1fr; }
+  .map-pin .label { font-size: 0.72rem; padding: 3px 7px; }
+}
+@media (max-width: 720px) {
+  .stats-bar { grid-template-columns: 1fr; }
+  .stat-cell { border-right: 0 !important; border-bottom: 1px solid var(--line); }
+  .stat-cell:last-child { border-bottom: 0; }
+  .news-grid { grid-template-columns: 1fr; }
+  .slogan-hero { padding: 130px 0 80px; }
 }
 </style>
 </head>
 <body>
 <div id="nav-placeholder"></div>
 
-<!-- ── HERO ── -->
-<section class="page-hero">
-  <div class="container">
-    <nav class="crumbs">
-      <a href="homepage.html">首页</a>
-      <span class="sep">/</span>
-      <span class="cur">关于我们</span>
-    </nav>
-    <span class="eyebrow">About DataBaker · 关于我们</span>
-    <h1 class="display" style="font-size:clamp(2.2rem,4.8vw,4rem);margin:16px 0 20px;">
-      <span style="display:block;">智能语音交互</span>
-      <span style="display:block;" class="glow-text">与 AI 数据服务专家</span>
+<!-- =========================================================
+     1) SLOGAN HERO  ·  接口：替换 <image-slot> 的 src 即可换底图
+     ========================================================= -->
+<section class="slogan-hero" data-screen-label="01 Slogan Hero">
+  <!--
+    底图接口：
+      · 简单替换：把下面 src="" 指向本地图片，例如 src="images/your-bg.jpg"
+      · 交互替换：开启编辑后，可直接把图片拖到该区域，自动持久化
+  -->
+  <image-slot
+    id="aboutSloganBg"
+    class="slogan-bg"
+    shape="rect"
+    fit="cover"
+    src=""
+    placeholder="在此拖入背景图  ·  Drop background image"
+  ></image-slot>
+
+  <div class="slogan-inner">
+    <div class="slogan-tag">About DataBaker · 关于标贝</div>
+    <h1 class="slogan-text">
+      优质<em>数据生产力</em>，<br/>
+      让 AI 落地更高效。
     </h1>
-    <p class="lead">标贝科技成立于 2016 年，以自研语音技术与一站式 AI 数据平台为核心，为各行业客户提供从智能语音产品到多模态数据服务的全栈能力</p>
+    <p class="slogan-sub">
+      标贝科技是一家技术驱动的专业 AI 数据服务商。依托自研 AI 数据平台与生产管线，
+      为大模型与场景化 AI 提供语音、视觉、点云、文本、多模态的数据基础设施。
+    </p>
+    <div class="slogan-cta">
+      <a href="#contact" class="btn btn-primary">联系我们 <span class="btn-arrow">→</span></a>
+      <a href="#timeline" class="btn btn-ghost">发展历程</a>
+    </div>
+  </div>
+
+  <div class="slogan-bg-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5-5 5 5M12 5v12"/></svg>
+    Bg · drag or set src
   </div>
 </section>
 
-<!-- ── 01 公司简介 ── -->
-<section class="section" style="padding-top:60px;">
+<!-- =========================================================
+     2) 关于我们 · 公司介绍 + 关键数据
+     ========================================================= -->
+<section class="about-section" id="intro">
   <div class="container">
-    <div class="about-grid" data-reveal>
-      <div class="about-copy">
-        <span class="eyebrow" style="margin-bottom:18px;display:inline-flex;">01 · 公司简介</span>
-        <h2>专注语音交互<br/><span class="glow-text">深耕 AI 数据</span></h2>
-        <p><b>标贝科技（DataBaker）</b>是一家专注于智能语音交互与 AI 数据服务的高新技术企业，总部位于北京。公司以自研的语音合成、语音识别等核心技术为基础，结合一站式 AI 数据平台，为各行业客户提供从语音技术产品到多模态数据采集标注的全栈解决方案。</p>
-        <p>在智能语音领域，标贝科技构建了覆盖<b>识别、合成、拓展</b>全链路的产品矩阵，并通过公有云 API 与私有化部署，灵活服务开发者与企业客户。在 AI 数据服务领域，公司基于自研数据平台，提供语音、视觉、点云、大模型等多领域的数据采集与标注服务。</p>
-        <div class="about-stats">
-          <div><b style="font-family:var(--font-tech);">2016</b><span>成立年份</span></div>
-          <div><b style="font-family:var(--font-tech);">20+</b><span>支持语种</span></div>
-          <div><b style="font-family:var(--font-tech);">200+</b><span>企业客户</span></div>
-          <div><b style="font-family:var(--font-tech);">全栈</b><span>语音 + 数据</span></div>
+
+    <div class="intro-wrap" data-reveal>
+      <div class="intro-copy">
+        <span class="eyebrow">01 · ABOUT US</span>
+        <h2>构建可信的 AI <em class="glow-text">数据底座</em></h2>
+        <p>
+          标贝科技围绕<b style="color:var(--text-hi);">语音、视觉、点云、文本、多模态</b>等核心数据类型，
+          提供从数据采集、标注、清洗到成品数据集交付的全流程能力，
+          致力于为 AI 企业与研发机构提供多语言、跨领域、跨模态的高质量数据服务。
+        </p>
+        <p>
+          通过深耕高质量数据底座建设，标贝科技构建覆盖多场景的数据处理解决方案，
+          为多模态大模型训练与场景化落地提供坚实支撑，服务于
+          <b style="color:var(--text-hi);">具身智能、医疗健康、智能驾驶、智慧金融、商业零售</b>
+          等垂直行业，加速 AI 技术从研发到产业应用的闭环转化。
+        </p>
+        <div class="intro-tags">
+          <span class="pill pill-accent">技术驱动</span>
+          <span class="pill pill-violet">全模态覆盖</span>
+          <span class="pill pill-green">国家专精特新「小巨人」</span>
         </div>
       </div>
-      <div class="biz-panel">
-        <div class="biz-bar"><i style="background:#44e08a;box-shadow:0 0 8px #44e08a;"></i>business.matrix · 业务版图</div>
-        <div class="biz-line">
-          <h4><span class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-7 9a7 7 0 0 0 14 0M12 19v3" stroke-linecap="round"/></svg></span>智能语音</h4>
-          <div class="biz-chips">
-            <span class="biz-chip">语音识别</span><span class="biz-chip">语音合成</span>
-            <span class="biz-chip">声音复刻</span><span class="biz-chip">声音转换</span>
-            <span class="biz-chip">声纹识别</span><span class="biz-chip">开放平台</span>
+
+      <div class="intro-viz">
+        <div class="viz-title-bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <span class="title">data.infrastructure</span>
+          <span class="badge">ONLINE</span>
+        </div>
+        <div class="viz-orbits">
+          <div class="viz-rings"></div>
+          <div class="orbit-core"><span>AI 数据<br/>底座</span></div>
+          <span class="orbit-pill"        style="top:8%;  left:6%;">语音 · ASR</span>
+          <span class="orbit-pill violet" style="top:14%; right:4%;">视觉 · CV</span>
+          <span class="orbit-pill cyan"   style="top:46%; left:-2%;">点云 · 3D</span>
+          <span class="orbit-pill green"  style="top:50%; right:-2%;">大模型</span>
+          <span class="orbit-pill"        style="bottom:14%; left:8%;">文本 · NLP</span>
+          <span class="orbit-pill violet" style="bottom:8%;  right:6%;">多模态</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar" data-reveal>
+      <div class="stat-cell">
+        <div class="stat-mono">Honors</div>
+        <div class="stat-num">200<sup>+</sup></div>
+        <div class="stat-label">荣誉资质 / 行业认证</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-mono">Speech</div>
+        <div class="stat-num">500<sup>+ 万小时</sup></div>
+        <div class="stat-label">语音数据集累计交付</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-mono">Multimodal</div>
+        <div class="stat-num">PB<sup>+ 级</sup></div>
+        <div class="stat-label">多模态数据规模</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-mono">Clients</div>
+        <div class="stat-num">1000<sup>+</sup></div>
+        <div class="stat-label">全球客户与合作团队</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     3) 发展历程 · Timeline
+     ========================================================= -->
+<section class="about-section" id="timeline">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">02 · MILESTONES</span>
+      <h2 class="display">发展历程 · <span class="glow-text">十年深耕</span></h2>
+      <p>从 2016 年北京成立，到布局全国 + 海外的数据服务网络，标贝持续深耕 AI 数据基础设施。</p>
+    </div>
+
+    <!-- 5-column timeline · 每个阶段一列纵向展开 -->
+    <div class="timeline-grid" data-reveal>
+      <!-- P1 初创起步 -->
+      <div class="tl-col" data-phase="p1">
+        <div class="tl-col-head">
+          <small>2016 — 2017</small>
+          <h3>初创起步</h3>
+          <span class="tl-dot-big"></span>
+        </div>
+        <div class="tl-col-line"></div>
+        <div class="tl-events">
+          <div class="tl-event">
+            <span class="tl-when">2016 · 02</span>
+            <ul><li>标贝科技成立于北京</li><li>核心团队来自知名业内企业</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2017 · 05</span>
+            <ul><li>设立长春数据基地</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2017 · 11</span>
+            <ul><li>获 Pre-A 轮千万级融资</li><li>获国家高新技术企业认定</li></ul>
           </div>
         </div>
-        <div class="biz-line">
-          <h4><span class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/></svg></span>AI 数据服务</h4>
-          <div class="biz-chips">
-            <span class="biz-chip">数据采集</span><span class="biz-chip">数据标注</span>
-            <span class="biz-chip">成品数据集</span><span class="biz-chip">标注平台</span>
-            <span class="biz-chip">多模态数据</span><span class="biz-chip">大模型数据</span>
+      </div>
+
+      <!-- P2 崭露头角 -->
+      <div class="tl-col" data-phase="p2">
+        <div class="tl-col-head">
+          <small>2018 — 2020</small>
+          <h3>崭露头角</h3>
+          <span class="tl-dot-big"></span>
+        </div>
+        <div class="tl-col-line"></div>
+        <div class="tl-events">
+          <div class="tl-event">
+            <span class="tl-when">2018 · 09</span>
+            <ul><li>建立天津数据基地</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2018 · 12</span>
+            <ul><li>获 A 轮 5000 万融资</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2019 · 01</span>
+            <ul><li>成立深圳分公司</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2019 · 12</span>
+            <ul><li>获得 A+ 轮融资</li><li>上线标贝悦读平台</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2020 · 03</span>
+            <ul><li>推出留声机方案</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2020 · 06</span>
+            <ul><li>语音标注工具上线</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2020 · 09</span>
+            <ul><li>发布数据采集平台</li></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- P3 厚积薄发 -->
+      <div class="tl-col" data-phase="p3">
+        <div class="tl-col-head">
+          <small>2021 — 2022</small>
+          <h3>厚积薄发</h3>
+          <span class="tl-dot-big"></span>
+        </div>
+        <div class="tl-col-line"></div>
+        <div class="tl-events">
+          <div class="tl-event">
+            <span class="tl-when">2021 · 04</span>
+            <ul><li>上线标贝开放平台</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2021 · 08</span>
+            <ul><li>图像标注平台上线</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2022 · 02</span>
+            <ul><li>获得北京「专精特新」小巨人</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2022 · 06</span>
+            <ul><li>上线 3D 点云工具</li></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- P4 激流勇进 -->
+      <div class="tl-col" data-phase="p4">
+        <div class="tl-col-head">
+          <small>2022 — 2023</small>
+          <h3>激流勇进</h3>
+          <span class="tl-dot-big"></span>
+        </div>
+        <div class="tl-col-line"></div>
+        <div class="tl-events">
+          <div class="tl-event">
+            <span class="tl-when">2022 · 09</span>
+            <ul><li>3D 点云 2.0 标注工具发布</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2022 · 10</span>
+            <ul><li>完成 B1 轮千万级融资</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2023 · 04</span>
+            <ul><li>完成 B2 轮超亿元融资</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2023 · 10</span>
+            <ul><li>上线 4D 标注工具</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2023 · 11</span>
+            <ul><li>发布「烘焙师」大模型</li></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- P5 持续争先 -->
+      <div class="tl-col" data-phase="p5">
+        <div class="tl-col-head">
+          <small>2024 — 2025</small>
+          <h3>持续争先</h3>
+          <span class="tl-dot-big"></span>
+        </div>
+        <div class="tl-col-line"></div>
+        <div class="tl-events">
+          <div class="tl-event">
+            <span class="tl-when">2024 · 04</span>
+            <ul><li>多模态工具上线</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2024 · 06</span>
+            <ul><li>成立青岛 AI 数据中心</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2024 · 10</span>
+            <ul><li>上线 AI 数据平台 4.0</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2024 · 12</span>
+            <ul><li>入选国家数据局首批数据标注优秀案例</li><li>荣获国家专精特新「小巨人」</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2025 · 04</span>
+            <ul><li>上线声音复刻大模型</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2025 · 08</span>
+            <ul><li>上线数据集管理平台</li></ul>
+          </div>
+          <div class="tl-event">
+            <span class="tl-when">2025 · 10</span>
+            <ul><li>入选国家数据局首批高质量数据集典型案例</li></ul>
           </div>
         </div>
       </div>
@@ -175,285 +824,431 @@
   </div>
 </section>
 
-<!-- ── 02 发展历程 ── -->
-<section class="section" style="padding-top:20px;">
+<!-- =========================================================
+     4) 全球数据服务基地 · 地图
+     ========================================================= -->
+<section class="about-section" id="map">
   <div class="container">
     <div class="section-head" data-reveal>
-      <span class="eyebrow">02 · Milestones</span>
-      <h2 class="display">发展<span class="glow-text">历程</span></h2>
-      <p>从语音技术起步，到智能语音与 AI 数据双轮驱动的成长之路</p>
+      <span class="eyebrow">03 · GLOBAL FOOTPRINT</span>
+      <h2 class="display">全球数据<span class="glow-text">服务基地</span></h2>
+      <p>专业数据团队遍布全球。在北京、青岛、天津、深圳、杭州、长春，以及美国、新加坡设立服务中心，专业、全面地服务全球客户。</p>
     </div>
-    <div class="timeline" data-reveal>
-      <div class="tl-item">
-        <span class="tl-node"></span>
-        <div class="tl-card">
-          <div class="tl-year">2016</div>
-          <h4>标贝科技成立</h4>
-          <p>公司在北京正式成立，以语音合成与语音数据服务为核心业务起步。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <span class="tl-node"></span>
-        <div class="tl-card">
-          <div class="tl-year">2017</div>
-          <h4>语音合成商业化</h4>
-          <p>语音合成产品进入商业化阶段，并对外开放中文语音合成数据集。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <span class="tl-node"></span>
-        <div class="tl-card">
-          <div class="tl-year">2019</div>
-          <h4>AI 数据平台上线</h4>
-          <p>自研一站式 AI 数据平台上线，业务拓展至视觉、文本等多模态数据。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <span class="tl-node"></span>
-        <div class="tl-card">
-          <div class="tl-year">2020</div>
-          <h4>智能语音开放平台</h4>
-          <p>面向开发者发布智能语音开放平台，提供 ASR / TTS 云端 API 服务。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <span class="tl-node"></span>
-        <div class="tl-card">
-          <div class="tl-year">2021</div>
-          <h4>多模态数据拓展</h4>
-          <p>数据服务能力延伸至点云、视频等多模态场景，配套自研标注工具链。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <span class="tl-node"></span>
-        <div class="tl-card">
-          <div class="tl-year">2022</div>
-          <h4>大模型数据布局</h4>
-          <p>布局大模型预训练与对齐数据服务，支撑头部大模型团队的数据需求。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <span class="tl-node"></span>
-        <div class="tl-card">
-          <div class="tl-year">2023</div>
-          <h4>声音复刻与大模型 TTS</h4>
-          <p>推出大模型声音复刻能力，实现秒级、高保真的个性化音色定制。</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <span class="tl-node"></span>
-        <div class="tl-card">
-          <div class="tl-year">2025</div>
-          <h4>全栈能力持续升级</h4>
-          <p>持续升级智能语音与 AI 数据双业务线，深化行业落地与生态合作。</p>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;">
-      <span class="demo-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>里程碑为示例内容，请替换为真实发展节点</span>
-    </div>
-  </div>
-</section>
 
-<!-- ── 03 核心理念 ── -->
-<section class="section" style="padding-top:20px;">
-  <div class="container">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow">03 · Values</span>
-      <h2 class="display">我们的<span class="glow-text">核心理念</span></h2>
-    </div>
-    <div class="val-grid" data-reveal>
-      <div class="val-card">
-        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
-        <h3>技术与质量并重</h3>
-        <p>持续投入语音算法与数据工程研发，以严格的质检体系保障产品效果与数据质量。</p>
+    <div class="map-wrap" data-reveal>
+      <div class="map-head">
+        <div>
+          <h3>Beijing HQ · 北京总部</h3>
+          <p>以北京为总部，辐射 6 城数据基地与 2 处海外服务中心，确保 7×24 服务响应与多语种交付能力。</p>
+        </div>
+        <div class="map-stats">
+          <div class="map-stat"><b>06</b><span>China bases</span></div>
+          <div class="map-stat"><b>02</b><span>Overseas</span></div>
+          <div class="map-stat"><b>7×24</b><span>Service</span></div>
+        </div>
       </div>
-      <div class="val-card">
-        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linejoin="round"/></svg></div>
-        <h3>创新驱动发展</h3>
-        <p>紧跟语音大模型等前沿方向，用技术创新不断降低 AI 能力的应用门槛。</p>
+
+      <div class="map-body">
+        <!-- Mercator-projected canvas · 横向「扁平」视图覆盖中国 + 海外服务中心 -->
+        <div class="map-canvas" id="mapCanvas">
+          <svg id="mapSvg" class="map-svg" viewBox="-800 -660 1600 700" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs>
+              <linearGradient id="cnFill" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"   stop-color="rgba(76,201,240,0.18)"/>
+                <stop offset="100%" stop-color="rgba(177,77,255,0.10)"/>
+              </linearGradient>
+              <radialGradient id="mapGlow" cx="35%" cy="50%" r="40%">
+                <stop offset="0%"   stop-color="rgba(76,201,240,0.18)"/>
+                <stop offset="100%" stop-color="rgba(76,201,240,0)"/>
+              </radialGradient>
+            </defs>
+
+            <rect x="-800" y="-660" width="1600" height="700" fill="url(#mapGlow)"/>
+
+            <!-- groups populated by JS for clean lat/lon math -->
+            <g id="mapGraticule"></g>
+            <g id="mapCountries"></g>
+            <g id="mapRoutes"></g>
+          </svg>
+
+          <!-- pin layer (absolute %; populated by JS in sync with the SVG mercator) -->
+          <div class="map-pin-layer" id="mapPinLayer"></div>
+        </div>
       </div>
-      <div class="val-card">
-        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <h3>客户价值优先</h3>
-        <p>从需求沟通到交付验收全程陪伴，确保每一份语音能力与数据资产真正可用。</p>
+
+      <div class="map-legend">
+        <span class="lg-hq">总部 Headquarters</span>
+        <span class="lg-base">国内数据基地 Domestic bases</span>
+        <span class="lg-office">海外服务中心 Overseas offices</span>
+        <span style="margin-left:auto;color:var(--text-dim);">* 地图为 Mercator 投影 · 主视角聚焦国内区域</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 04 荣誉资质 ── -->
-<section class="section" style="padding-top:20px;">
+<!-- =========================================================
+     5) 荣誉资质 · Carousel
+     ========================================================= -->
+<section class="about-section" id="honors">
   <div class="container">
     <div class="section-head" data-reveal>
-      <span class="eyebrow">04 · Honors</span>
+      <span class="eyebrow">04 · HONORS &amp; CERTIFICATIONS</span>
       <h2 class="display">荣誉<span class="glow-text">资质</span></h2>
-      <p>多年深耕积累的技术认证与行业认可</p>
+      <p>200+ 项资质认证，国家级、行业级与体系认证并行，持续以专业能力获得认可。</p>
     </div>
-    <div class="honor-grid" data-reveal>
-      <div class="honor-card">
-        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="9" r="6"/><path d="M9 14l-2 8 5-3 5 3-2-8" stroke-linejoin="round"/></svg></div>
-        <h4>国家高新技术企业</h4>
-        <p>通过国家高新技术企业认定</p>
+
+    <div class="carousel" data-reveal style="--dur: 70s;">
+      <div class="carousel-track" id="honorsTrack">
+        <!-- honor cards injected by JS (duplicated for seamless loop) -->
       </div>
-      <div class="honor-card">
-        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 3v7c0 6-8 10-8 10S4 18 4 12V5z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h4>ISO 27001 认证</h4>
-        <p>信息安全管理体系认证</p>
-      </div>
-      <div class="honor-card">
-        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
-        <h4>ISO 9001 认证</h4>
-        <p>质量管理体系认证</p>
-      </div>
-      <div class="honor-card">
-        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h10l4 4v14H5z" stroke-linejoin="round"/><path d="M9 12h6M9 16h4" stroke-linecap="round"/></svg></div>
-        <h4>发明专利与软著</h4>
-        <p>数十项自主知识产权</p>
-      </div>
-      <div class="honor-card">
-        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z" stroke-linejoin="round"/></svg></div>
-        <h4>行业技术奖项</h4>
-        <p>多项 AI 语音技术奖项</p>
-      </div>
-      <div class="honor-card">
-        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4" stroke-linecap="round"/></svg></div>
-        <h4>CMMI 能力认证</h4>
-        <p>软件能力成熟度认证</p>
-      </div>
-      <div class="honor-card">
-        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
-        <h4>数据安全合规</h4>
-        <p>数据安全与隐私保护合规</p>
-      </div>
-      <div class="honor-card">
-        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87" stroke-linecap="round"/></svg></div>
-        <h4>专精特新企业</h4>
-        <p>专精特新中小企业</p>
-      </div>
-    </div>
-    <div style="text-align:center;">
-      <span class="demo-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>荣誉资质为示例内容，请替换为真实证书与认定</span>
     </div>
   </div>
 </section>
 
-<!-- ── 05 最新动态 ── -->
-<section class="section" style="padding-top:20px;">
+<!-- =========================================================
+     6) 合作伙伴 · Carousel
+     ========================================================= -->
+<section class="about-section" id="partners">
   <div class="container">
     <div class="section-head" data-reveal>
-      <span class="eyebrow">05 · News</span>
-      <h2 class="display">最新<span class="glow-text">动态</span></h2>
-      <p>了解标贝科技的产品进展、技术发布与行业活动</p>
+      <span class="eyebrow">05 · PARTNERS</span>
+      <h2 class="display">合作<span class="glow-text">伙伴</span></h2>
+      <p>服务于头部互联网企业、研究机构与垂直行业领导者，已累计与 1000+ 团队建立合作。</p>
+    </div>
+
+    <div class="carousel" data-reveal style="--dur: 50s;">
+      <div class="carousel-track" id="partnersTrack1"></div>
+    </div>
+    <div class="carousel" data-reveal style="--dur: 60s; margin-top: 14px;">
+      <div class="carousel-track" id="partnersTrack2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     7) 新闻资讯
+     ========================================================= -->
+<section class="about-section" id="news">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">06 · NEWS</span>
+      <h2 class="display">新闻<span class="glow-text">资讯</span></h2>
+      <p>关注标贝最新动态，了解 AI 数据领域前沿实践与行业洞察。</p>
     </div>
     <div class="news-grid" data-reveal>
-      <div class="news-card">
-        <div class="news-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-7 9a7 7 0 0 0 14 0M12 19v3" stroke-linecap="round"/></svg></div>
-        <div class="news-body">
-          <div class="news-meta"><span class="news-tag">产品发布</span><span>2025.03</span></div>
-          <h4>大模型声音复刻能力全面升级</h4>
-          <p>新一代语音大模型驱动的声音复刻，支持秒级、零样本的高保真音色定制。</p>
-          <span class="news-more">阅读全文<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </div>
-      <div class="news-card">
-        <div class="news-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/></svg></div>
-        <div class="news-body">
-          <div class="news-meta"><span class="news-tag">技术动态</span><span>2025.01</span></div>
-          <h4>AI 数据平台支持多模态数据闭环</h4>
-          <p>一站式数据平台持续升级，覆盖语音、视觉、点云、大模型数据全流程。</p>
-          <span class="news-more">阅读全文<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </div>
-      <div class="news-card">
-        <div class="news-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <div class="news-body">
-          <div class="news-meta"><span class="news-tag">行业活动</span><span>2024.11</span></div>
-          <h4>标贝科技亮相人工智能行业大会</h4>
-          <p>在行业大会上展示智能语音与 AI 数据服务的最新技术成果与落地案例。</p>
-          <span class="news-more">阅读全文<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;">
-      <span class="demo-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>动态为示例内容，请替换为真实新闻与发布信息</span>
+      <article class="news-card">
+        <div class="news-date"><b>20</b><small>2026-05</small></div>
+        <h4>标贝科技高质量图像数据集，让 AI「看」得更准、更深</h4>
+        <p>面对计算机视觉领域日益复杂的应用需求，标贝科技依托深厚的数据服务积淀，匠心打造覆盖智慧教育、商业零售、文旅创意等主流场景的大规模专业化图像数据集。</p>
+        <a href="javascript:void(0)" class="news-more">阅读全文 →</a>
+      </article>
+      <article class="news-card">
+        <div class="news-date"><b>12</b><small>2026-05</small></div>
+        <h4>标贝科技亮相第 12 届上海国际人形机器人与供应链生态展览会</h4>
+        <p>第 12 届上海国际人形机器人与供应链生态展览会圆满落幕。标贝携具身智能数据解决方案亮相，集中展示在多模态数据采集、高精度标注、高质量数据集建设等领域的核心实力。</p>
+        <a href="javascript:void(0)" class="news-more">阅读全文 →</a>
+      </article>
+      <article class="news-card">
+        <div class="news-date"><b>24</b><small>2026-04</small></div>
+        <h4>从舞台到赛道：高质量数据驱动具身智能机器人「跨越式进化」</h4>
+        <p>2026 年马年春晚舞台上人形机器人方阵姿态流畅；时隔两月，北京亦庄机器人半马赛事再传捷报。再次刷新大众对机器人灵活性、耐力与自主性的认知上限。</p>
+        <a href="javascript:void(0)" class="news-more">阅读全文 →</a>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ── 06 合作伙伴 ── -->
-<section class="section" style="padding-top:20px;">
+<!-- =========================================================
+     8) CTA 联系我们
+     ========================================================= -->
+<section class="cta-section" id="contact">
   <div class="container">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow">06 · Partners</span>
-      <h2 class="display">合作<span class="glow-text">伙伴</span></h2>
-      <p>智能语音与 AI 数据能力已服务多个行业的企业客户</p>
-    </div>
-    <div class="partner-tags" data-reveal>
-      <span class="partner-tag">互联网与科技</span>
-      <span class="partner-tag">金融</span>
-      <span class="partner-tag">汽车出行</span>
-      <span class="partner-tag">教育</span>
-      <span class="partner-tag">智能硬件</span>
-      <span class="partner-tag">文娱传媒</span>
-      <span class="partner-tag">运营商</span>
-      <span class="partner-tag">政企</span>
-    </div>
-    <div class="logo-wall" data-reveal>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="14" cy="14" r="8"/><path d="M28 6h14M28 14h10M28 22h14" stroke-linecap="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="7" width="14" height="14" rx="3"/><path d="M26 14h16M34 8l8 6-8 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21l8-15 8 15M11 16h10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="34" cy="14" r="8"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 7v14M10 7h9a4 4 0 0 1 0 8h-9" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 14h14" stroke-linecap="round"/><circle cx="38" cy="14" r="4"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="14" cy="14" r="7"/><circle cx="32" cy="14" r="7"/><path d="M21 14h4" stroke-linecap="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21V7l10 9 10-9v14" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 8v12M40 8v12" stroke-linecap="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="7" width="14" height="14" rx="7"/><path d="M28 21V7l8 9 8-9v14" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 7h12M16 7v14" stroke-linecap="round"/><circle cx="34" cy="14" r="8"/><path d="M34 10v8" stroke-linecap="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 14a8 8 0 0 1 16 0M24 14a8 8 0 0 1 16 0" stroke-linecap="round"/><circle cx="16" cy="14" r="2"/><circle cx="32" cy="14" r="2"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="8" width="13" height="13" rx="2"/><rect x="28" y="8" width="13" height="13" rx="2"/><path d="M20 14h8" stroke-linecap="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 6l7 16M14 6L7 22M9 16h10" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 7v14h10" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="14" cy="14" r="8"/><path d="M14 9v10M9 14h10" stroke-linecap="round"/><path d="M28 14h14" stroke-linecap="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 22V6l9 8 9-8v16" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="14" r="7"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7v14M9 7h8a5 5 0 0 1 0 10H9" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 7h14M35 7v14" stroke-linecap="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14l7-8 7 8-7 8z" stroke-linejoin="round"/><path d="M28 7v14h12" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="14" cy="14" r="8"/><path d="M28 7h14v14" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 21L42 7" stroke-linecap="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="7" width="14" height="14" rx="3"/><path d="M28 14h14M28 9h10M28 19h10" stroke-linecap="round"/></svg></div>
-      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21V7h9a4 4 0 0 1 0 8H8m9 0l5 6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="35" cy="14" r="8"/></svg></div>
-    </div>
-    <div style="text-align:center;">
-      <span class="demo-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>合作伙伴标识为示例占位，请替换为真实合作方 Logo</span>
-    </div>
-  </div>
-</section>
-
-<!-- ── 07 联系我们 ── -->
-<section class="section" style="padding-top:20px;padding-bottom:70px;">
-  <div class="container">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow">07 · Contact</span>
-      <h2 class="display">与我们<span class="glow-text">取得联系</span></h2>
-      <p>无论是产品咨询、商务合作还是加入团队，欢迎随时联系我们</p>
-    </div>
-    <div class="contact-grid" data-reveal>
-      <div class="contact-card">
-        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></div>
-        <h3>商务合作</h3>
-        <p>bd@data-baker.com</p>
-      </div>
-      <div class="contact-card">
-        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2z"/></svg></div>
-        <h3>电话咨询</h3>
-        <p>400 898 2016</p>
-      </div>
-      <div class="contact-card">
-        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <h3>公司地址</h3>
-        <p>北京市 · 标贝科技</p>
+    <div class="cta-card" data-reveal>
+      <div class="cta-inner">
+        <span class="eyebrow">CONTACT US · 获取专业服务</span>
+        <h2>获取高质量数据服务</h2>
+        <p>无论是大模型训练数据、垂直场景数据集，还是 AI 数据平台与工具，标贝团队 7×24 为您响应。</p>
+        <div class="cta-actions">
+          <a href="javascript:void(0)" class="btn btn-primary" id="ctaTrial">立即咨询 <span class="btn-arrow">→</span></a>
+          <a href="tel:4001688833" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2z"/></svg>
+            400-168-8833
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <div id="footer-placeholder"></div>
+
+<script src="image-slot.js"></script>
 <script src="_shared.js"></script>
+<script>
+/* =========================================================
+   About page · scripts
+   ========================================================= */
+(function() {
+
+  // ── 荣誉资质 数据 ─────────────────────────────
+  const HONORS = [
+    { name: '国家专精特新「小巨人」企业',     en: 'Little Giant · National', icon: 'trophy' },
+    { name: '北京专精特新「小巨人」',         en: 'Little Giant · Beijing',  icon: 'star' },
+    { name: '国家高新技术企业',                en: 'National High-Tech',      icon: 'shield' },
+    { name: '国家数据局·首批数据标注优秀案例', en: 'Data Annotation Top',     icon: 'medal' },
+    { name: '国家数据局·首批高质量数据集典型', en: 'High-Quality Dataset',    icon: 'badge' },
+    { name: '中国信通院·语音合成评测优秀',     en: 'CAICT · TTS Eval',        icon: 'trophy' },
+    { name: 'ISO/IEC 27001 信息安全管理体系',  en: 'ISO 27001',               icon: 'shield' },
+    { name: 'ISO 9001 质量管理体系认证',       en: 'ISO 9001',                icon: 'shield' },
+    { name: 'CMMI 软件能力成熟度认证',         en: 'CMMI Certified',          icon: 'badge' },
+    { name: '中关村高新技术企业',              en: 'Z-Park High-Tech',        icon: 'star' },
+    { name: '软件著作权 50+',                  en: 'Software Copyrights',     icon: 'medal' },
+    { name: '人工智能产业联盟核心成员',         en: 'AIIA Core Member',        icon: 'trophy' },
+  ];
+
+  const ICONS = {
+    trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/><path d="M4 4h2v3a2 2 0 0 1-2 2H3"/><path d="M20 4h-2v3a2 2 0 0 0 2 2h1"/><path d="M10 17v3M14 17v3M8 21h8"/></svg>',
+    star:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9.5 16.5 14 18.5 21 12 17 5.5 21 7.5 14 2 9.5 9 9 12 2"/></svg>',
+    shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
+    medal:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="7"/><path d="M8 8l-4-6h6l4 6"/><path d="M16 8l4-6h-6l-4 6"/></svg>',
+    badge:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2 4 4 .5-3 3 1 4-4-2-4 2 1-4-3-3 4-.5z"/><path d="M8 14v8l4-2 4 2v-8"/></svg>',
+  };
+
+  function honorCard(h, i) {
+    return `<div class="honor-card">
+      <div class="honor-badge">${ICONS[h.icon] || ICONS.trophy}</div>
+      <div>
+        <h4>${h.name}</h4>
+        <small>${String(i+1).padStart(2,'0')} · ${h.en}</small>
+      </div>
+    </div>`;
+  }
+  const honorsHtml = HONORS.map(honorCard).join('');
+  document.getElementById('honorsTrack').innerHTML = honorsHtml + honorsHtml;
+
+  // ── 合作伙伴 数据（中英双语 logo 卡）─────────────
+  // 每张卡片内嵌 <image-slot>，可拖入图片或在 HTML 里设置
+  //   <image-slot src="images/alibaba.png">
+  // 来替换为真实 logo，无图时回退为中英文文字占位
+  const PARTNERS_A = [
+    { id: 'alibaba',  cn: '阿里巴巴', en: 'ALIBABA GROUP' },
+    { id: 'tencent',  cn: '腾讯',     en: 'TENCENT' },
+    { id: 'baidu',    cn: '百度',     en: 'BAIDU' },
+    { id: 'netease',  cn: '网易',     en: 'NETEASE' },
+    { id: 'jd',       cn: '京东',     en: 'JD.COM' },
+    { id: 'lenovo',   cn: '联想',     en: 'LENOVO' },
+    { id: 'huawei',   cn: '华为',     en: 'HUAWEI' },
+    { id: 'xiaomi',   cn: '小米',     en: 'XIAOMI' },
+    { id: 'sogou',    cn: '搜狗',     en: 'SOGOU' },
+    { id: 'didi',     cn: '滴滴',     en: 'DIDI' },
+    { id: 'midea',    cn: '美的',     en: 'MIDEA' },
+    { id: 'kuaishou', cn: '快手',     en: 'KUAISHOU' },
+    { id: 'samsung',  cn: '三星',     en: 'SAMSUNG' },
+    { id: 'oppo',     cn: 'OPPO',     en: 'OPPO' },
+  ];
+  const PARTNERS_B = [
+    { id: 'microsoft',cn: '微软',     en: 'MICROSOFT' },
+    { id: 'wechat',   cn: '微信',     en: 'WECHAT' },
+    { id: 'cmcc',     cn: '中国移动', en: 'CHINA MOBILE' },
+    { id: 'unicom',   cn: '中国联通', en: 'CHINA UNICOM' },
+    { id: 'ximalaya', cn: '喜马拉雅', en: 'XIMALAYA' },
+    { id: 'ke',       cn: '贝壳',     en: 'KE.COM' },
+    { id: 'sunyard',  cn: '信雅达',   en: 'SUNYARD' },
+    { id: 'hudun',    cn: '虎盾',     en: 'HUDUN' },
+    { id: 'mobvoi',   cn: '出门问问', en: 'MOBVOI' },
+    { id: 'changhong',cn: '长虹',     en: 'CHANGHONG' },
+    { id: 'xinhua',   cn: '新华网',   en: 'XINHUA NET' },
+    { id: 'pku',      cn: '北京大学', en: 'PEKING UNIVERSITY' },
+    { id: 'thu',      cn: '清华大学', en: 'TSINGHUA UNIVERSITY' },
+    { id: 'edaijia',  cn: 'E 代驾',   en: 'E-DAIJIA' },
+  ];
+  function partnerCard(p) {
+    // image-slot fit=contain so logos preserve their aspect-ratio;
+    // src="" 留空，作者可改为 src="images/<id>.png" 一次性配齐；
+    // 也可在编辑模式拖入图片，自动持久化到 .image-slots.state.json
+    return `<div class="partner-card">
+      <image-slot
+        id="partner-${p.id}"
+        fit="contain"
+        shape="rounded" radius="8"
+        src=""
+        placeholder="拖入 ${p.cn} logo"
+      ></image-slot>
+      <div class="pn-text"><b>${p.cn}</b><small>${p.en}</small></div>
+    </div>`;
+  }
+  const a = PARTNERS_A.map(partnerCard).join('');
+  const b = PARTNERS_B.map(partnerCard).join('');
+  document.getElementById('partnersTrack1').innerHTML = a + a;
+  document.getElementById('partnersTrack2').innerHTML = b + b;
+
+  // ── 发展历程 已改为 5 列纵向，不再需要 phase pills + 滚动联动 ──
+
+  // ── 地图 · Mercator 投影 · 太平洋为中心 · 横向「扁平」视图 ──────────
+  //   x = (lon - LON0) * SCALE         (longitudes wrap to ±180 around LON0)
+  //   y = -ln(tan(π/4 + lat·π/360)) · (180/π) · SCALE   (north up)
+  //
+  // viewBox = "-800 -660 1600 700"   覆盖 lon 100°E 经太平洋至 100°W、lat 约 -2..55
+  const LON0 = 180, SCALE = 10;
+  const VB = { x: -800, y: -660, w: 1600, h: 700 };
+  function proj(lon, lat) {
+    let nlon = lon;
+    // wrap so any lon is at most ±180° from LON0
+    while (nlon - LON0 >  180) nlon -= 360;
+    while (nlon - LON0 < -180) nlon += 360;
+    const x = (nlon - LON0) * SCALE;
+    const y = -Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360)) * (180 / Math.PI) * SCALE;
+    return { x, y };
+  }
+  function pctOf(p) {
+    return {
+      left: ((p.x - VB.x) / VB.w) * 100,
+      top:  ((p.y - VB.y) / VB.h) * 100,
+    };
+  }
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function pathFromLatLon(points, closed) {
+    const d = points.map((pt, i) => {
+      const p = proj(pt[0], pt[1]);
+      return (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ' ' + p.y.toFixed(1);
+    }).join(' ') + (closed ? ' Z' : '');
+    return d;
+  }
+
+  // ── graticule（经纬网） ──
+  const graticule = document.getElementById('mapGraticule');
+  // 横向 latitude 线：跨整个 viewBox
+  for (let lat = 0; lat <= 50; lat += 10) {
+    const y = proj(0, lat).y;
+    graticule.appendChild(el('line', {
+      x1: VB.x, y1: y, x2: VB.x + VB.w, y2: y,
+      class: lat % 20 === 0 ? 'grat-bold' : 'grat',
+    }));
+    graticule.appendChild(el('text', {
+      x: VB.x + 6, y: y - 3, class: 'grat-label',
+    })).textContent = lat + '°N';
+  }
+  // 纵向 longitude 线
+  const LONS = [100, 120, 140, 160, 180, -160, -140, -120, -100];
+  LONS.forEach(lon => {
+    const x = proj(lon, 0).x;
+    graticule.appendChild(el('line', {
+      x1: x, y1: VB.y, x2: x, y2: VB.y + VB.h,
+      class: (lon % 40 === 0 || lon === 180) ? 'grat-bold' : 'grat',
+    }));
+    const label = lon === 180 ? '180°' : (lon > 0 ? lon + '°E' : (-lon) + '°W');
+    graticule.appendChild(el('text', {
+      x: x + 3, y: VB.y + VB.h - 6, class: 'grat-label',
+    })).textContent = label;
+  });
+
+  // ── countries · China outline (focal) + USA west + context ──
+  const countries = document.getElementById('mapCountries');
+
+  // simplified China outline (lon, lat) — clockwise from NW Xinjiang
+  const CN_OUTLINE = [
+    [75,38],[75,40.5],[80,45],[83,47],[85,48],[88,49],[90,47.5],[95,49],[102,52],[110,53],
+    [117,53.5],[122,53.5],[127,52],[131,49],[134,48],[135,48],[133,45.5],[131,45],[130,42.5],
+    [128,41.5],[126,41],[124,40.5],[122,40.5],[121,39.5],[119,38.5],[121,37],[122,36.5],
+    [121,35],[121,32],[122,30],[121,28],[119,25],[117.5,23.5],[115,22.5],[113,22],[110,21.5],
+    [110,18.5],[108,18],[107,19.5],[106,21],[105,22],[103,22],[101,22],[99,23],[98,24.5],
+    [98,27],[97,28],[94,28],[91,28],[88,28],[85,28],[82,29.5],[80,30.5],[78,32],[76,35],
+    [75,36],[75,38]
+  ];
+  const CN_HAINAN = [[109,20],[110.5,20.2],[111,19.2],[110,18.2],[108.6,18.4],[108.6,19.3],[109,20]];
+  countries.appendChild(el('path', { d: pathFromLatLon(CN_OUTLINE, true), class: 'country cn' }));
+  countries.appendChild(el('path', { d: pathFromLatLon(CN_HAINAN, true),  class: 'country cn' }));
+
+  // 美国本土西海岸 + 北美西部（简化轮廓） + 阿拉斯加南缘
+  // 注意：负经度会被 proj() 自动 wrap 到 LON0 = 180 的右侧
+  const USA_WEST = [
+    [-125, 49], [-124, 48], [-124, 45], [-123, 42], [-124, 40], [-122, 38],
+    [-120, 35], [-118, 34], [-117, 33], [-115, 32.5], [-114, 32.5],
+    [-114, 35], [-109, 37], [-104, 41], [-104, 45], [-104, 49], [-115, 49], [-125, 49],
+  ];
+  const ALASKA = [
+    [-168, 65], [-160, 67], [-155, 70], [-148, 70], [-141, 70], [-141, 60],
+    [-148, 60], [-155, 58], [-162, 56], [-167, 60], [-168, 65],
+  ];
+  countries.appendChild(el('path', { d: pathFromLatLon(USA_WEST, true), class: 'country ctx' }));
+  countries.appendChild(el('path', { d: pathFromLatLon(ALASKA,   true), class: 'country ctx' }));
+
+  // 周边地理上下文 —— 朝鲜半岛 / 日本 / 台湾 / 东南亚 / 印度南端 / 菲律宾 / 新加坡岛
+  const CTX = [
+    [[125,38.5],[127,40],[129,38],[129,36],[127.5,35],[126.5,35],[125.5,36.5],[125,38.5]],
+    [[131,33.5],[135,34],[139,35.5],[141.5,38],[141.5,41],[140,41],[136,37],[133,34.5],[131,33.5]],
+    [[140,42],[145,43],[145.5,45.5],[141,45.5],[140,43],[140,42]],
+    [[120.5,22],[121.5,22],[122,24.5],[121,25.2],[120.3,23],[120.5,22]],
+    [[100,20],[102,22],[105,22],[107,18],[109,12],[107,10],[103,5],[100,5],[100,8],[97,12],[98,16],[100,20]],
+    [[120,14],[122,18],[121,16.5],[120.5,14],[120,14]],
+    [[77,8],[80,13],[82,17],[80,20],[77,16],[76,11],[77,8]],
+    [[103.6,1.2],[104,1.2],[104,1.5],[103.6,1.5],[103.6,1.2]],
+    // 夏威夷
+    [[-156,19.5],[-154.8,19.5],[-154.8,20.3],[-156,20.3],[-156,19.5]],
+  ];
+  CTX.forEach(poly => countries.appendChild(el('path', { d: pathFromLatLon(poly, true), class: 'country ctx' })));
+
+  // ── routes · Beijing → other locations (含跨太平洋至美国) ──
+  const routes = document.getElementById('mapRoutes');
+  const BJ = proj(116.4, 39.9);
+  const DESTS = [
+    [125.3, 43.9],  // Changchun
+    [117.2, 39.1],  // Tianjin
+    [120.4, 36.1],  // Qingdao
+    [120.2, 30.3],  // Hangzhou
+    [114.1, 22.5],  // Shenzhen
+    [103.8,  1.4],  // Singapore
+    [-122.4, 37.8], // San Francisco · USA
+  ];
+  DESTS.forEach(([lon, lat]) => {
+    const to = proj(lon, lat);
+    // 跨太平洋的弧线 control point 朝北偏移更明显（大地线效果）
+    const dx = to.x - BJ.x, dy = to.y - BJ.y;
+    const dist = Math.hypot(dx, dy);
+    const k = dist > 500 ? 0.18 : 0.10;
+    const mx = (BJ.x + to.x) / 2 + dy * k;
+    const my = (BJ.y + to.y) / 2 - dx * k;
+    routes.appendChild(el('path', {
+      d: `M${BJ.x.toFixed(1)} ${BJ.y.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${to.x.toFixed(1)} ${to.y.toFixed(1)}`,
+      class: dist > 500 ? 'route dim' : 'route',
+    }));
+  });
+
+  // ── pins ──
+  const PIN_LAYER = document.getElementById('mapPinLayer');
+  const CITIES = [
+    { name: '北京',   en: 'Beijing',   lon:  116.4, lat: 39.9, type: 'hq',       tag: 'HQ',       labelPos: 'right' },
+    { name: '长春',   en: 'Changchun', lon:  125.3, lat: 43.9, type: 'base',     tag: 'BASE',     labelPos: 'right' },
+    { name: '天津',   en: 'Tianjin',   lon:  117.2, lat: 39.1, type: 'base',     tag: 'BASE',     labelPos: 'left'  },
+    { name: '青岛',   en: 'Qingdao',   lon:  120.4, lat: 36.1, type: 'base',     tag: 'BASE',     labelPos: 'right' },
+    { name: '杭州',   en: 'Hangzhou',  lon:  120.2, lat: 30.3, type: 'base',     tag: 'BASE',     labelPos: 'right' },
+    { name: '深圳',   en: 'Shenzhen',  lon:  114.1, lat: 22.5, type: 'base',     tag: 'BASE',     labelPos: 'left'  },
+    { name: '新加坡', en: 'Singapore', lon:  103.8, lat:  1.4, type: 'overseas', tag: 'OVERSEAS', labelPos: 'above' },
+    { name: '美国',   en: 'USA · SF',  lon: -122.4, lat: 37.8, type: 'overseas', tag: 'OVERSEAS', labelPos: 'left'  },
+  ];
+  CITIES.forEach(c => {
+    const pct = pctOf(proj(c.lon, c.lat));
+    const div = document.createElement('div');
+    div.className = 'map-pin' +
+      (c.type === 'hq'       ? ' is-hq'       : '') +
+      (c.type === 'overseas' ? ' is-overseas' : '') +
+      (c.labelPos === 'left'  ? ' label-left'  : '') +
+      (c.labelPos === 'above' ? ' label-above' : '') +
+      (c.labelPos === 'below' ? ' label-below' : '');
+    div.style.left = pct.left + '%';
+    div.style.top  = pct.top  + '%';
+    div.innerHTML =
+      '<div class="dot"></div>' +
+      '<div class="label"><small>' + c.tag + '</small> ' + c.name + ' ' + c.en + '</div>';
+    PIN_LAYER.appendChild(div);
+  });
+
+})();
+</script>
 </body>
 </html>

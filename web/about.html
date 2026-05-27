@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>关于我们 · 标贝科技</title>
+<meta name="description" content="标贝科技成立于 2016 年，专注智能语音交互与 AI 数据服务，提供语音合成、语音识别、声音复刻及多模态数据采集标注的全栈能力。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="_shared.css" />
+<style>
+/* ── 公司简介 ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.about-copy h2 { font-family: var(--font-display); font-size: clamp(1.7rem,3vw,2.4rem); font-weight: 600; margin: 0 0 18px; line-height: 1.16; }
+.about-copy > p { color: var(--text-mute); font-size: 0.96rem; line-height: 1.9; margin: 0 0 18px; }
+.about-copy > p b { color: var(--text-hi); font-weight: 600; }
+.about-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; border-top: 1px solid var(--line); padding-top: 22px; margin-top: 26px; }
+.about-stats b { font-family: var(--font-tech); font-size: 1.7rem; color: var(--text-hi); display: block; line-height: 1; }
+.about-stats span { color: var(--text-mute); font-size: 0.78rem; }
+.biz-panel { border: 1px solid var(--line-strong); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(10,20,46,0.85),rgba(7,13,32,0.85)); padding: 26px; position: relative; box-shadow: var(--shadow-card); }
+.biz-bar { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 18px; }
+.biz-bar i { width: 8px; height: 8px; border-radius: 50%; }
+.biz-line { border: 1px solid var(--line); border-radius: var(--r); padding: 16px 16px 14px; margin-bottom: 12px; background: rgba(13,26,58,0.5); }
+.biz-line:last-child { margin-bottom: 0; }
+.biz-line h4 { font-family: var(--font-display); font-size: 1.04rem; font-weight: 600; margin: 0 0 10px; display: flex; align-items: center; gap: 9px; }
+.biz-line h4 .bd { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; background: rgba(76,201,240,0.1); border: 1px solid var(--line-strong); color: var(--brand-hi); }
+.biz-line h4 .bd svg { width: 15px; height: 15px; }
+.biz-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.biz-chip { padding: 3px 9px; border-radius: 5px; font-size: 11px; color: var(--text-mute); border: 1px solid var(--line); background: rgba(76,201,240,0.04); }
+
+/* ── 示例标记 ── */
+.demo-note { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 99px; border: 1px dashed rgba(255,200,80,0.45); background: rgba(255,200,80,0.07); color: #ffc850; font-size: 11px; font-family: var(--font-mono); letter-spacing: 0.03em; margin-top: 14px; }
+.demo-note svg { width: 13px; height: 13px; }
+
+/* ── 发展历程 时间轴 ── */
+.timeline { position: relative; max-width: 980px; margin: 0 auto; }
+.timeline::before { content:""; position:absolute; left:50%; top:6px; bottom:6px; width:2px; transform:translateX(-50%); background:linear-gradient(180deg,transparent,rgba(76,201,240,0.55) 7%,rgba(177,77,255,0.55) 93%,transparent); }
+.tl-item { position:relative; width:50%; padding:14px 42px; box-sizing:border-box; }
+.tl-item:nth-child(odd) { left:0; text-align:right; }
+.tl-item:nth-child(even) { left:50%; text-align:left; }
+.tl-node { position:absolute; top:26px; width:16px; height:16px; border-radius:50%; background:var(--bg-1); border:2px solid var(--brand-hi); box-shadow:0 0 12px rgba(76,201,240,0.6); }
+.tl-item:nth-child(odd) .tl-node { right:-8px; }
+.tl-item:nth-child(even) .tl-node { left:-8px; }
+.tl-card { border:1px solid var(--line); border-radius:var(--r-lg); background:linear-gradient(180deg,rgba(13,26,58,0.6),rgba(10,20,46,0.6)); padding:18px 22px; transition:all 240ms ease; }
+.tl-card:hover { border-color:rgba(76,201,240,0.4); transform:translateY(-3px); box-shadow:0 14px 32px rgba(4,105,207,0.18); }
+.tl-year { font-family:var(--font-tech); font-size:1.5rem; font-weight:800; color:var(--brand-hi); line-height:1; margin-bottom:7px; }
+.tl-card h4 { font-family:var(--font-display); font-size:1.04rem; font-weight:600; margin:0 0 6px; color:var(--text-hi); }
+.tl-card p { color:var(--text-mute); font-size:0.85rem; line-height:1.72; margin:0; }
+
+/* ── 核心理念 ── */
+.val-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.val-card { padding: 28px 24px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.55),rgba(10,20,46,0.55)); text-align: center; transition: all 240ms ease; }
+.val-card:hover { border-color: rgba(76,201,240,0.4); transform: translateY(-4px); }
+.val-card .icb { margin: 0 auto 16px; }
+.val-card h3 { font-family: var(--font-display); font-size: 1.12rem; font-weight: 600; margin: 0 0 8px; }
+.val-card p { color: var(--text-mute); font-size: 0.88rem; margin: 0; line-height: 1.72; }
+
+/* ── 荣誉资质 ── */
+.honor-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+.honor-card { padding: 26px 20px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.55),rgba(10,20,46,0.55)); text-align: center; transition: all 240ms ease; }
+.honor-card:hover { border-color: rgba(255,200,80,0.4); transform: translateY(-4px); box-shadow: 0 14px 32px rgba(255,200,80,0.1); }
+.honor-medal { width: 56px; height: 56px; margin: 0 auto 14px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,200,80,0.1); border: 1px solid rgba(255,200,80,0.32); color: #ffc850; }
+.honor-medal svg { width: 26px; height: 26px; }
+.honor-card h4 { font-family: var(--font-display); font-size: 0.98rem; font-weight: 600; margin: 0 0 6px; color: var(--text-hi); }
+.honor-card p { color: var(--text-mute); font-size: 0.79rem; margin: 0; line-height: 1.6; }
+
+/* ── 最新动态 ── */
+.news-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.news-card { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: linear-gradient(180deg,rgba(13,26,58,0.55),rgba(10,20,46,0.55)); transition: all 240ms ease; display: flex; flex-direction: column; }
+.news-card:hover { border-color: rgba(76,201,240,0.4); transform: translateY(-4px); box-shadow: 0 16px 36px rgba(4,105,207,0.18); }
+.news-thumb { height: 124px; background: linear-gradient(135deg,rgba(76,201,240,0.16),rgba(177,77,255,0.16)); display: grid; place-items: center; color: var(--brand-hi); position: relative; overflow: hidden; }
+.news-thumb::before { content:""; position:absolute; inset:0; background-image:repeating-linear-gradient(45deg,rgba(76,201,240,0.06) 0 6px,transparent 6px 12px); }
+.news-thumb svg { width: 38px; height: 38px; opacity: 0.55; position: relative; }
+.news-body { padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.news-meta { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.05em; }
+.news-tag { padding: 2px 8px; border-radius: 4px; background: rgba(76,201,240,0.1); color: var(--brand-hi); border: 1px solid rgba(76,201,240,0.25); }
+.news-card h4 { font-family: var(--font-display); font-size: 1.04rem; font-weight: 600; margin: 0; line-height: 1.42; color: var(--text-hi); }
+.news-card > .news-body > p { color: var(--text-mute); font-size: 0.85rem; line-height: 1.72; margin: 0; flex: 1; }
+.news-more { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-hi); display: inline-flex; align-items: center; gap: 5px; }
+.news-more svg { width: 12px; height: 12px; transition: transform 200ms ease; }
+.news-card:hover .news-more svg { transform: translateX(3px); }
+
+/* ── 合作伙伴 ── */
+.partner-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 28px; }
+.partner-tag { padding: 6px 15px; border-radius: 99px; border: 1px solid var(--line); background: rgba(10,20,46,0.5); color: var(--text-mute); font-size: 0.84rem; }
+.partner-tag b { color: var(--brand-hi); font-weight: 600; }
+.logo-wall { display: grid; grid-template-columns: repeat(6,1fr); gap: 14px; }
+.logo-tile { aspect-ratio: 16/7; border: 1px solid var(--line); border-radius: var(--r); background: rgba(10,20,46,0.4); display: grid; place-items: center; transition: all 200ms ease; }
+.logo-tile:hover { border-color: rgba(76,201,240,0.35); background: rgba(76,201,240,0.05); transform: translateY(-2px); }
+.logo-tile svg { width: 46px; height: 26px; color: var(--text-dim); transition: color 200ms ease; }
+.logo-tile:hover svg { color: var(--brand-hi); }
+
+/* ── 联系我们 ── */
+.contact-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; max-width: 920px; margin: 0 auto; }
+.contact-card { padding: 26px 24px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.55),rgba(10,20,46,0.55)); transition: all 240ms ease; }
+.contact-card:hover { border-color: rgba(76,201,240,0.4); transform: translateY(-3px); }
+.contact-card .icb { margin-bottom: 14px; }
+.contact-card h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin: 0 0 6px; }
+.contact-card p { color: var(--text-mute); font-size: 0.88rem; margin: 0; line-height: 1.7; }
+
+@media (max-width: 1024px) {
+  .about-grid { grid-template-columns: 1fr; gap: 36px; }
+  .honor-grid { grid-template-columns: 1fr 1fr; }
+  .logo-wall { grid-template-columns: repeat(4,1fr); }
+}
+@media (max-width: 760px) {
+  .timeline::before { left: 19px; }
+  .tl-item, .tl-item:nth-child(even) { width: 100%; left: 0; text-align: left; padding: 12px 0 12px 50px; }
+  .tl-item:nth-child(odd) { text-align: left; }
+  .tl-item:nth-child(odd) .tl-node, .tl-item:nth-child(even) .tl-node { left: 11px; right: auto; }
+  .val-grid, .news-grid, .contact-grid { grid-template-columns: 1fr; }
+  .honor-grid { grid-template-columns: 1fr 1fr; }
+  .logo-wall { grid-template-columns: repeat(3,1fr); }
+  .about-stats { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<!-- ── HERO ── -->
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs">
+      <a href="homepage.html">首页</a>
+      <span class="sep">/</span>
+      <span class="cur">关于我们</span>
+    </nav>
+    <span class="eyebrow">About DataBaker · 关于我们</span>
+    <h1 class="display" style="font-size:clamp(2.2rem,4.8vw,4rem);margin:16px 0 20px;">
+      <span style="display:block;">智能语音交互</span>
+      <span style="display:block;" class="glow-text">与 AI 数据服务专家</span>
+    </h1>
+    <p class="lead">标贝科技成立于 2016 年，以自研语音技术与一站式 AI 数据平台为核心，为各行业客户提供从智能语音产品到多模态数据服务的全栈能力</p>
+  </div>
+</section>
+
+<!-- ── 01 公司简介 ── -->
+<section class="section" style="padding-top:60px;">
+  <div class="container">
+    <div class="about-grid" data-reveal>
+      <div class="about-copy">
+        <span class="eyebrow" style="margin-bottom:18px;display:inline-flex;">01 · 公司简介</span>
+        <h2>专注语音交互<br/><span class="glow-text">深耕 AI 数据</span></h2>
+        <p><b>标贝科技（DataBaker）</b>是一家专注于智能语音交互与 AI 数据服务的高新技术企业，总部位于北京。公司以自研的语音合成、语音识别等核心技术为基础，结合一站式 AI 数据平台，为各行业客户提供从语音技术产品到多模态数据采集标注的全栈解决方案。</p>
+        <p>在智能语音领域，标贝科技构建了覆盖<b>识别、合成、拓展</b>全链路的产品矩阵，并通过公有云 API 与私有化部署，灵活服务开发者与企业客户。在 AI 数据服务领域，公司基于自研数据平台，提供语音、视觉、点云、大模型等多领域的数据采集与标注服务。</p>
+        <div class="about-stats">
+          <div><b style="font-family:var(--font-tech);">2016</b><span>成立年份</span></div>
+          <div><b style="font-family:var(--font-tech);">20+</b><span>支持语种</span></div>
+          <div><b style="font-family:var(--font-tech);">200+</b><span>企业客户</span></div>
+          <div><b style="font-family:var(--font-tech);">全栈</b><span>语音 + 数据</span></div>
+        </div>
+      </div>
+      <div class="biz-panel">
+        <div class="biz-bar"><i style="background:#44e08a;box-shadow:0 0 8px #44e08a;"></i>business.matrix · 业务版图</div>
+        <div class="biz-line">
+          <h4><span class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-7 9a7 7 0 0 0 14 0M12 19v3" stroke-linecap="round"/></svg></span>智能语音</h4>
+          <div class="biz-chips">
+            <span class="biz-chip">语音识别</span><span class="biz-chip">语音合成</span>
+            <span class="biz-chip">声音复刻</span><span class="biz-chip">声音转换</span>
+            <span class="biz-chip">声纹识别</span><span class="biz-chip">开放平台</span>
+          </div>
+        </div>
+        <div class="biz-line">
+          <h4><span class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/></svg></span>AI 数据服务</h4>
+          <div class="biz-chips">
+            <span class="biz-chip">数据采集</span><span class="biz-chip">数据标注</span>
+            <span class="biz-chip">成品数据集</span><span class="biz-chip">标注平台</span>
+            <span class="biz-chip">多模态数据</span><span class="biz-chip">大模型数据</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 发展历程 ── -->
+<section class="section" style="padding-top:20px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">02 · Milestones</span>
+      <h2 class="display">发展<span class="glow-text">历程</span></h2>
+      <p>从语音技术起步，到智能语音与 AI 数据双轮驱动的成长之路</p>
+    </div>
+    <div class="timeline" data-reveal>
+      <div class="tl-item">
+        <span class="tl-node"></span>
+        <div class="tl-card">
+          <div class="tl-year">2016</div>
+          <h4>标贝科技成立</h4>
+          <p>公司在北京正式成立，以语音合成与语音数据服务为核心业务起步。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-node"></span>
+        <div class="tl-card">
+          <div class="tl-year">2017</div>
+          <h4>语音合成商业化</h4>
+          <p>语音合成产品进入商业化阶段，并对外开放中文语音合成数据集。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-node"></span>
+        <div class="tl-card">
+          <div class="tl-year">2019</div>
+          <h4>AI 数据平台上线</h4>
+          <p>自研一站式 AI 数据平台上线，业务拓展至视觉、文本等多模态数据。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-node"></span>
+        <div class="tl-card">
+          <div class="tl-year">2020</div>
+          <h4>智能语音开放平台</h4>
+          <p>面向开发者发布智能语音开放平台，提供 ASR / TTS 云端 API 服务。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-node"></span>
+        <div class="tl-card">
+          <div class="tl-year">2021</div>
+          <h4>多模态数据拓展</h4>
+          <p>数据服务能力延伸至点云、视频等多模态场景，配套自研标注工具链。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-node"></span>
+        <div class="tl-card">
+          <div class="tl-year">2022</div>
+          <h4>大模型数据布局</h4>
+          <p>布局大模型预训练与对齐数据服务，支撑头部大模型团队的数据需求。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-node"></span>
+        <div class="tl-card">
+          <div class="tl-year">2023</div>
+          <h4>声音复刻与大模型 TTS</h4>
+          <p>推出大模型声音复刻能力，实现秒级、高保真的个性化音色定制。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-node"></span>
+        <div class="tl-card">
+          <div class="tl-year">2025</div>
+          <h4>全栈能力持续升级</h4>
+          <p>持续升级智能语音与 AI 数据双业务线，深化行业落地与生态合作。</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <span class="demo-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>里程碑为示例内容，请替换为真实发展节点</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── 03 核心理念 ── -->
+<section class="section" style="padding-top:20px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">03 · Values</span>
+      <h2 class="display">我们的<span class="glow-text">核心理念</span></h2>
+    </div>
+    <div class="val-grid" data-reveal>
+      <div class="val-card">
+        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h3>技术与质量并重</h3>
+        <p>持续投入语音算法与数据工程研发，以严格的质检体系保障产品效果与数据质量。</p>
+      </div>
+      <div class="val-card">
+        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-linejoin="round"/></svg></div>
+        <h3>创新驱动发展</h3>
+        <p>紧跟语音大模型等前沿方向，用技术创新不断降低 AI 能力的应用门槛。</p>
+      </div>
+      <div class="val-card">
+        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>客户价值优先</h3>
+        <p>从需求沟通到交付验收全程陪伴，确保每一份语音能力与数据资产真正可用。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 荣誉资质 ── -->
+<section class="section" style="padding-top:20px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">04 · Honors</span>
+      <h2 class="display">荣誉<span class="glow-text">资质</span></h2>
+      <p>多年深耕积累的技术认证与行业认可</p>
+    </div>
+    <div class="honor-grid" data-reveal>
+      <div class="honor-card">
+        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="9" r="6"/><path d="M9 14l-2 8 5-3 5 3-2-8" stroke-linejoin="round"/></svg></div>
+        <h4>国家高新技术企业</h4>
+        <p>通过国家高新技术企业认定</p>
+      </div>
+      <div class="honor-card">
+        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 3v7c0 6-8 10-8 10S4 18 4 12V5z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h4>ISO 27001 认证</h4>
+        <p>信息安全管理体系认证</p>
+      </div>
+      <div class="honor-card">
+        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h4>ISO 9001 认证</h4>
+        <p>质量管理体系认证</p>
+      </div>
+      <div class="honor-card">
+        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h10l4 4v14H5z" stroke-linejoin="round"/><path d="M9 12h6M9 16h4" stroke-linecap="round"/></svg></div>
+        <h4>发明专利与软著</h4>
+        <p>数十项自主知识产权</p>
+      </div>
+      <div class="honor-card">
+        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z" stroke-linejoin="round"/></svg></div>
+        <h4>行业技术奖项</h4>
+        <p>多项 AI 语音技术奖项</p>
+      </div>
+      <div class="honor-card">
+        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4" stroke-linecap="round"/></svg></div>
+        <h4>CMMI 能力认证</h4>
+        <p>软件能力成熟度认证</p>
+      </div>
+      <div class="honor-card">
+        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+        <h4>数据安全合规</h4>
+        <p>数据安全与隐私保护合规</p>
+      </div>
+      <div class="honor-card">
+        <div class="honor-medal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87" stroke-linecap="round"/></svg></div>
+        <h4>专精特新企业</h4>
+        <p>专精特新中小企业</p>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <span class="demo-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>荣誉资质为示例内容，请替换为真实证书与认定</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── 05 最新动态 ── -->
+<section class="section" style="padding-top:20px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">05 · News</span>
+      <h2 class="display">最新<span class="glow-text">动态</span></h2>
+      <p>了解标贝科技的产品进展、技术发布与行业活动</p>
+    </div>
+    <div class="news-grid" data-reveal>
+      <div class="news-card">
+        <div class="news-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-7 9a7 7 0 0 0 14 0M12 19v3" stroke-linecap="round"/></svg></div>
+        <div class="news-body">
+          <div class="news-meta"><span class="news-tag">产品发布</span><span>2025.03</span></div>
+          <h4>大模型声音复刻能力全面升级</h4>
+          <p>新一代语音大模型驱动的声音复刻，支持秒级、零样本的高保真音色定制。</p>
+          <span class="news-more">阅读全文<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 12l10 5 10-5M2 17l10 5 10-5"/></svg></div>
+        <div class="news-body">
+          <div class="news-meta"><span class="news-tag">技术动态</span><span>2025.01</span></div>
+          <h4>AI 数据平台支持多模态数据闭环</h4>
+          <p>一站式数据平台持续升级，覆盖语音、视觉、点云、大模型数据全流程。</p>
+          <span class="news-more">阅读全文<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="news-body">
+          <div class="news-meta"><span class="news-tag">行业活动</span><span>2024.11</span></div>
+          <h4>标贝科技亮相人工智能行业大会</h4>
+          <p>在行业大会上展示智能语音与 AI 数据服务的最新技术成果与落地案例。</p>
+          <span class="news-more">阅读全文<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <span class="demo-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>动态为示例内容，请替换为真实新闻与发布信息</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── 06 合作伙伴 ── -->
+<section class="section" style="padding-top:20px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">06 · Partners</span>
+      <h2 class="display">合作<span class="glow-text">伙伴</span></h2>
+      <p>智能语音与 AI 数据能力已服务多个行业的企业客户</p>
+    </div>
+    <div class="partner-tags" data-reveal>
+      <span class="partner-tag">互联网与科技</span>
+      <span class="partner-tag">金融</span>
+      <span class="partner-tag">汽车出行</span>
+      <span class="partner-tag">教育</span>
+      <span class="partner-tag">智能硬件</span>
+      <span class="partner-tag">文娱传媒</span>
+      <span class="partner-tag">运营商</span>
+      <span class="partner-tag">政企</span>
+    </div>
+    <div class="logo-wall" data-reveal>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="14" cy="14" r="8"/><path d="M28 6h14M28 14h10M28 22h14" stroke-linecap="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="7" width="14" height="14" rx="3"/><path d="M26 14h16M34 8l8 6-8 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21l8-15 8 15M11 16h10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="34" cy="14" r="8"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 7v14M10 7h9a4 4 0 0 1 0 8h-9" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 14h14" stroke-linecap="round"/><circle cx="38" cy="14" r="4"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="14" cy="14" r="7"/><circle cx="32" cy="14" r="7"/><path d="M21 14h4" stroke-linecap="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21V7l10 9 10-9v14" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 8v12M40 8v12" stroke-linecap="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="7" width="14" height="14" rx="7"/><path d="M28 21V7l8 9 8-9v14" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 7h12M16 7v14" stroke-linecap="round"/><circle cx="34" cy="14" r="8"/><path d="M34 10v8" stroke-linecap="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 14a8 8 0 0 1 16 0M24 14a8 8 0 0 1 16 0" stroke-linecap="round"/><circle cx="16" cy="14" r="2"/><circle cx="32" cy="14" r="2"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="8" width="13" height="13" rx="2"/><rect x="28" y="8" width="13" height="13" rx="2"/><path d="M20 14h8" stroke-linecap="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 6l7 16M14 6L7 22M9 16h10" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 7v14h10" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="14" cy="14" r="8"/><path d="M14 9v10M9 14h10" stroke-linecap="round"/><path d="M28 14h14" stroke-linecap="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 22V6l9 8 9-8v16" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="14" r="7"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7v14M9 7h8a5 5 0 0 1 0 10H9" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 7h14M35 7v14" stroke-linecap="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14l7-8 7 8-7 8z" stroke-linejoin="round"/><path d="M28 7v14h12" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="14" cy="14" r="8"/><path d="M28 7h14v14" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 21L42 7" stroke-linecap="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="7" width="14" height="14" rx="3"/><path d="M28 14h14M28 9h10M28 19h10" stroke-linecap="round"/></svg></div>
+      <div class="logo-tile"><svg viewBox="0 0 48 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21V7h9a4 4 0 0 1 0 8H8m9 0l5 6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="35" cy="14" r="8"/></svg></div>
+    </div>
+    <div style="text-align:center;">
+      <span class="demo-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>合作伙伴标识为示例占位，请替换为真实合作方 Logo</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── 07 联系我们 ── -->
+<section class="section" style="padding-top:20px;padding-bottom:70px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">07 · Contact</span>
+      <h2 class="display">与我们<span class="glow-text">取得联系</span></h2>
+      <p>无论是产品咨询、商务合作还是加入团队，欢迎随时联系我们</p>
+    </div>
+    <div class="contact-grid" data-reveal>
+      <div class="contact-card">
+        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></div>
+        <h3>商务合作</h3>
+        <p>bd@data-baker.com</p>
+      </div>
+      <div class="contact-card">
+        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2z"/></svg></div>
+        <h3>电话咨询</h3>
+        <p>400 898 2016</p>
+      </div>
+      <div class="contact-card">
+        <div class="icb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3>公司地址</h3>
+        <p>北京市 · 标贝科技</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="_shared.js"></script>
+</body>
+</html>

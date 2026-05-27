@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>录音文件识别 · 智能语音 · 标贝科技</title>
+<meta name="description" content="标贝录音文件识别（Audio File Recognition）· 对已录制的语音文件进行非实时批量转写，支持 WAV、MP3、M4A 等多种格式，输出带时间戳的结构化文本，适用于音频归档与离线分析场景。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="_shared.css" />
+<link rel="stylesheet" href="_product.css" />
+</head>
+<body class="theme-asr">
+<div id="nav-placeholder"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs">
+      <a href="homepage.html">首页</a>
+      <span class="sep">/</span>
+      <a href="voice_ai.html">智能语音</a>
+      <span class="sep">/</span>
+      <a href="voice_ai.html#asr">语音识别</a>
+      <span class="sep">/</span>
+      <span class="cur">录音文件识别</span>
+    </nav>
+    <span class="eyebrow">Audio File Recognition · 语音识别</span>
+    <h1 class="display" style="font-size:clamp(2.2rem,4.8vw,4rem);margin:16px 0 20px;">
+      <span style="display:block;">录音文件识别</span>
+      <span style="display:block;" class="glow-text">批量音频转文字</span>
+    </h1>
+    <p class="lead">对已录制的语音文件进行非实时批量转写，支持 WAV、MP3、M4A 等多种格式，输出带时间戳的结构化文本，适用于音频归档与离线分析场景。</p>
+    <div class="htag-row"><span class="htag">离线批量</span><span class="htag">多种格式</span><span class="htag">时间戳</span><span class="htag">说话人</span><span class="htag">高准确率</span></div>
+    <div class="page-actions">
+      <a href="homepage.html#contact" class="btn btn-primary">免费试用<svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="tool_docs.html" class="btn btn-ghost">查看接入文档</a>
+      <a href="voice_ai.html#asr" class="btn btn-ghost">返回智能语音</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:56px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Live Demo · 在线体验</span>
+      <h2 class="display">即刻体验<span class="glow-text">录音文件识别</span></h2>
+      <p>下方为交互式演示，可直接操作感受产品能力</p>
+    </div>
+    <div class="demo-wrap sec-narrow" data-demo="asr" data-reveal></div>
+    <script id="pd-config" type="application/json">{"title": "File Recognition", "record": false, "fileMode": true, "samples": [{"label": "采访录音.mp3", "type": "MP3 · 44.1kHz · 03:24", "dur": "3.4 MB", "conf": 98.0, "ms": 2400, "text": "本次采访我们邀请到了行业资深专家，就人工智能的发展趋势进行了深入探讨与交流。"}, {"label": "会议纪要.wav", "type": "WAV · 16kHz · 12:08", "dur": "11.2 MB", "conf": 97.4, "ms": 5200, "text": "经过充分讨论，会议确定了下一阶段的工作重点，并明确了各部门的责任分工与时间节点。"}, {"label": "培训录音.m4a", "type": "M4A · 16kHz · 28:50", "dur": "18.6 MB", "conf": 96.8, "ms": 9800, "text": "本次培训的核心内容是新版业务系统的操作流程，请各位学员结合实际场景加以掌握。"}]}</script>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="sec-narrow" data-reveal>
+      <div class="section-head" style="text-align:left;justify-items:start;margin-bottom:28px;">
+        <span class="eyebrow">Overview · 产品介绍</span>
+        <h2 class="display" style="font-size:clamp(1.6rem,2.8vw,2.2rem);">关于录音文件识别</h2>
+      </div>
+      <p class="lead-para"><b>录音文件识别（Audio File Recognition）</b>是面向已录制音频的非实时批量转写服务。用户上传音频文件后，引擎异步完成解码与识别，并回调返回带时间戳的完整转写结果。</p>
+      <p class="lead-para">产品支持 <b>WAV、MP3、M4A、AAC、FLAC</b> 等主流音频格式与多种采样率，单文件最长可达 5 小时，并支持批量任务提交。识别结果包含分句时间戳、说话人标注与置信度信息，便于后续检索与剪辑对齐。</p>
+      <p class="lead-para">相比实时识别，录音文件识别更注重<b>转写完整度与准确率</b>，适合通话录音归档、音视频内容字幕生成、访谈笔录整理等对时延不敏感、对质量要求高的离线场景。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Core Features · 核心功能</span>
+      <h2 class="display">核心能力<span class="glow-text">一览</span></h2>
+    </div>
+    <div class="feat-grid" data-reveal>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+        <h4>多格式批量识别</h4><p>支持 WAV / MP3 / M4A / AAC / FLAC 等格式，单文件最长 5 小时，可批量提交。</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg></div>
+        <h4>分句时间戳</h4><p>为每个识别分句输出起止时间戳，便于字幕对齐与音频精准定位。</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/></svg></div>
+        <h4>多说话人标注</h4><p>自动区分录音中的不同说话人，按角色组织通话与会议文本。</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h10l4 4v14H5z" stroke-linejoin="round"/><path d="M9 12h7M9 16h5" stroke-linecap="round"/></svg></div>
+        <h4>结构化输出</h4><p>返回包含文本、时间、说话人、置信度的结构化结果，可直接入库检索。</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 12a9 9 0 0 1-15 6.7L3 16" stroke-linecap="round"/><path d="M21 3v5h-5M3 21v-5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h4>异步回调机制</h4><p>任务异步处理，支持回调通知与轮询查询，长音频转写无需保持连接。</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h18l-7 8v6l-4 2v-8z" stroke-linejoin="round"/></svg></div>
+        <h4>热词与顺滑</h4><p>支持领域热词表与口语顺滑，提升专有词识别率并输出规范文本。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Specifications · 技术规格</span>
+      <h2 class="display">规格与<span class="glow-text">参数</span></h2>
+    </div>
+    <div class="sec-narrow" data-reveal>
+      <table class="spec-table">
+        <tr><th>支持音频格式</th><td><span class="mono-tag">WAV</span><span class="mono-tag">MP3</span><span class="mono-tag">M4A</span><span class="mono-tag">AAC</span><span class="mono-tag">FLAC</span></td></tr>
+        <tr><th>采样率</th><td>8000 Hz ~ 48000 Hz</td></tr>
+        <tr><th>单文件时长上限</th><td>≤ 5 小时</td></tr>
+        <tr><th>单文件大小上限</th><td>≤ 512 MB</td></tr>
+        <tr><th>处理方式</th><td>异步批量处理 · 回调 / 轮询</td></tr>
+        <tr><th>识别准确率</th><td>普通话 ≥ 98%（标准测试集）</td></tr>
+        <tr><th>转写速度</th><td>约为音频时长的 0.1 ~ 0.2 倍</td></tr>
+        <tr><th>说话人分离</th><td>支持，最多区分 10 位说话人</td></tr>
+        <tr><th>结果保留期</th><td>识别结果默认保留 7 天</td></tr>
+        <tr><th>接口协议</th><td>HTTP / RESTful</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">API Reference · 接口说明</span>
+      <h2 class="display">快速<span class="glow-text">对接接口</span></h2>
+      <p>核心请求参数与调用示例，便于快速完成接入</p>
+    </div>
+    <div class="sec-narrow" data-reveal>
+      <table class="api-table">
+        <thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>app_id</td><td>string</td><td><span class="req">必填</span></td><td>应用 ID，开放平台创建应用后获取</td></tr>
+          <tr><td>api_key</td><td>string</td><td><span class="req">必填</span></td><td>接口鉴权密钥</td></tr>
+          <tr><td>audio_url</td><td>string</td><td><span class="req">必填</span></td><td>音频文件的可访问 URL 地址</td></tr>
+          <tr><td>audio_format</td><td>string</td><td><span class="req">必填</span></td><td>音频格式：wav / mp3 / m4a / aac / flac</td></tr>
+          <tr><td>language</td><td>string</td><td><span class="opt">选填</span></td><td>识别语种，默认 zh-CN</td></tr>
+          <tr><td>enable_speaker</td><td>bool</td><td><span class="opt">选填</span></td><td>是否开启多说话人分离，默认 false</td></tr>
+          <tr><td>enable_timestamp</td><td>bool</td><td><span class="opt">选填</span></td><td>是否输出分句时间戳，默认 true</td></tr>
+          <tr><td>callback_url</td><td>string</td><td><span class="opt">选填</span></td><td>识别完成后的结果回调地址</td></tr>
+        </tbody>
+      </table>
+      <div class="code-card">
+        <div class="code-tabs"><button class="code-tab on" data-code="c0">cURL</button><button class="code-tab" data-code="c1">返回示例</button></div>
+        <div class="code-pane on" data-code="c0"><pre><code># 1. 提交识别任务
+curl -X POST "https://openspeech.data-baker.com/asr/v1/file" \
+  -H "Authorization: your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "app_id": "your_app_id",
+        "audio_url": "https://your-bucket/meeting.mp3",
+        "audio_format": "mp3",
+        "enable_speaker": true,
+        "enable_timestamp": true
+      }'
+# 返回 task_id
+
+# 2. 轮询查询结果
+curl "https://openspeech.data-baker.com/asr/v1/file/result?task_id=TASK_ID" \
+  -H "Authorization: your_api_key"</code></pre></div><div class="code-pane" data-code="c1"><pre><code>{
+  "code": 0,
+  "message": "success",
+  "task_id": "f7a91c2e8b14",
+  "status": "completed",
+  "result": [
+    {
+      "text": "本次采访我们邀请到了行业资深专家。",
+      "speaker": "S1",
+      "begin_ms": 0,
+      "end_ms": 3200,
+      "confidence": 0.980
+    }
+  ]
+}</code></pre></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Scenarios · 应用场景</span>
+      <h2 class="display">典型<span class="glow-text">应用场景</span></h2>
+    </div>
+    <div class="scene-grid" data-reveal>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h4l2 5-3 2a14 14 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A18 18 0 0 1 3 5a2 2 0 0 1 2-2z" stroke-linejoin="round"/></svg></div>
+        <h4>通话录音归档</h4><p>历史通话录音批量转写归档，支撑合规留存与数据分析。</p>
+      </div>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11v2a1 1 0 0 0 1 1h2l10 5V5L6 10H4a1 1 0 0 0-1 1z" stroke-linejoin="round"/><path d="M18 8.5a4 4 0 0 1 0 7" stroke-linecap="round"/></svg></div>
+        <h4>音视频字幕生成</h4><p>为已有音视频内容批量生成字幕文件与文字稿。</p>
+      </div>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h10l4 4v14H5z" stroke-linejoin="round"/><path d="M9 12h7M9 16h5" stroke-linecap="round"/></svg></div>
+        <h4>访谈笔录整理</h4><p>记者访谈、调研录音批量转写，大幅缩短笔录整理时间。</p>
+      </div>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg></div>
+        <h4>内容检索分析</h4><p>音频内容转文本后可全文检索，挖掘关键信息与舆情线索。</p>
+      </div>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h11a2 2 0 0 1 2 2v15H7a2 2 0 0 0-2 2z" stroke-linejoin="round"/><path d="M5 4v18" stroke-linecap="round"/></svg></div>
+        <h4>培训资料沉淀</h4><p>培训与讲座录音转写归档，沉淀为可复用的知识文档。</p>
+      </div>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 3v7c0 6-8 10-8 10S4 18 4 12V5z" stroke-linejoin="round"/></svg></div>
+        <h4>质检与合规审查</h4><p>批量转写客服与业务录音，支撑质量抽检与合规审计。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Integration · 接入流程</span>
+      <h2 class="display">四步<span class="glow-text">快速接入</span></h2>
+    </div>
+    <div class="flow" data-reveal>
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <h4>注册开放平台</h4><p>注册标贝开放平台账号，创建应用并获取 app_id 与 api_key。</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <h4>选择协议与 SDK</h4><p>按场景选择接入协议，下载对应语言 SDK 与示例代码。</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <h4>封装调用请求</h4><p>按音频/文本规格封装请求，配置识别或合成相关参数。</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <h4>联调上线监控</h4><p>完成接口联调与压测，上线后在控制台监控用量与质量。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Pricing · 计费说明</span>
+      <h2 class="display">灵活<span class="glow-text">计费方案</span></h2>
+    </div>
+    <div class="price-grid" data-reveal>
+      <div class="price-card">
+        <span class="price-tag">FREE TRIAL</span>
+        <h4>免费体验</h4>
+        <div class="price-amt">¥0 <small>/ 新用户</small></div>
+        <ul><li>注册赠送 50,000 次识别额度</li><li>全功能开放，无需信用卡</li><li>额度有效期 90 天</li></ul>
+      </div>
+      <div class="price-card featured">
+        <span class="price-tag">PAY AS YOU GO</span>
+        <h4>公有云按量</h4>
+        <div class="price-amt">按次计费 <small>/ 阶梯单价</small></div>
+        <ul><li>按实际调用次数计费，无最低消费</li><li>调用量越大阶梯单价越低</li><li>99.9% SLA 可用性保障</li><li>多区域节点全国低延迟</li></ul>
+      </div>
+      <div class="price-card">
+        <span class="price-tag">ON-PREMISE</span>
+        <h4>私有化部署</h4>
+        <div class="price-amt">授权制 <small>/ 联系销售</small></div>
+        <ul><li>模型部署在客户内网，数据不出域</li><li>支持 Docker / K8s 容器化交付</li><li>专属技术支持与版本升级</li></ul>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--text-dim);font-size:0.82rem;margin-top:18px;">* 具体方案与报价以标贝开放平台及商务沟通为准</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Related · 相关产品</span>
+      <h2 class="display">探索更多<span class="glow-text">语音产品</span></h2>
+    </div>
+    <div class="related sec-narrow" data-reveal>
+      <a href="voice_asr_word.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h3l3-8 4 16 3-8h5" stroke-linecap="round" stroke-linejoin="round"/></svg>一句话识别</a>
+      <a href="voice_asr_speech.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>长语音识别</a>
+      <a href="voice_asr_selflearn.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 6 .9-4.5 4.3 1.1 6.3L12 16.8 6.4 19.5l1.1-6.3L3 8.9 9 8z" stroke-linejoin="round"/></svg>自学习工具</a>
+      <a href="voice_ext_mos.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19a8 8 0 1 1 16 0" stroke-linecap="round"/><path d="M12 19l4.5-6" stroke-linecap="round"/></svg>合成系统评测</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card" data-reveal>
+      <div class="cta-inner">
+        <span class="eyebrow">Get Started</span>
+        <h2>立即体验录音文件识别</h2>
+        <p>注册标贝开放平台，免费试用智能语音全系列产品能力</p>
+        <div class="cta-actions">
+          <a href="tool_openplatform.html" class="btn btn-primary">免费注册<svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="tool_docs.html" class="btn btn-ghost">查看开发文档</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="_shared.js"></script>
+<script src="_product.js"></script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>视频数据集· 标贝科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="_shared.css" />
+<style>
+.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+
+/* Video viz: timeline */
+.vid-viz { padding: 22px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg, rgba(10,20,46,0.85), rgba(7,13,32,0.85)); box-shadow: var(--shadow-card); position: relative; }
+.vid-viz::before { content: ""; position: absolute; top: -1px; left: 32px; right: 32px; height: 2px; background: var(--grad-line); }
+.vid-frame { aspect-ratio: 16/9; border-radius: var(--r); background: linear-gradient(135deg, rgba(177,77,255,0.18), rgba(24,166,184,0.14)); position: relative; overflow: hidden; margin-bottom: 16px; }
+.vid-frame::before { content: ""; position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, rgba(76,201,240,0.08) 0 2px, transparent 2px 4px); }
+.vid-frame::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--cyan-hi), transparent); box-shadow: 0 0 12px var(--cyan-hi); animation: vidScan 3.4s linear infinite; }
+@keyframes vidScan { 0%{top:0} 100%{top:100%} }
+.vid-bbox { position: absolute; border: 1.5px dashed var(--brand-hi); border-radius: 3px; box-shadow: 0 0 10px rgba(76,201,240,0.35); }
+.vid-bbox b { position: absolute; top: -16px; left: -1px; padding: 1px 6px; background: var(--brand-hi); color: #060d22; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 1px; }
+.vid-bbox.b1 { left: 14%; top: 28%; width: 28%; height: 42%; animation: vidMove 6s ease-in-out infinite; }
+.vid-bbox.b2 { left: 56%; top: 38%; width: 24%; height: 34%; border-color: var(--violet-hi); animation: vidMove 7s ease-in-out infinite reverse; }
+.vid-bbox.b2 b { background: var(--violet-hi); color: #fff; }
+@keyframes vidMove { 50% { transform: translate(8%, 4%); } }
+.vid-play { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 52px; height: 52px; border-radius: 50%; background: rgba(7,13,32,0.7); border: 1.5px solid rgba(76,201,240,0.5); display: grid; place-items: center; backdrop-filter: blur(8px); z-index: 4; }
+.vid-play svg { color: var(--brand-hi); margin-left: 4px; }
+
+.vid-timeline { padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r); background: rgba(13,26,58,0.55); margin-bottom: 14px; }
+.vid-timeline .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: var(--text-mute); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; }
+.vid-timeline .top b { color: var(--text-hi); font-family: var(--font-tech); }
+.vid-track { position: relative; height: 18px; border-radius: 4px; background: rgba(76,201,240,0.06); overflow: hidden; }
+.vid-seg { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+.vid-seg.s1 { left: 4%;  width: 24%; background: linear-gradient(90deg, var(--brand), var(--brand-hi)); }
+.vid-seg.s2 { left: 32%; width: 18%; background: linear-gradient(90deg, var(--violet), var(--violet-hi)); }
+.vid-seg.s3 { left: 54%; width: 28%; background: linear-gradient(90deg, #24a5b8, #44e08a); }
+.vid-seg b { position: absolute; left: 6px; top: 2px; color: #fff; font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+.vid-cursor { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--brand-hi); box-shadow: 0 0 10px var(--brand-hi); }
+
+.vid-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.vid-meta div { padding: 12px; border: 1px solid var(--line); border-radius: var(--r); background: rgba(13,26,58,0.5); text-align: center; }
+.vid-meta b { display: block; font-family: var(--font-tech); font-size: 1.05rem; color: var(--text-hi); }
+.vid-meta span { color: var(--text-mute); font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* Catalog */
+.cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.cat-card { position: relative; padding: 0; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg, rgba(13,26,58,0.55), rgba(10,20,46,0.55)); overflow: hidden; transition: all 240ms ease; }
+.cat-card:hover { border-color: rgba(76,201,240,0.4); transform: translateY(-4px); }
+.cat-card .thumb { aspect-ratio: 16/9; position: relative; overflow: hidden; }
+.cat-card .thumb::before { content: ""; position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, rgba(76,201,240,0.08) 0 2px, transparent 2px 4px); }
+.cat-card .thumb::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(5,8,19,0.85) 100%); }
+.cat-card .thumb.v1 { background: linear-gradient(135deg, rgba(76,201,240,0.18), rgba(177,77,255,0.14)); }
+.cat-card .thumb.v2 { background: linear-gradient(135deg, rgba(68,224,138,0.18), rgba(24,166,184,0.14)); }
+.cat-card .thumb.v3 { background: linear-gradient(135deg, rgba(177,77,255,0.18), rgba(255,77,203,0.14)); }
+.cat-card .thumb.v4 { background: linear-gradient(135deg, rgba(255,200,80,0.18), rgba(255,140,80,0.14)); }
+.cat-card .thumb.v5 { background: linear-gradient(135deg, rgba(24,166,184,0.18), rgba(76,201,240,0.14)); }
+.cat-card .thumb.v6 { background: linear-gradient(135deg, rgba(255,77,203,0.18), rgba(177,77,255,0.14)); }
+.cat-card .lab { position: absolute; left: 14px; top: 14px; padding: 4px 9px; background: rgba(7,13,32,0.88); color: var(--brand-hi); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 3px; border: 1px solid var(--line-strong); z-index: 3; }
+.cat-card .duration { position: absolute; right: 14px; bottom: 12px; padding: 3px 8px; background: rgba(7,13,32,0.85); color: var(--text-hi); font-family: var(--font-mono); font-size: 10px; border-radius: 3px; z-index: 3; }
+.cat-card .demo-box { position: absolute; z-index: 2; border: 1.4px dashed var(--brand-hi); box-shadow: 0 0 10px rgba(76,201,240,0.35); border-radius: 3px; }
+.cat-card .demo-box b { position: absolute; top: -14px; left: -1px; padding: 1px 5px; background: var(--brand-hi); color: #060d22; font-family: var(--font-mono); font-size: 8px; font-weight: 700; border-radius: 1px; }
+.cat-card .body { padding: 22px; }
+.cat-card h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 0 0 8px; }
+.cat-card p { color: var(--text-mute); font-size: 0.88rem; margin: 0 0 14px; line-height: 1.66; }
+.cat-card .meta { display: flex; gap: 16px; padding-top: 14px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 10px; color: var(--text-mute); letter-spacing: 0.08em; }
+.cat-card .meta b { color: var(--text-hi); font-family: var(--font-tech); font-weight: 600; }
+.cat-card .lnk { margin-left: auto; color: var(--brand-hi); font-family: var(--font-display); font-weight: 600; }
+
+/* Annotation features */
+.feat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.feat-cell { padding: 22px; border: 1px solid var(--line); border-radius: var(--r); background: linear-gradient(180deg, rgba(13,26,58,0.55), rgba(10,20,46,0.55)); }
+.feat-cell .icb { margin-bottom: 12px; }
+.feat-cell h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin: 0 0 6px; }
+.feat-cell p { color: var(--text-mute); font-size: 0.84rem; line-height: 1.66; margin: 0; }
+
+@media (max-width: 1100px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .cat-grid { grid-template-columns: 1fr 1fr; }
+  .feat-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 720px) {
+  .cat-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div data-reveal>
+        <nav class="crumbs">
+          <a href="homepage.html">首页</a>
+          <span class="sep">/</span>
+          <span>数据</span>
+          <span class="sep">/</span>
+          <span class="cur">视频数据</span>
+        </nav>
+        <span class="eyebrow">Video Dataset · 视频数据</span>
+        <h1 class="display">
+          <span class="line">视频与时序数据集</span>
+          <span class="line glow-text">行为 · 追踪 · 驾驶 · 手势</span>
+        </h1>
+        <p class="lead">覆盖行为识别、自动驾驶、手势交互、动作捕捉等多种时序任务，提供帧纀BBox、时间段切分与多目标 ID 追踪标注</p>
+        <div class="hero-chips">
+          <span class="hero-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg><b>1,200h+</b> 视频</span>
+          <span class="hero-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h18M3 6h18M3 18h12"/></svg>帧级标注 <b>30 fps</b></span>
+          <span class="hero-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 6-6"/></svg>IoU <b>≥0.85</b></span>
+        </div>
+        <div class="page-actions">
+          <a href="homepage.html#contact" class="btn btn-primary">申请试用<svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="#catalog" class="btn btn-ghost">浏览数据</a>
+        </div>
+      </div>
+
+      <div class="vid-viz" data-reveal>
+        <div class="viz-title-bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <span class="title">video.tracker playback</span>
+          <span class="badge">●30 FPS</span>
+        </div>
+        <div class="vid-frame">
+          <div class="vid-bbox b1"><b>PERSON · ID 04</b></div>
+          <div class="vid-bbox b2"><b>BAG · ID 11</b></div>
+          <div class="vid-play"><svg width="18" height="20" viewBox="0 0 18 20" fill="currentColor"><path d="M2 1l14 9-14 9z"/></svg></div>
+        </div>
+        <div class="vid-timeline">
+          <div class="top"><span>SEG · 时序行为切片</span><span>00:00.0 / <b>00:24.6</b></span></div>
+          <div class="vid-track">
+            <div class="vid-seg s1"><b>WALK</b></div>
+            <div class="vid-seg s2"><b>STOP</b></div>
+            <div class="vid-seg s3"><b>PICK</b></div>
+            <div class="vid-cursor" style="left:42%"></div>
+          </div>
+        </div>
+        <div class="vid-meta">
+          <div><b>1,200h</b><span>总时</span></div>
+          <div><b>30 fps</b><span>帧率</span></div>
+          <div><b>0.87</b><span>IoU</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATALOG -->
+<section id="catalog" class="section">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">01 · Catalog</span>
+      <h2 class="display">多类垀span class="glow-text">视频数据</span></h2>
+    </div>
+    <div class="cat-grid" data-reveal>
+      <article class="cat-card">
+        <div class="thumb v1">
+          <span class="lab">行为识别</span>
+          <span class="duration">00:24.6</span>
+          <div class="demo-box" style="top:30%;left:24%;width:28%;height:50%"><b>WALK</b></div>
+        </div>
+        <div class="body">
+          <h3>日常行为识别</h3>
+          <p>步行、跑动、坐立、跌倒等 80 类常见行为，覆盖室内外多场景</p>
+          <div class="meta"><span>样本 <b>120h</b></span><span>类目 <b>80</b></span><a class="lnk" href="#">详情 </a></div>
+        </div>
+      </article>
+      <article class="cat-card">
+        <div class="thumb v2">
+          <span class="lab">自动驾驶</span>
+          <span class="duration">02:18.4</span>
+          <div class="demo-box" style="top:42%;left:14%;width:32%;height:32%;border-color:#44e08a"><b style="background:#44e08a">CAR</b></div>
+          <div class="demo-box" style="top:48%;left:54%;width:24%;height:24%;border-color:#44e08a"><b style="background:#44e08a">PED</b></div>
+        </div>
+        <div class="body">
+          <h3>道路场景驾驶视频</h3>
+          <p>城市 / 高通/ 夜间 / 雨雪多气候场景，含多目标追踪 ID 与时序事件</p>
+          <div class="meta"><span>样本 <b>400h</b></span><span>ID 追踪 <b>最/b></span><a class="lnk" href="#">详情 </a></div>
+        </div>
+      </article>
+      <article class="cat-card">
+        <div class="thumb v3">
+          <span class="lab">手势</span>
+          <span class="duration">00:08.2</span>
+          <div class="demo-box" style="top:30%;left:42%;width:18%;height:32%;border-color:#b14dff"><b style="background:#b14dff;color:#fff">HAND</b></div>
+        </div>
+        <div class="body">
+          <h3>手势交互数据</h3>
+          <p>30 类常用手力+ 关键点轨迹，适配 AR / VR / 智能终端交互训练</p>
+          <div class="meta"><span>样本 <b>60h</b></span><span>关键点<b>21</b></span><a class="lnk" href="#">详情 </a></div>
+        </div>
+      </article>
+      <article class="cat-card">
+        <div class="thumb v4">
+          <span class="lab">动捕</span>
+          <span class="duration">01:02.0</span>
+          <div class="demo-box" style="top:20%;left:34%;width:22%;height:60%;border-color:#ffc850"><b style="background:#ffc850;color:#060d22">BODY</b></div>
+        </div>
+        <div class="body">
+          <h3>全身动作捕捉</h3>
+          <p>多机位同此+ 17 个身体关键点，适配数字人、舞蹈、健身等应用</p>
+          <div class="meta"><span>样本 <b>180h</b></span><span>关键点<b>17</b></span><a class="lnk" href="#">详情 </a></div>
+        </div>
+      </article>
+      <article class="cat-card">
+        <div class="thumb v5">
+          <span class="lab">安防</span>
+          <span class="duration">04:12.0</span>
+          <div class="demo-box" style="top:36%;left:18%;width:22%;height:42%"><b>INTRUDE</b></div>
+        </div>
+        <div class="body">
+          <h3>安防场景异常事件</h3>
+          <p>入侵、跌倒、聚集、打架等异常事件，附时间段标注与场景描述</p>
+          <div class="meta"><span>样本 <b>240h</b></span><span>事件 <b>40+</b></span><a class="lnk" href="#">详情 </a></div>
+        </div>
+      </article>
+      <article class="cat-card">
+        <div class="thumb v6">
+          <span class="lab">视频生成</span>
+          <span class="duration">00:16.0</span>
+          <div class="demo-box" style="top:28%;left:24%;width:50%;height:38%;border-color:#ff4dcb"><b style="background:#ff4dcb;color:#fff">CAPTION</b></div>
+        </div>
+        <div class="body">
+          <h3>视频生成训练</h3>
+          <p>含视频片殀+ 高质量描过caption，适配文本到视频生成模型</p>
+          <div class="meta"><span>样本 <b>200h</b></span><span>描述 <b>双语</b></span><a class="lnk" href="#">详情 </a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ANNOTATION FEATURES -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">02 · Annotation</span>
+      <h2 class="display">视频<span class="glow-text">标注能力</span></h2>
+    </div>
+    <div class="feat-grid" data-reveal>
+      <div class="feat-cell">
+        <div class="icb icb-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg></div>
+        <h4>帧级 BBox</h4>
+        <p>逐帧目标位置 + 类别 + 实例 ID，支持稠密目标与小目标</p>
+      </div>
+      <div class="feat-cell">
+        <div class="icb icb-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 8l10 10"/></svg></div>
+        <h4>多目标追</h4>
+        <p>稳定 ID 跨帧关联，遮挡场景下保持轨迹完整</p>
+      </div>
+      <div class="feat-cell">
+        <div class="icb icb-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h18"/><rect x="5" y="9" width="6" height="6" rx="1"/><rect x="13" y="9" width="6" height="6" rx="1"/></svg></div>
+        <h4>时序切分</h4>
+        <p>按行为或事件切分时间段，输出起止时间戳与类别</p>
+      </div>
+      <div class="feat-cell">
+        <div class="icb icb-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l5-5 3 3 3-3 7 7" stroke-linecap="round"/><circle cx="14" cy="6" r="2"/></svg></div>
+        <h4>姿态轨</h4>
+        <p>多人多帧 17 / 21 关键点轨迹，附遮挡可见性</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card" data-reveal>
+      <div class="cta-inner">
+        <span class="eyebrow">Next Step</span>
+        <h2>获取视频数据</h2>
+        <p>提供 30 分钟样本 + 标注规范文档，评估通过后启动正式授权与定制</p>
+        <div class="cta-actions">
+          <a href="homepage.html#contact" class="btn btn-primary">申请试用<svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="dataset_image.html" class="btn btn-ghost">查看图像数据</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="_shared.js"></script>
+</body>
+</html>
+

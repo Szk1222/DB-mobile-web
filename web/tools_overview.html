@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>工具平台总览 · 标贝科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="_shared.css" />
+<style>
+.tools-cat { margin-bottom: 72px; }
+.tools-cat-head { display: flex; align-items: center; gap: 20px; margin-bottom: 32px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.tools-cat-icon { width: 52px; height: 52px; border-radius: var(--r); border: 1px solid var(--line-strong); background: rgba(76,201,240,0.08); display: grid; place-items: center; color: var(--brand-hi); flex: 0 0 auto; }
+.tools-cat-icon svg { width: 26px; height: 26px; }
+.tools-cat-head h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; margin: 0; }
+.tools-cat-head p { color: var(--text-mute); font-size: 0.9rem; margin: 4px 0 0; }
+.tools-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+.tool-card { position: relative; padding: 26px 22px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.55),rgba(10,20,46,0.55)); overflow: hidden; transition: all 240ms ease; }
+.tool-card:hover { border-color: rgba(76,201,240,0.4); transform: translateY(-4px); box-shadow: 0 18px 40px rgba(4,105,207,0.2); }
+.tool-card::after { content:""; position:absolute; top:0; left:0; right:0; height:2px; background:var(--grad-line); transform:scaleX(0); transform-origin:left; transition:transform 500ms ease; }
+.tool-card:hover::after { transform:scaleX(1); }
+.tool-num { font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:0.18em; margin-bottom:16px; }
+.tool-card .icb { margin-bottom: 16px; }
+.tool-card h3 { font-family:var(--font-display); font-size:1.1rem; font-weight:600; margin:0 0 8px; }
+.tool-card p { color:var(--text-mute); font-size:0.88rem; margin:0 0 16px; line-height:1.7; }
+.tool-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+.tool-tags span { padding:3px 8px; border-radius:4px; background:rgba(76,201,240,0.06); border:1px solid var(--line); color:var(--text-mute); font-family:var(--font-mono); font-size:9px; letter-spacing:0.08em; text-transform:uppercase; }
+.tool-link { display:inline-flex; align-items:center; gap:6px; color:var(--brand-hi); font-family:var(--font-display); font-size:0.88rem; font-weight:600; }
+.tool-link svg { transition:transform 200ms ease; }
+.tool-card:hover .tool-link svg { transform:translateX(4px); }
+.badge-pill { display:inline-flex; align-items:center; padding:2px 7px; border-radius:3px; font-family:var(--font-mono); font-size:9px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; margin-left:6px; }
+.badge-hot  { background:rgba(255,107,107,0.15); color:#ff6b6b; border:1px solid rgba(255,107,107,0.3); }
+.badge-new  { background:rgba(68,224,138,0.12);  color:#44e08a; border:1px solid rgba(68,224,138,0.3); }
+@media(max-width:1100px){ .tools-grid{ grid-template-columns:1fr 1fr; } }
+@media(max-width:720px){ .tools-grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs">
+      <a href="homepage.html">首页</a>
+      <span class="sep">/</span>
+      <span class="cur">工具平台总览</span>
+    </nav>
+    <span class="eyebrow">Tools Platform · 工具平台</span>
+    <h1 class="display" style="font-size:clamp(2.2rem,4.8vw,4rem);margin:16px 0 20px;">
+      <span style="display:block;">AI 数据全链路</span>
+      <span style="display:block;" class="glow-text">工具平台矩阵</span>
+    </h1>
+    <p class="lead">覆盖数据标注、采集、开发接入与阅读训练等全场景工具，一站式支持 AI 项目的端到端数据工程需求</p>
+    <div class="page-actions">
+      <a href="homepage.html#contact" class="btn btn-primary">立即体验<svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="solutions_overview.html" class="btn btn-ghost">查看解决方案</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:60px;">
+  <div class="container">
+
+    <!-- 标注平台 -->
+    <div class="tools-cat" data-reveal>
+      <div class="tools-cat-head">
+        <div class="tools-cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/></svg>
+        </div>
+        <div>
+          <h2>标注平台</h2>
+          <p>支持多类型数据标注任务，提供 Web 端可视化标注工作台与质检流程管理</p>
+        </div>
+      </div>
+      <div class="tools-grid">
+        <a class="tool-card" href="tool_annotation_3d.html">
+          <div class="tool-num">TOOL · 001</div>
+          <div class="icb icb-sm"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2L18 6v8L10 18 2 14V6z"/><path d="M10 2v16M2 6l8 4 8-4" opacity=".5"/></svg></div>
+          <h3>3D 点云标注</h3>
+          <p>支持激光雷达点云的 3D 框选、实例分割与多帧联动标注，适配自动驾驶与机器人感知场景</p>
+          <div class="tool-tags"><span>LiDAR</span><span>自动驾驶</span><span>3D BBox</span></div>
+          <span class="tool-link">进入工具 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </a>
+        <a class="tool-card" href="tool_annotation_2d.html">
+          <div class="tool-num">TOOL · 002</div>
+          <div class="icb icb-sm"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="16" height="16" rx="2"/><rect x="6" y="6" width="6" height="6" rx="1"/></svg></div>
+          <h3>2D 图像标注</h3>
+          <p>BBox、Polygon、Mask、关键点等全类型标注，支持批量模板与 AI 辅助预标注加速</p>
+          <div class="tool-tags"><span>BBox</span><span>Polygon</span><span>Mask</span></div>
+          <span class="tool-link">进入工具 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </a>
+        <a class="tool-card" href="tool_annotation_tts.html">
+          <div class="tool-num">TOOL · 003</div>
+          <div class="icb icb-sm"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10l3-6 4 8 3-4 4 8"/></svg></div>
+          <h3>语音合成标注</h3>
+          <p>面向 TTS 任务的文本录制与韵律标注工作台，支持情感标签、停顿节奏与多发音人管理</p>
+          <div class="tool-tags"><span>TTS</span><span>韵律</span><span>情感</span></div>
+          <span class="tool-link">进入工具 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </a>
+        <a class="tool-card" href="tool_annotation_asr.html">
+          <div class="tool-num">TOOL · 004</div>
+          <div class="icb icb-sm"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-5 8a5 5 0 0 0 10 0M10 18v2"/></svg></div>
+          <h3>语音识别标注</h3>
+          <p>转写、实体、情绪、说话人分离等ASR 数据标注，内置质检流程与标注员绩效追踪</p>
+          <div class="tool-tags"><span>ASR</span><span>转写</span><span>说话</span></div>
+          <span class="tool-link">进入工具 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 采集平台 -->
+    <div class="tools-cat" data-reveal>
+      <div class="tools-cat-head">
+        <div class="tools-cat-icon" style="background:rgba(177,77,255,0.08);border-color:rgba(177,77,255,0.2);color:var(--violet-hi)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <h2>采集平台</h2>
+          <p>标准化多端数据采集流程管理，支持语音、图像、视频等多模态数据的任务分发与质量把控</p>
+        </div>
+      </div>
+      <div class="tools-grid" style="grid-template-columns:repeat(2,1fr);max-width:680px;">
+        <a class="tool-card" href="tool_collection.html">
+          <div class="tool-num">TOOL · 005</div>
+          <div class="icb icb-sm" style="background:rgba(177,77,255,0.08);border-color:rgba(177,77,255,0.2);color:var(--violet-hi)"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="16" height="16" rx="2"/><path d="M7 8h6M7 12h4"/></svg></div>
+          <h3>标贝易采 <span class="badge-pill badge-new">NEW</span></h3>
+          <p>面向个人与企业的多模态数据采集SaaS 平台，支持语音录制、图片上传与视频拍摄任务发布</p>
+          <div class="tool-tags"><span>多模</span><span>SaaS</span><span>任务分发</span></div>
+          <span class="tool-link" style="color:var(--violet-hi)">进入工具 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 开发者工具 -->
+    <div class="tools-cat" data-reveal>
+      <div class="tools-cat-head">
+        <div class="tools-cat-icon" style="background:rgba(68,224,138,0.08);border-color:rgba(68,224,138,0.2);color:#44e08a">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 6l4-4 4 4M16 18l-4 4-4-4M6 8l-4 4 4 4M18 8l4 4-4 4" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <h2>开发者工具</h2>
+          <p>API 接入与完整开发文档，帮助工程师快速集成标注、采集与数据质检能力到自有系统</p>
+        </div>
+      </div>
+      <div class="tools-grid" style="grid-template-columns:repeat(2,1fr);max-width:680px;">
+        <a class="tool-card" href="tool_openplatform.html">
+          <div class="tool-num">TOOL · 006</div>
+          <div class="icb icb-sm" style="background:rgba(68,224,138,0.08);border-color:rgba(68,224,138,0.2);color:#44e08a"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 6v8M6 10h8"/></svg></div>
+          <h3>开放平台</h3>
+          <p>REST API 提供数据集查询、样本检索与标注任务管理接口，支持OAuth 2.0 鉴权一SDK 接入</p>
+          <div class="tool-tags"><span>REST API</span><span>OAuth</span><span>SDK</span></div>
+          <span class="tool-link" style="color:#44e08a">进入平台 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </a>
+        <a class="tool-card" href="tool_docs.html">
+          <div class="tool-num">TOOL · 007</div>
+          <div class="icb icb-sm" style="background:rgba(68,224,138,0.08);border-color:rgba(68,224,138,0.2);color:#44e08a"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h12v12H4z" rx="1"/><path d="M7 8h6M7 11h4"/></svg></div>
+          <h3>开发文档</h3>
+          <p>完整的API Reference、快速上手指南、最佳实践与代码示例，覆盖主流编程语言</p>
+          <div class="tool-tags"><span>Docs</span><span>示例</span><span>多语言</span></div>
+          <span class="tool-link" style="color:#44e08a">查看文档 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 标贝悦读 -->
+    <div class="tools-cat" data-reveal>
+      <div class="tools-cat-head">
+        <div class="tools-cat-icon" style="background:rgba(255,200,80,0.08);border-color:rgba(255,200,80,0.2);color:#ffc850">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 10h16M4 14h10M4 18h6" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <h2>标贝悦读</h2>
+          <p>针对朗读训练与教育场景设计的语音数据采集与评测工具，支持儿童与成人发音数据收集</p>
+        </div>
+      </div>
+      <div class="tools-grid" style="grid-template-columns:repeat(2,1fr);max-width:680px;">
+        <a class="tool-card" href="tool_reader.html">
+          <div class="tool-num">TOOL · 008</div>
+          <div class="icb icb-sm" style="background:rgba(255,200,80,0.08);border-color:rgba(255,200,80,0.2);color:#ffc850"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M5 10a5 5 0 0 0 10 0"/></svg></div>
+          <h3>标贝悦读 <span class="badge-pill badge-hot">HOT</span></h3>
+          <p>集朗读文本分发、在线录制、即时打分与数据回收于一体的教育语音采集平台</p>
+          <div class="tool-tags"><span>朗读</span><span>评测</span><span>教育</span></div>
+          <span class="tool-link" style="color:#ffc850">进入应用 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card" data-reveal>
+      <div class="cta-inner">
+        <span class="eyebrow">Get Started</span>
+        <h2>立即体验工具平台</h2>
+        <p>注册后可免费试用标注平台与开放平台，或联系我们获取专属私有化部署方案</p>
+        <div class="cta-actions">
+          <a href="tool_openplatform.html" class="btn btn-primary">免费注册体验<svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="https://distribute.ebiaoge.com/sp/formreport/distribute/ty0d2tkkvp/1476002722365784915" class="btn btn-ghost">联系销售 &rsaquo;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="_shared.js"></script>
+</body>
+</html>
+

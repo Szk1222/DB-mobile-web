@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>长语音识别 · 智能语音 · 标贝科技</title>
+<meta name="description" content="标贝长语音识别（Long Speech Recognition）· 对不限时长的语音输入进行实时流式转写，自动断句与标点，可识别多说话人对话，适用于会议、课堂、客服通话等长音频实时转写场景。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="_shared.css" />
+<link rel="stylesheet" href="_product.css" />
+</head>
+<body class="theme-asr">
+<div id="nav-placeholder"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs">
+      <a href="homepage.html">首页</a>
+      <span class="sep">/</span>
+      <a href="voice_ai.html">智能语音</a>
+      <span class="sep">/</span>
+      <a href="voice_ai.html#asr">语音识别</a>
+      <span class="sep">/</span>
+      <span class="cur">长语音识别</span>
+    </nav>
+    <span class="eyebrow">Long Speech Recognition · 语音识别</span>
+    <h1 class="display" style="font-size:clamp(2.2rem,4.8vw,4rem);margin:16px 0 20px;">
+      <span style="display:block;">长语音识别</span>
+      <span style="display:block;" class="glow-text">不限时长实时转写</span>
+    </h1>
+    <p class="lead">对不限时长的语音输入进行实时流式转写，自动断句与标点，可识别多说话人对话，适用于会议、课堂、客服通话等长音频实时转写场景。</p>
+    <div class="htag-row"><span class="htag">实时流式</span><span class="htag">不限时长</span><span class="htag">自动断句</span><span class="htag">多说话人</span><span class="htag">多语种</span></div>
+    <div class="page-actions">
+      <a href="homepage.html#contact" class="btn btn-primary">免费试用<svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="tool_docs.html" class="btn btn-ghost">查看接入文档</a>
+      <a href="voice_ai.html#asr" class="btn btn-ghost">返回智能语音</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:56px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Live Demo · 在线体验</span>
+      <h2 class="display">即刻体验<span class="glow-text">长语音识别</span></h2>
+      <p>下方为交互式演示，可直接操作感受产品能力</p>
+    </div>
+    <div class="demo-wrap sec-narrow" data-demo="asr" data-reveal></div>
+    <script id="pd-config" type="application/json">{"title": "Long ASR Console", "record": true, "samples": [{"label": "会议讨论", "type": "中文 · 16kHz", "dur": "12.4s", "conf": 98.2, "ms": 680, "text": "好的，我们今天的会议主要讨论三个议题：第一是第二季度的产品规划，第二是市场推广预算的分配，第三是技术团队的招聘进度安排。"}, {"label": "课堂讲解", "type": "中文 · 16kHz", "dur": "9.8s", "conf": 97.6, "ms": 560, "text": "同学们请注意，今天我们学习的重点是函数的单调性，它描述了函数值随自变量变化的整体趋势。"}, {"label": "客服通话", "type": "电话 · 8kHz", "dur": "8.2s", "conf": 96.9, "ms": 520, "text": "您好，请问有什么可以帮您？我的快递显示已经签收，但是我并没有收到，麻烦帮我查询一下。"}]}</script>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="sec-narrow" data-reveal>
+      <div class="section-head" style="text-align:left;justify-items:start;margin-bottom:28px;">
+        <span class="eyebrow">Overview · 产品介绍</span>
+        <h2 class="display" style="font-size:clamp(1.6rem,2.8vw,2.2rem);">关于长语音识别</h2>
+      </div>
+      <p class="lead-para"><b>长语音识别（Long Speech Recognition）</b>面向不限时长的连续语音输入，提供持续稳定的实时流式转写能力。引擎以 WebSocket 长连接接收音频流，边接收边解码，并随说话进度持续返回转写结果。</p>
+      <p class="lead-para">产品在一句话识别的声学能力基础上，强化了长时段语音的<b>稳定性与一致性</b>：自动断句分行、标点预测、口语顺滑（去除语气词与重复），并支持多说话人分离，为每段文本标注说话人角色。</p>
+      <p class="lead-para">无论是数小时的会议录音实时转写、课堂直播字幕，还是呼叫中心的全程通话记录，长语音识别都能以低延迟稳定输出规范文本，并提供公有云 API 与私有化部署两种接入方式。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Core Features · 核心功能</span>
+      <h2 class="display">核心能力<span class="glow-text">一览</span></h2>
+    </div>
+    <div class="feat-grid" data-reveal>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h3l3-8 4 16 3-8h5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h4>持续流式转写</h4><p>WebSocket 长连接持续接收音频流，不限时长边说边出字，长时段转写稳定无中断。</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h10l4 4v14H5z" stroke-linejoin="round"/><path d="M9 12h7M9 16h5" stroke-linecap="round"/></svg></div>
+        <h4>自动断句与标点</h4><p>按语义自动断句分行并预测标点，长文本输出结构清晰、便于阅读与归档。</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/></svg></div>
+        <h4>多说话人分离</h4><p>区分对话中的不同说话人并标注角色，会议与通话记录可按发言人组织。</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h4L20 8l-4-4L4 16z" stroke-linejoin="round"/><path d="M14 6l4 4" stroke-linecap="round"/></svg></div>
+        <h4>口语顺滑处理</h4><p>自动去除“嗯”“啊”等语气词与口吃重复，输出更接近书面表达的规范文本。</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke-linecap="round"/></svg></div>
+        <h4>多语种与方言</h4><p>支持普通话、英语、粤语等 20+ 语种方言，并可识别中英文混读长段落。</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h18l-7 8v6l-4 2v-8z" stroke-linejoin="round"/></svg></div>
+        <h4>热词与领域适配</h4><p>支持上传领域热词表，提升专业术语、人名地名等专有词汇的长文识别准确率。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Specifications · 技术规格</span>
+      <h2 class="display">规格与<span class="glow-text">参数</span></h2>
+    </div>
+    <div class="sec-narrow" data-reveal>
+      <table class="spec-table">
+        <tr><th>支持音频格式</th><td><span class="mono-tag">PCM</span><span class="mono-tag">WAV</span><span class="mono-tag">MP3</span><span class="mono-tag">OPUS</span><span class="mono-tag">SPEEX</span></td></tr>
+        <tr><th>采样率</th><td>8000 Hz / 16000 Hz（推荐 16000 Hz）</td></tr>
+        <tr><th>采样位数 / 声道</th><td>16 bit · 单声道</td></tr>
+        <tr><th>单次连接时长</th><td>不限时长，支持长连接持续转写</td></tr>
+        <tr><th>传输协议</th><td>WebSocket（流式长连接）</td></tr>
+        <tr><th>首字返回延迟</th><td>&lt; 400 ms</td></tr>
+        <tr><th>识别准确率</th><td>普通话 ≥ 98%（标准测试集）</td></tr>
+        <tr><th>说话人分离</th><td>支持，最多区分 10 位说话人</td></tr>
+        <tr><th>默认并发</th><td>10 路（公有云，可申请扩容）</td></tr>
+        <tr><th>SDK 支持</th><td>Python / Java / JavaScript / iOS / Android / C++</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">API Reference · 接口说明</span>
+      <h2 class="display">快速<span class="glow-text">对接接口</span></h2>
+      <p>核心请求参数与调用示例，便于快速完成接入</p>
+    </div>
+    <div class="sec-narrow" data-reveal>
+      <table class="api-table">
+        <thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>app_id</td><td>string</td><td><span class="req">必填</span></td><td>应用 ID，开放平台创建应用后获取</td></tr>
+          <tr><td>api_key</td><td>string</td><td><span class="req">必填</span></td><td>接口鉴权密钥，请妥善保管</td></tr>
+          <tr><td>audio_format</td><td>string</td><td><span class="req">必填</span></td><td>音频编码：pcm / wav / mp3 / opus / speex</td></tr>
+          <tr><td>sample_rate</td><td>int</td><td><span class="req">必填</span></td><td>采样率，取值 8000 或 16000</td></tr>
+          <tr><td>language</td><td>string</td><td><span class="opt">选填</span></td><td>识别语种，默认 zh-CN</td></tr>
+          <tr><td>enable_punctuation</td><td>bool</td><td><span class="opt">选填</span></td><td>是否添加标点，默认 true</td></tr>
+          <tr><td>enable_speaker</td><td>bool</td><td><span class="opt">选填</span></td><td>是否开启多说话人分离，默认 false</td></tr>
+          <tr><td>enable_smooth</td><td>bool</td><td><span class="opt">选填</span></td><td>是否开启口语顺滑，默认 true</td></tr>
+          <tr><td>hotword_id</td><td>string</td><td><span class="opt">选填</span></td><td>热词表 ID，提升专有名词识别率</td></tr>
+        </tbody>
+      </table>
+      <div class="code-card">
+        <div class="code-tabs"><button class="code-tab on" data-code="c0">Python</button><button class="code-tab" data-code="c1">返回示例</button></div>
+        <div class="code-pane on" data-code="c0"><pre><code>import websocket, json, threading
+
+URL = "wss://openspeech.data-baker.com/asr/v1/long"
+ws = websocket.create_connection(
+    URL, header=["Authorization: your_api_key"])
+
+ws.send(json.dumps({
+    "app_id": "your_app_id",
+    "audio_format": "pcm",
+    "sample_rate": 16000,
+    "language": "zh-CN",
+    "enable_punctuation": True,
+    "enable_speaker": True
+}))
+
+def receiver():
+    while True:
+        msg = json.loads(ws.recv())
+        if msg.get("is_final"):
+            break
+        print(msg["result"]["text"])
+
+threading.Thread(target=receiver).start()
+
+# 持续推送音频分片（每 200ms 一帧）
+with open("meeting.pcm", "rb") as f:
+    for chunk in iter(lambda: f.read(6400), b""):
+        ws.send_binary(chunk)
+ws.send_binary(b"")</code></pre></div><div class="code-pane" data-code="c1"><pre><code>{
+  "code": 0,
+  "message": "success",
+  "is_final": false,
+  "result": {
+    "text": "第二季度的产品规划已经基本确定。",
+    "speaker": "S1",
+    "begin_ms": 12400,
+    "end_ms": 15200,
+    "confidence": 0.982
+  }
+}</code></pre></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Scenarios · 应用场景</span>
+      <h2 class="display">典型<span class="glow-text">应用场景</span></h2>
+    </div>
+    <div class="scene-grid" data-reveal>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg></div>
+        <h4>智能会议纪要</h4><p>会议全程实时转写并按发言人组织，自动生成结构化会议纪要。</p>
+      </div>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h11a2 2 0 0 1 2 2v15H7a2 2 0 0 0-2 2z" stroke-linejoin="round"/><path d="M5 4v18" stroke-linecap="round"/></svg></div>
+        <h4>课堂与直播字幕</h4><p>为课堂教学、在线直播提供实时字幕与课后文字稿。</p>
+      </div>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h4l2 5-3 2a14 14 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A18 18 0 0 1 3 5a2 2 0 0 1 2-2z" stroke-linejoin="round"/></svg></div>
+        <h4>呼叫中心质检</h4><p>全程通话转写为文本，支撑客服质检、合规审查与数据分析。</p>
+      </div>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3h10l4 4v14H5z" stroke-linejoin="round"/><path d="M9 12h7M9 16h5" stroke-linecap="round"/></svg></div>
+        <h4>访谈与庭审记录</h4><p>长时段访谈、庭审、笔录场景的实时文字记录。</p>
+      </div>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11v2a1 1 0 0 0 1 1h2l10 5V5L6 10H4a1 1 0 0 0-1 1z" stroke-linejoin="round"/><path d="M18 8.5a4 4 0 0 1 0 7" stroke-linecap="round"/></svg></div>
+        <h4>媒体内容生产</h4><p>新闻采访、播客录制实时转写，加速内容编辑与二次创作。</p>
+      </div>
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4M8 4h8" stroke-linecap="round"/><circle cx="9.5" cy="14" r="1.4"/><circle cx="14.5" cy="14" r="1.4"/></svg></div>
+        <h4>实时语音交互</h4><p>为长对话型语音助手与陪伴机器人提供持续语音理解输入。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Integration · 接入流程</span>
+      <h2 class="display">四步<span class="glow-text">快速接入</span></h2>
+    </div>
+    <div class="flow" data-reveal>
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <h4>注册开放平台</h4><p>注册标贝开放平台账号，创建应用并获取 app_id 与 api_key。</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <h4>选择协议与 SDK</h4><p>按场景选择接入协议，下载对应语言 SDK 与示例代码。</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <h4>封装调用请求</h4><p>按音频/文本规格封装请求，配置识别或合成相关参数。</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <h4>联调上线监控</h4><p>完成接口联调与压测，上线后在控制台监控用量与质量。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Pricing · 计费说明</span>
+      <h2 class="display">灵活<span class="glow-text">计费方案</span></h2>
+    </div>
+    <div class="price-grid" data-reveal>
+      <div class="price-card">
+        <span class="price-tag">FREE TRIAL</span>
+        <h4>免费体验</h4>
+        <div class="price-amt">¥0 <small>/ 新用户</small></div>
+        <ul><li>注册赠送 50,000 次识别额度</li><li>全功能开放，无需信用卡</li><li>额度有效期 90 天</li></ul>
+      </div>
+      <div class="price-card featured">
+        <span class="price-tag">PAY AS YOU GO</span>
+        <h4>公有云按量</h4>
+        <div class="price-amt">按次计费 <small>/ 阶梯单价</small></div>
+        <ul><li>按实际调用次数计费，无最低消费</li><li>调用量越大阶梯单价越低</li><li>99.9% SLA 可用性保障</li><li>多区域节点全国低延迟</li></ul>
+      </div>
+      <div class="price-card">
+        <span class="price-tag">ON-PREMISE</span>
+        <h4>私有化部署</h4>
+        <div class="price-amt">授权制 <small>/ 联系销售</small></div>
+        <ul><li>模型部署在客户内网，数据不出域</li><li>支持 Docker / K8s 容器化交付</li><li>专属技术支持与版本升级</li></ul>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--text-dim);font-size:0.82rem;margin-top:18px;">* 具体方案与报价以标贝开放平台及商务沟通为准</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Related · 相关产品</span>
+      <h2 class="display">探索更多<span class="glow-text">语音产品</span></h2>
+    </div>
+    <div class="related sec-narrow" data-reveal>
+      <a href="voice_asr_word.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h3l3-8 4 16 3-8h5" stroke-linecap="round" stroke-linejoin="round"/></svg>一句话识别</a>
+      <a href="voice_asr_file.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>录音文件识别</a>
+      <a href="voice_asr_selflearn.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 6 .9-4.5 4.3 1.1 6.3L12 16.8 6.4 19.5l1.1-6.3L3 8.9 9 8z" stroke-linejoin="round"/></svg>自学习工具</a>
+      <a href="voice_tts_online.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V6l11-3v12" stroke-linejoin="round"/><circle cx="6" cy="18" r="3"/><circle cx="20" cy="15" r="3"/></svg>在线合成</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card" data-reveal>
+      <div class="cta-inner">
+        <span class="eyebrow">Get Started</span>
+        <h2>立即体验长语音识别</h2>
+        <p>注册标贝开放平台，免费试用智能语音全系列产品能力</p>
+        <div class="cta-actions">
+          <a href="tool_openplatform.html" class="btn btn-primary">免费注册<svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="tool_docs.html" class="btn btn-ghost">查看开发文档</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="_shared.js"></script>
+<script src="_product.js"></script>
+</body>
+</html>

@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>一句话识别 · 智能语音 · 标贝科技</title>
+<meta name="description" content="标贝一句话识别（Short Speech Recognition），面向 60 秒以内短音频的实时流式语音转文字服务，普通话准确率 ≥ 98%，首字延迟低于 300ms。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="_shared.css" />
+<style>
+/* ── 标签 ── */
+.htag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.htag { padding: 5px 12px; border-radius: 99px; border: 1px solid rgba(76,201,240,0.22); background: rgba(76,201,240,0.08); color: var(--brand-hi); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+.sec-narrow { max-width: 1000px; margin: 0 auto; }
+.lead-para { color: var(--text-mute); font-size: 1rem; line-height: 1.92; margin: 0 0 20px; }
+.lead-para:last-child { margin-bottom: 0; }
+.lead-para b { color: var(--text-hi); font-weight: 600; }
+
+/* ── 在线演示 ── */
+.demo-wrap { border: 1px solid var(--line-strong); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.72),rgba(8,16,38,0.82)); overflow: hidden; box-shadow: var(--shadow-card); }
+.demo-head { display: flex; align-items: center; gap: 8px; padding: 13px 20px; border-bottom: 1px solid var(--line); background: rgba(7,13,32,0.6); }
+.demo-dot { width: 9px; height: 9px; border-radius: 50%; }
+.demo-dot.r { background: #ff5f56; } .demo-dot.y { background: #ffbd2e; } .demo-dot.g { background: #27c93f; }
+.demo-title { margin-left: 8px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); }
+.demo-live { margin-left: auto; display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--brand-hi); }
+.demo-live i { width: 7px; height: 7px; border-radius: 50%; background: #44e08a; box-shadow: 0 0 8px #44e08a; animation: dPulse 1.6s infinite; }
+@keyframes dPulse { 50% { opacity: 0.35; transform: scale(0.7); } }
+
+.demo-tabs { display: flex; gap: 4px; padding: 16px 22px 0; }
+.demo-tab { padding: 10px 20px; border-radius: 9px 9px 0 0; font-family: var(--font-display); font-weight: 600; font-size: 0.94rem; color: var(--text-mute); border: 1px solid transparent; border-bottom: none; transition: all 0.2s ease; }
+.demo-tab:hover { color: var(--text); }
+.demo-tab.on { color: var(--text-hi); background: rgba(76,201,240,0.08); border-color: var(--line); }
+
+.demo-panel { display: none; padding: 24px 22px 26px; }
+.demo-panel.on { display: block; }
+
+.smp-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+.smp { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: rgba(10,20,46,0.55); transition: all 0.2s ease; }
+.smp:hover { border-color: rgba(76,201,240,0.4); transform: translateY(-2px); }
+.smp.on { border-color: var(--brand-hi); background: rgba(76,201,240,0.1); box-shadow: 0 0 0 1px rgba(76,201,240,0.25); }
+.smp-ic { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; background: rgba(76,201,240,0.1); color: var(--brand-hi); flex: 0 0 auto; }
+.smp-ic svg { width: 16px; height: 16px; }
+.smp-meta { display: flex; flex-direction: column; line-height: 1.35; }
+.smp-meta b { font-size: 0.86rem; color: var(--text-hi); font-weight: 600; }
+.smp-meta span { font-family: var(--font-mono); font-size: 9px; color: var(--text-dim); letter-spacing: 0.08em; }
+
+.stage { border: 1px solid var(--line); border-radius: 12px; background: rgba(5,10,26,0.7); padding: 22px; }
+.wave { display: flex; align-items: center; justify-content: center; gap: 3px; height: 84px; }
+.wave i { width: 4px; height: 6px; border-radius: 2px; background: linear-gradient(180deg,var(--brand-hi),var(--violet-hi)); transition: height 0.09s linear; }
+.stage-foot { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+
+.st { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; border-radius: 99px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--line); color: var(--text-dim); }
+.st i { width: 6px; height: 6px; border-radius: 50%; background: var(--text-dim); }
+.st.busy { color: #ffc850; border-color: rgba(255,200,80,0.35); }
+.st.busy i { background: #ffc850; animation: dPulse 1s infinite; }
+.st.done { color: #44e08a; border-color: rgba(68,224,138,0.35); }
+.st.done i { background: #44e08a; box-shadow: 0 0 8px #44e08a; }
+
+.result-box { margin-top: 18px; border: 1px solid var(--line); border-radius: 12px; background: rgba(10,20,46,0.5); padding: 18px 20px; }
+.result-label { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+.result-text { font-size: 1.14rem; color: var(--text-hi); line-height: 1.74; min-height: 1.74em; }
+.result-text.ph { color: var(--text-dim); font-size: 0.95rem; }
+.caret { display: none; width: 2px; height: 1.05em; background: var(--brand-hi); vertical-align: -2px; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+.caret.on { display: inline-block; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 14px; opacity: 0; transition: opacity 0.3s ease; }
+.metrics.show { opacity: 1; }
+.metric { border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; background: rgba(7,13,32,0.55); }
+.metric .v { font-family: var(--font-tech); font-size: 1.45rem; font-weight: 700; color: var(--brand-hi); line-height: 1.1; }
+.metric .k { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-top: 3px; }
+
+.rec-area { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 10px 0 6px; }
+.rec-btn { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.rec-circle { width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line-strong); background: rgba(76,201,240,0.08); color: var(--brand-hi); transition: all 0.25s ease; }
+.rec-circle svg { width: 34px; height: 34px; }
+.rec-circle:hover { border-color: var(--brand-hi); }
+.rec-btn.on .rec-circle { background: rgba(255,107,107,0.14); border-color: #ff6b6b; color: #ff6b6b; animation: recPulse 1.6s infinite; }
+@keyframes recPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,107,107,0.4); } 50% { box-shadow: 0 0 0 16px rgba(255,107,107,0); } }
+.rec-label { font-family: var(--font-display); font-weight: 600; font-size: 0.96rem; color: var(--text-hi); }
+.rec-note { font-size: 11px; color: var(--text-dim); text-align: center; max-width: 420px; line-height: 1.7; }
+.rec-msg { display: none; margin-top: 10px; padding: 9px 14px; border-radius: 8px; border: 1px solid rgba(255,200,80,0.3); background: rgba(255,200,80,0.08); color: #ffc850; font-size: 0.82rem; }
+.rec-msg.show { display: block; }
+
+/* ── 功能卡片 ── */
+.feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.feat-card { padding: 24px 22px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.5),rgba(10,20,46,0.5)); transition: all 0.24s ease; }
+.feat-card:hover { border-color: rgba(76,201,240,0.35); transform: translateY(-3px); box-shadow: 0 16px 36px rgba(4,105,207,0.18); }
+.feat-ic { width: 46px; height: 46px; border-radius: 11px; display: grid; place-items: center; background: rgba(76,201,240,0.08); border: 1px solid var(--line-strong); color: var(--brand-hi); margin-bottom: 14px; }
+.feat-ic svg { width: 23px; height: 23px; }
+.feat-card h4 { font-family: var(--font-display); font-size: 1.08rem; font-weight: 600; margin: 0 0 7px; }
+.feat-card p { color: var(--text-mute); font-size: 0.87rem; line-height: 1.72; margin: 0; }
+
+/* ── 规格表 ── */
+.spec-table { width: 100%; border-collapse: collapse; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+.spec-table tr { border-bottom: 1px solid var(--line); }
+.spec-table tr:last-child { border-bottom: none; }
+.spec-table th { text-align: left; padding: 14px 22px; width: 32%; background: rgba(76,201,240,0.05); font-family: var(--font-display); font-weight: 600; color: var(--text-hi); font-size: 0.94rem; vertical-align: top; }
+.spec-table td { padding: 14px 22px; color: var(--text-mute); font-size: 0.9rem; line-height: 1.7; }
+.mono-tag { font-family: var(--font-mono); font-size: 0.82rem; padding: 2px 7px; border-radius: 4px; background: rgba(76,201,240,0.1); color: var(--brand-hi); border: 1px solid rgba(76,201,240,0.2); }
+
+/* ── API ── */
+.api-table { width: 100%; border-collapse: collapse; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+.api-table thead th { background: rgba(76,201,240,0.07); font-family: var(--font-display); font-weight: 600; color: var(--text-hi); font-size: 0.86rem; text-align: left; padding: 12px 18px; }
+.api-table tbody tr { border-top: 1px solid var(--line); }
+.api-table td { padding: 12px 18px; font-size: 0.85rem; color: var(--text-mute); line-height: 1.65; vertical-align: top; }
+.api-table td:first-child { font-family: var(--font-mono); color: var(--brand-hi); white-space: nowrap; }
+.api-table .req { color: #ff6b6b; font-family: var(--font-mono); font-size: 0.78rem; }
+.api-table .opt { color: var(--text-dim); font-family: var(--font-mono); font-size: 0.78rem; }
+
+.code-card { margin-top: 22px; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: rgba(5,10,26,0.85); }
+.code-tabs { display: flex; gap: 2px; padding: 10px 14px 0; background: rgba(7,13,32,0.6); border-bottom: 1px solid var(--line); }
+.code-tab { padding: 8px 16px; border-radius: 7px 7px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--text-dim); transition: all 0.18s ease; }
+.code-tab:hover { color: var(--text); }
+.code-tab.on { color: var(--brand-hi); background: rgba(76,201,240,0.08); }
+.code-pane { display: none; }
+.code-pane.on { display: block; }
+.code-pane pre { margin: 0; padding: 20px 22px; overflow-x: auto; }
+.code-pane code { font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.78; color: #cbe6ff; white-space: pre; }
+
+/* ── 应用场景 ── */
+.scene-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.scene-card { padding: 26px 22px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.5),rgba(10,20,46,0.5)); transition: all 0.24s ease; }
+.scene-card:hover { border-color: rgba(76,201,240,0.35); transform: translateY(-3px); }
+.scene-ic { width: 50px; height: 50px; border-radius: var(--r); border: 1px solid var(--line-strong); background: rgba(76,201,240,0.08); display: grid; place-items: center; color: var(--brand-hi); margin-bottom: 15px; }
+.scene-ic svg { width: 25px; height: 25px; }
+.scene-card h4 { font-family: var(--font-display); font-size: 1.06rem; font-weight: 600; margin: 0 0 7px; }
+.scene-card p { color: var(--text-mute); font-size: 0.86rem; line-height: 1.7; margin: 0; }
+
+/* ── 接入流程 ── */
+.flow { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.flow-step { position: relative; padding: 26px 20px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.5),rgba(10,20,46,0.5)); }
+.flow-num { font-family: var(--font-tech); font-size: 2.1rem; font-weight: 800; color: rgba(76,201,240,0.28); line-height: 1; }
+.flow-step h4 { font-family: var(--font-display); font-size: 1.02rem; font-weight: 600; margin: 12px 0 7px; }
+.flow-step p { color: var(--text-mute); font-size: 0.84rem; line-height: 1.68; margin: 0; }
+.flow-step::after { content: ""; position: absolute; top: 50%; right: -10px; width: 8px; height: 8px; border-top: 1.5px solid rgba(76,201,240,0.4); border-right: 1.5px solid rgba(76,201,240,0.4); transform: translateY(-50%) rotate(45deg); }
+.flow-step:last-child::after { display: none; }
+
+/* ── 计费 ── */
+.price-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.price-card { padding: 28px 24px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg,rgba(13,26,58,0.55),rgba(10,20,46,0.55)); display: flex; flex-direction: column; gap: 12px; }
+.price-card.featured { border-color: rgba(76,201,240,0.4); background: linear-gradient(180deg,rgba(4,105,207,0.12),rgba(10,20,46,0.6)); }
+.price-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-hi); }
+.price-card h4 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; margin: 0; }
+.price-amt { font-family: var(--font-tech); font-size: 1.7rem; font-weight: 700; color: var(--text-hi); }
+.price-amt small { font-family: var(--font-cn); font-size: 0.8rem; color: var(--text-dim); font-weight: 400; }
+.price-card ul { list-style: none; padding: 0; margin: 4px 0 0; display: grid; gap: 9px; }
+.price-card li { display: flex; align-items: flex-start; gap: 9px; font-size: 0.85rem; color: var(--text-mute); line-height: 1.6; }
+.price-card li::before { content: ""; flex: 0 0 auto; margin-top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--brand-hi); box-shadow: 0 0 6px var(--brand-hi); }
+
+.related { display: flex; flex-wrap: wrap; gap: 12px; }
+.related a { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border: 1px solid var(--line); border-radius: var(--r); background: rgba(10,20,46,0.5); font-size: 0.9rem; color: var(--text); transition: all 0.2s ease; }
+.related a:hover { border-color: rgba(76,201,240,0.4); color: var(--text-hi); transform: translateY(-2px); }
+.related a svg { width: 16px; height: 16px; color: var(--brand-hi); }
+
+@media (max-width: 1024px) {
+  .feat-grid, .scene-grid { grid-template-columns: 1fr 1fr; }
+  .flow { grid-template-columns: 1fr 1fr; }
+  .flow-step:nth-child(2)::after { display: none; }
+  .price-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 680px) {
+  .feat-grid, .scene-grid, .flow { grid-template-columns: 1fr; }
+  .flow-step::after { display: none; }
+  .metrics { grid-template-columns: 1fr; }
+  .spec-table th { width: 42%; }
+  .demo-tabs { padding-left: 14px; padding-right: 14px; }
+}
+</style>
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<!-- ── HERO ── -->
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs">
+      <a href="homepage.html">首页</a>
+      <span class="sep">/</span>
+      <a href="voice_ai.html">智能语音</a>
+      <span class="sep">/</span>
+      <a href="voice_ai.html#asr">语音识别</a>
+      <span class="sep">/</span>
+      <span class="cur">一句话识别</span>
+    </nav>
+    <span class="eyebrow">Short Speech Recognition · 语音识别</span>
+    <h1 class="display" style="font-size:clamp(2.2rem,4.8vw,4rem);margin:16px 0 20px;">
+      <span style="display:block;">一句话识别</span>
+      <span style="display:block;" class="glow-text">让机器听懂每一句话</span>
+    </h1>
+    <p class="lead">对 60 秒以内的短语音进行实时流式转写，边说边出字。基于标贝自研端到端深度神经网络声学模型，普通话识别准确率 ≥ 98%，首字返回延迟低于 300ms，适用于语音输入、语音指令与实时交互场景</p>
+    <div class="htag-row">
+      <span class="htag">实时流式</span>
+      <span class="htag">短音频</span>
+      <span class="htag">低延迟</span>
+      <span class="htag">多语种</span>
+      <span class="htag">智能标点</span>
+      <span class="htag">热词定制</span>
+    </div>
+    <div class="page-actions">
+      <a href="homepage.html#contact" class="btn btn-primary">免费试用<svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="tool_docs.html" class="btn btn-ghost">查看接入文档</a>
+      <a href="voice_ai.html#asr" class="btn btn-ghost">返回智能语音</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 在线体验 ── -->
+<section class="section" style="padding-top:56px;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Live Demo · 在线体验</span>
+      <h2 class="display">即刻体验<span class="glow-text">语音转文字</span></h2>
+      <p>选择示例音频感受流式识别效果，或使用麦克风实时录音查看声波可视化</p>
+    </div>
+
+    <div class="demo-wrap sec-narrow" data-reveal>
+      <div class="demo-head">
+        <span class="demo-dot r"></span><span class="demo-dot y"></span><span class="demo-dot g"></span>
+        <span class="demo-title">ASR Console · 一句话识别</span>
+        <span class="demo-live"><i></i>Engine Ready</span>
+      </div>
+
+      <div class="demo-tabs">
+        <button class="demo-tab on" data-tab="sample">示例音频</button>
+        <button class="demo-tab" data-tab="record">实时录音</button>
+      </div>
+
+      <!-- 示例音频面板 -->
+      <div class="demo-panel on" data-panel="sample">
+        <div class="smp-row" id="smpRow"></div>
+        <div class="stage">
+          <div class="wave" id="wave"></div>
+          <div class="stage-foot">
+            <button class="btn btn-primary btn-sm" id="recognizeBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z"/></svg>
+              开始识别
+            </button>
+            <button class="btn btn-ghost btn-sm" id="resetBtn">重置</button>
+            <span class="st" id="status"><i></i><span>待机</span></span>
+          </div>
+        </div>
+        <div class="result-box">
+          <div class="result-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+            识别结果 · Transcript
+          </div>
+          <div class="result-text ph" id="resultText">选择示例音频后点击「开始识别」，识别文本将随说随返。<span class="caret" id="caret"></span></div>
+          <div class="metrics" id="metrics">
+            <div class="metric"><div class="v" id="mConf">—</div><div class="k">识别置信度</div></div>
+            <div class="metric"><div class="v" id="mTime">—</div><div class="k">识别耗时</div></div>
+            <div class="metric"><div class="v" id="mChars">—</div><div class="k">输出字数</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 实时录音面板 -->
+      <div class="demo-panel" data-panel="record">
+        <div class="stage">
+          <div class="wave" id="recWave"></div>
+        </div>
+        <div class="rec-area">
+          <button class="rec-btn" id="recBtn">
+            <span class="rec-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-7 9a7 7 0 0 0 14 0M12 19v3" stroke-linecap="round"/></svg>
+            </span>
+            <span class="rec-label" id="recLabel">点击录音</span>
+          </button>
+          <span class="st" id="recStatus"><i></i><span>待机</span></span>
+          <p class="rec-note">麦克风音频仅用于本页声波可视化演示，不会被上传或存储。接入标贝一句话识别接口后即可获得真实转写结果。</p>
+          <div class="rec-msg" id="recMsg"></div>
+        </div>
+        <div class="result-box">
+          <div class="result-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+            识别结果 · Transcript
+          </div>
+          <div class="result-text ph" id="recResult">点击麦克风开始录音，结束后将展示演示转写结果。<span class="caret" id="recCaret"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 产品介绍 ── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="sec-narrow" data-reveal>
+      <div class="section-head" style="text-align:left;justify-items:start;margin-bottom:28px;">
+        <span class="eyebrow">Overview · 产品介绍</span>
+        <h2 class="display" style="font-size:clamp(1.6rem,2.8vw,2.2rem);">什么是一句话识别</h2>
+      </div>
+      <p class="lead-para">
+        <b>一句话识别（Short Speech Recognition）</b>是标贝智能语音识别（ASR）产品线中面向短音频的实时转写服务，专为 60 秒以内的语音输入设计。用户边说话，引擎边以流式分片返回识别文本，真正实现"随说随出字"的交互体验。
+      </p>
+      <p class="lead-para">
+        产品依托标贝自研的<b>端到端深度神经网络声学模型</b>，结合大规模真实场景语料持续训练迭代。在标准测试集上普通话识别准确率达 <b>98% 以上</b>，并内置前端降噪、智能断句、标点预测与数字格式规整能力，输出可直接使用的规范文本。
+      </p>
+      <p class="lead-para">
+        无论是语音输入法、智能硬件语音指令，还是 App 内的语音交互入口，一句话识别都能以低于 <b>300ms</b> 的首字延迟稳定支撑。产品同时提供公有云 API 与私有化部署两种接入方式，满足开发者快速验证与企业级合规落地的不同需求。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 核心功能 ── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Core Features · 核心功能</span>
+      <h2 class="display">六大能力<span class="glow-text">开箱即用</span></h2>
+    </div>
+    <div class="feat-grid" data-reveal>
+
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l3-8 4 16 3-8h4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h4>实时流式识别</h4>
+        <p>音频分片上传，引擎边接收边解码，识别结果随说随返，端到端首字延迟低于 300ms，适配实时语音交互。</p>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h12M4 18h7" stroke-linecap="round"/><circle cx="19" cy="17" r="2.5"/></svg></div>
+        <h4>智能断句与标点</h4>
+        <p>基于语义模型自动添加逗号、句号、问号等标点，自动断句分行，输出符合阅读习惯的规范文本。</p>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7V4h16v3M9 20h6M12 4v16" stroke-linecap="round"/></svg></div>
+        <h4>数字与格式规整</h4>
+        <p>内置 ITN 逆文本规整，将"一百二十三"转为"123"，自动识别金额、日期、时间、电话号码等结构化文本。</p>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke-linecap="round"/></svg></div>
+        <h4>多语种与方言</h4>
+        <p>支持普通话、英语、粤语、四川话、上海话等 20+ 语种方言，并可识别中英文混读内容。</p>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 6 6 .9-4.5 4.3 1.1 6.3L12 16.8 6.4 19.5l1.1-6.3L3 8.9 9 8z" stroke-linejoin="round"/></svg></div>
+        <h4>热词与领域定制</h4>
+        <p>上传专有名词、品牌词、人名地名等热词表，针对性提升垂直领域专有词汇的识别召回率。</p>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 14v-4M7 18V6M11 16V8M15 20V4M19 14v-4M23 12h0" stroke-linecap="round"/></svg></div>
+        <h4>噪声抑制与回声消除</h4>
+        <p>前端集成信号处理算法，有效抑制背景噪声与回声，适配车载、户外、公共空间等强噪环境。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 技术规格 ── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Specifications · 技术规格</span>
+      <h2 class="display">接口与<span class="glow-text">性能参数</span></h2>
+    </div>
+    <div class="sec-narrow" data-reveal>
+      <table class="spec-table">
+        <tr><th>支持音频格式</th><td><span class="mono-tag">PCM</span> <span class="mono-tag">WAV</span> <span class="mono-tag">MP3</span> <span class="mono-tag">OPUS</span> <span class="mono-tag">SPEEX</span></td></tr>
+        <tr><th>采样率</th><td>8000 Hz / 16000 Hz（推荐 16000 Hz）</td></tr>
+        <tr><th>采样位数 / 声道</th><td>16 bit · 单声道</td></tr>
+        <tr><th>单次音频时长</th><td>≤ 60 秒</td></tr>
+        <tr><th>传输协议</th><td>WebSocket（流式实时）/ HTTP（整段上传）</td></tr>
+        <tr><th>首字返回延迟</th><td>&lt; 300 ms</td></tr>
+        <tr><th>识别准确率</th><td>普通话 ≥ 98%（标准测试集）</td></tr>
+        <tr><th>支持语种</th><td>普通话、英语、粤语等 20+ 语种与方言</td></tr>
+        <tr><th>默认并发</th><td>10 路（公有云，可申请扩容）</td></tr>
+        <tr><th>SDK 支持</th><td>Python / Java / JavaScript / iOS / Android / C++</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── 接口说明 ── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">API Reference · 接口说明</span>
+      <h2 class="display">快速<span class="glow-text">对接接口</span></h2>
+      <p>请求核心参数与多语言调用示例，30 分钟即可完成首次接入</p>
+    </div>
+    <div class="sec-narrow" data-reveal>
+      <table class="api-table">
+        <thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>app_id</td><td>string</td><td><span class="req">必填</span></td><td>应用 ID，在开放平台创建应用后获取</td></tr>
+          <tr><td>api_key</td><td>string</td><td><span class="req">必填</span></td><td>接口鉴权密钥，请妥善保管，勿在前端明文暴露</td></tr>
+          <tr><td>audio_format</td><td>string</td><td><span class="req">必填</span></td><td>音频编码：pcm / wav / mp3 / opus / speex</td></tr>
+          <tr><td>sample_rate</td><td>int</td><td><span class="req">必填</span></td><td>采样率，取值 8000 或 16000</td></tr>
+          <tr><td>language</td><td>string</td><td><span class="opt">选填</span></td><td>识别语种，默认 zh-CN，支持 en-US、yue-CN 等</td></tr>
+          <tr><td>enable_punctuation</td><td>bool</td><td><span class="opt">选填</span></td><td>是否添加标点符号，默认 true</td></tr>
+          <tr><td>enable_itn</td><td>bool</td><td><span class="opt">选填</span></td><td>数字 / 金额 / 日期格式规整，默认 true</td></tr>
+          <tr><td>hotword_id</td><td>string</td><td><span class="opt">选填</span></td><td>热词表 ID，用于提升专有名词识别率</td></tr>
+        </tbody>
+      </table>
+
+      <div class="code-card">
+        <div class="code-tabs">
+          <button class="code-tab on" data-code="py">Python</button>
+          <button class="code-tab" data-code="curl">cURL</button>
+          <button class="code-tab" data-code="resp">返回示例</button>
+        </div>
+        <div class="code-pane on" data-code="py"><pre><code>import websocket, json
+
+URL = "wss://openspeech.data-baker.com/asr/v1/short"
+ws = websocket.create_connection(
+    URL, header=["Authorization: your_api_key"])
+
+# 1. 发送识别参数
+ws.send(json.dumps({
+    "app_id": "your_app_id",
+    "audio_format": "pcm",
+    "sample_rate": 16000,
+    "language": "zh-CN",
+    "enable_punctuation": True,
+    "enable_itn": True
+}))
+
+# 2. 分片发送音频
+with open("audio.pcm", "rb") as f:
+    for chunk in iter(lambda: f.read(3200), b""):
+        ws.send_binary(chunk)
+ws.send_binary(b"")          # 发送结束标记
+
+# 3. 接收识别结果
+print(json.loads(ws.recv())["result"]["text"])</code></pre></div>
+        <div class="code-pane" data-code="curl"><pre><code>curl -X POST "https://openspeech.data-baker.com/asr/v1/short" \
+  -H "Authorization: your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "app_id": "your_app_id",
+        "audio_format": "wav",
+        "sample_rate": 16000,
+        "language": "zh-CN",
+        "enable_punctuation": true,
+        "enable_itn": true,
+        "audio": "BASE64_AUDIO_DATA"
+      }'</code></pre></div>
+        <div class="code-pane" data-code="resp"><pre><code>{
+  "code": 0,
+  "message": "success",
+  "request_id": "5f3a9c2e-7b14-4d8a-9e21-1c6f0b3a8d44",
+  "result": {
+    "text": "帮我把明天上午10点的会议提醒一下。",
+    "confidence": 0.986,
+    "audio_duration_ms": 3200,
+    "language": "zh-CN"
+  }
+}</code></pre></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 应用场景 ── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Scenarios · 应用场景</span>
+      <h2 class="display">短语音识别<span class="glow-text">典型落地</span></h2>
+    </div>
+    <div class="scene-grid" data-reveal>
+
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M12 8v8" stroke-linecap="round"/></svg></div>
+        <h4>语音输入法</h4>
+        <p>替代键盘输入，用户口述即可转写为文字，输入效率提升数倍，覆盖聊天、搜索、备忘等场景。</p>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
+        <h4>智能硬件语音指令</h4>
+        <p>智能音箱、机器人、可穿戴设备的指令识别，准确捕捉唤醒后的简短命令并即时响应。</p>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 17h14M7 17V9a5 5 0 0 1 10 0v8M3 13l2-2M21 13l-2-2" stroke-linecap="round"/><circle cx="12" cy="20" r="1.6"/></svg></div>
+        <h4>车载语音交互</h4>
+        <p>导航、音乐、空调等车机指令识别，强噪声抑制保障行车环境下的稳定唤醒与转写。</p>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h4>智能客服 IVR</h4>
+        <p>电话语音导航中识别用户意图表述，替代按键菜单，缩短服务路径，提升接通体验。</p>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg></div>
+        <h4>实时语音搜索</h4>
+        <p>电商、地图、视频等 App 内语音搜索入口，口述关键词即时转写并触发检索。</p>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3" stroke-linecap="round"/></svg></div>
+        <h4>App 内语音交互</h4>
+        <p>为移动应用接入语音助手、语音指令等交互入口，丰富无障碍与免手操作体验。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 接入流程 ── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Integration · 接入流程</span>
+      <h2 class="display">四步<span class="glow-text">完成接入</span></h2>
+    </div>
+    <div class="flow" data-reveal>
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <h4>注册开放平台</h4>
+        <p>注册标贝开放平台账号，创建应用并获取 app_id 与 api_key 鉴权信息。</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <h4>选择协议与 SDK</h4>
+        <p>按场景选择 WebSocket 流式或 HTTP 整段协议，下载对应语言 SDK。</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <h4>封装音频请求</h4>
+        <p>按音频格式与采样率要求封装请求，配置标点、ITN、热词等参数。</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <h4>联调上线监控</h4>
+        <p>完成接口联调与压测，正式上线后在控制台监控调用量与识别质量。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 计费说明 ── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Pricing · 计费说明</span>
+      <h2 class="display">灵活<span class="glow-text">计费方案</span></h2>
+    </div>
+    <div class="price-grid" data-reveal>
+
+      <div class="price-card">
+        <span class="price-tag">FREE TRIAL</span>
+        <h4>免费体验</h4>
+        <div class="price-amt">¥0 <small>/ 新用户</small></div>
+        <ul>
+          <li>新用户注册赠送 50,000 次识别额度</li>
+          <li>全功能开放，无需信用卡</li>
+          <li>额度有效期 90 天</li>
+        </ul>
+      </div>
+
+      <div class="price-card featured">
+        <span class="price-tag">PAY AS YOU GO</span>
+        <h4>公有云按量</h4>
+        <div class="price-amt">按次计费 <small>/ 阶梯单价</small></div>
+        <ul>
+          <li>按实际调用次数计费，无最低消费</li>
+          <li>调用量越大，阶梯单价越低</li>
+          <li>99.9% SLA 可用性保障</li>
+          <li>多区域节点，全国低延迟访问</li>
+        </ul>
+      </div>
+
+      <div class="price-card">
+        <span class="price-tag">ON-PREMISE</span>
+        <h4>私有化部署</h4>
+        <div class="price-amt">授权制 <small>/ 联系销售</small></div>
+        <ul>
+          <li>模型与服务部署在客户内网，数据不出域</li>
+          <li>支持 Docker / K8s 容器化交付</li>
+          <li>专属技术支持与版本升级服务</li>
+        </ul>
+      </div>
+
+    </div>
+    <p style="text-align:center;color:var(--text-dim);font-size:0.82rem;margin-top:18px;">* 具体单价与扩容方案以开放平台报价及商务沟通为准</p>
+  </div>
+</section>
+
+<!-- ── 相关产品 ── -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Related · 相关产品</span>
+      <h2 class="display">探索更多<span class="glow-text">语音识别能力</span></h2>
+    </div>
+    <div class="related sec-narrow" data-reveal>
+      <a href="voice_ai.html#asr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10l3-6 4 8 3-4 4 8"/></svg>长语音识别</a>
+      <a href="voice_ai.html#asr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="4" height="12" rx="1"/><rect x="9" y="4" width="4" height="16" rx="1"/><rect x="16" y="10" width="4" height="10" rx="1"/></svg>录音文件识别</a>
+      <a href="voice_ai.html#asr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 6 .9-4.5 4.3 1.1 6.3L12 16.8 6.4 19.5l1.1-6.3L3 8.9 9 8z"/></svg>自学习工具</a>
+      <a href="voice_ai.html#tts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>在线合成</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card" data-reveal>
+      <div class="cta-inner">
+        <span class="eyebrow">Get Started</span>
+        <h2>立即接入一句话识别</h2>
+        <p>注册即可免费调用 API，新用户赠送 50,000 次识别额度，30 分钟完成接入</p>
+        <div class="cta-actions">
+          <a href="tool_openplatform.html" class="btn btn-primary">免费注册<svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="tool_docs.html" class="btn btn-ghost">查看开发文档</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="_shared.js"></script>
+<script>
+/* ===== 一句话识别 · 交互演示 ===== */
+(function () {
+  /* ---------- 通用：标签切换 ---------- */
+  function bindTabs(tabSel, paneSel, attr) {
+    var tabs = document.querySelectorAll(tabSel);
+    var panes = document.querySelectorAll(paneSel);
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        var key = t.getAttribute(attr);
+        tabs.forEach(function (x) { x.classList.toggle('on', x === t); });
+        panes.forEach(function (p) { p.classList.toggle('on', p.getAttribute(attr) === key); });
+      });
+    });
+  }
+  bindTabs('.code-tab', '.code-pane', 'data-code');
+
+  /* ---------- 演示主面板切换 ---------- */
+  var demoTabs = document.querySelectorAll('.demo-tab');
+  var demoPanels = document.querySelectorAll('.demo-panel');
+  demoTabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      var key = t.getAttribute('data-tab');
+      demoTabs.forEach(function (x) { x.classList.toggle('on', x === t); });
+      demoPanels.forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-panel') === key); });
+      if (key !== 'record') stopRecording();
+    });
+  });
+
+  /* ---------- 波形条生成 ---------- */
+  function buildBars(host, n) {
+    var bars = [];
+    for (var i = 0; i < n; i++) {
+      var b = document.createElement('i');
+      b.style.height = '6px';
+      host.appendChild(b);
+      bars.push(b);
+    }
+    return bars;
+  }
+  var BAR_N = 56;
+  var waveBars = buildBars(document.getElementById('wave'), BAR_N);
+  var recBars = buildBars(document.getElementById('recWave'), BAR_N);
+
+  function flatten(bars) {
+    bars.forEach(function (b) { b.style.height = '6px'; });
+  }
+
+  /* ---------- 示例音频数据 ---------- */
+  var SAMPLES = [
+    { label: '日常对话', type: '中文 · 16kHz', dur: '3.4s',
+      text: '帮我把明天上午10点的会议提醒一下，地点在3楼会议室。',
+      conf: 98.6, ms: 420 },
+    { label: '数字英文混合', type: '中英混读 · 16kHz', dur: '2.9s',
+      text: '我的订单号是BD2026，麻烦帮我查一下物流到哪儿了。',
+      conf: 97.4, ms: 380 },
+    { label: '地址导航', type: '中文 · 16kHz', dur: '2.6s',
+      text: '请导航到上海市浦东新区世纪大道100号。',
+      conf: 99.1, ms: 360 }
+  ];
+
+  var selected = 0;
+  var running = false;
+  var waveTimer = null, streamTimer = null;
+
+  /* 构建示例选择卡 */
+  var smpRow = document.getElementById('smpRow');
+  var micSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-7 9a7 7 0 0 0 14 0M12 19v3" stroke-linecap="round"/></svg>';
+  SAMPLES.forEach(function (s, i) {
+    var el = document.createElement('button');
+    el.className = 'smp' + (i === 0 ? ' on' : '');
+    el.innerHTML = '<span class="smp-ic">' + micSvg + '</span>' +
+      '<span class="smp-meta"><b>' + s.label + '</b><span>' + s.type + ' · ' + s.dur + '</span></span>';
+    el.addEventListener('click', function () {
+      if (running) return;
+      selected = i;
+      document.querySelectorAll('.smp').forEach(function (x, xi) {
+        x.classList.toggle('on', xi === i);
+      });
+      resetSample();
+    });
+    smpRow.appendChild(el);
+  });
+
+  /* DOM 引用 */
+  var statusEl = document.getElementById('status');
+  var resultText = document.getElementById('resultText');
+  var caret = document.getElementById('caret');
+  var metrics = document.getElementById('metrics');
+  var recognizeBtn = document.getElementById('recognizeBtn');
+  var resetBtn = document.getElementById('resetBtn');
+
+  function setStatus(el, txt, cls) {
+    el.className = 'st' + (cls ? ' ' + cls : '');
+    el.querySelector('span').textContent = txt;
+  }
+
+  /* 波形动画 */
+  function animateWave(bars, on) {
+    if (on) {
+      var t = 0;
+      waveTimer = setInterval(function () {
+        t += 1;
+        bars.forEach(function (b, i) {
+          var base = Math.sin(t / 5 + i * 0.5);
+          var env = Math.sin(t / 22 + i / 9);
+          var h = 7 + Math.abs(base) * (0.45 + 0.55 * Math.random()) * Math.abs(env) * 60;
+          b.style.height = h.toFixed(1) + 'px';
+        });
+      }, 55);
+    } else {
+      clearInterval(waveTimer);
+      waveTimer = null;
+      flatten(bars);
+    }
+  }
+
+  /* 流式输出文字 */
+  function streamText(el, caretEl, full, speed, done) {
+    var i = 0;
+    el.classList.remove('ph');
+    el.textContent = '';
+    caretEl.classList.add('on');
+    el.appendChild(caretEl);
+    streamTimer = setInterval(function () {
+      i++;
+      el.textContent = full.slice(0, i);
+      el.appendChild(caretEl);
+      if (i >= full.length) {
+        clearInterval(streamTimer);
+        streamTimer = null;
+        caretEl.classList.remove('on');
+        if (done) done();
+      }
+    }, speed);
+  }
+
+  /* 重置示例区 */
+  function resetSample() {
+    if (streamTimer) { clearInterval(streamTimer); streamTimer = null; }
+    animateWave(waveBars, false);
+    running = false;
+    recognizeBtn.disabled = false;
+    caret.classList.remove('on');
+    resultText.classList.add('ph');
+    resultText.textContent = '选择示例音频后点击「开始识别」，识别文本将随说随返。';
+    resultText.appendChild(caret);
+    metrics.classList.remove('show');
+    document.getElementById('mConf').textContent = '—';
+    document.getElementById('mTime').textContent = '—';
+    document.getElementById('mChars').textContent = '—';
+    setStatus(statusEl, '待机', '');
+  }
+
+  /* 识别动作 */
+  function recognize() {
+    if (running) return;
+    var s = SAMPLES[selected];
+    running = true;
+    recognizeBtn.disabled = true;
+    metrics.classList.remove('show');
+    setStatus(statusEl, '识别中', 'busy');
+    animateWave(waveBars, true);
+    resultText.classList.remove('ph');
+    resultText.textContent = '';
+    resultText.appendChild(caret);
+    caret.classList.add('on');
+
+    setTimeout(function () {
+      streamText(resultText, caret, s.text, 78, function () {
+        animateWave(waveBars, false);
+        setStatus(statusEl, '识别完成', 'done');
+        document.getElementById('mConf').textContent = s.conf.toFixed(1) + '%';
+        document.getElementById('mTime').textContent = s.ms + 'ms';
+        document.getElementById('mChars').textContent = s.text.length + ' 字';
+        metrics.classList.add('show');
+        running = false;
+        recognizeBtn.disabled = false;
+      });
+    }, 520);
+  }
+
+  recognizeBtn.addEventListener('click', recognize);
+  resetBtn.addEventListener('click', resetSample);
+
+  /* ---------- 实时录音 ---------- */
+  var recBtn = document.getElementById('recBtn');
+  var recLabel = document.getElementById('recLabel');
+  var recStatus = document.getElementById('recStatus');
+  var recMsg = document.getElementById('recMsg');
+  var recResult = document.getElementById('recResult');
+  var recCaret = document.getElementById('recCaret');
+  var recording = false;
+  var mediaStream = null, audioCtx = null, analyser = null, rafId = null, recStreamTimer = null;
+
+  function stopRecording() {
+    if (!recording) return;
+    recording = false;
+    recBtn.classList.remove('on');
+    recLabel.textContent = '点击录音';
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    if (mediaStream) { mediaStream.getTracks().forEach(function (t) { t.stop(); }); mediaStream = null; }
+    if (audioCtx) { audioCtx.close().catch(function () {}); audioCtx = null; }
+    flatten(recBars);
+  }
+
+  async function startRecording() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      recMsg.textContent = '当前浏览器不支持麦克风录音，请使用最新版 Chrome / Edge 体验。';
+      recMsg.classList.add('show');
+      return;
+    }
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      recMsg.textContent = '未能获取麦克风权限，请在浏览器地址栏允许麦克风访问后重试。';
+      recMsg.classList.add('show');
+      return;
+    }
+    recMsg.classList.remove('show');
+    recording = true;
+    recBtn.classList.add('on');
+    recLabel.textContent = '结束录音';
+    setStatus(recStatus, '录音中', 'busy');
+    recResult.classList.add('ph');
+    recResult.textContent = '正在采集音频…';
+    recResult.appendChild(recCaret);
+
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var src = audioCtx.createMediaStreamSource(mediaStream);
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 128;
+    src.connect(analyser);
+    var data = new Uint8Array(analyser.frequencyBinCount);
+
+    (function draw() {
+      if (!recording) return;
+      analyser.getByteFrequencyData(data);
+      recBars.forEach(function (b, i) {
+        var v = data[i % data.length] / 255;
+        b.style.height = (6 + v * 64).toFixed(1) + 'px';
+      });
+      rafId = requestAnimationFrame(draw);
+    })();
+  }
+
+  function finishRecording() {
+    stopRecording();
+    setStatus(recStatus, '识别中', 'busy');
+    recResult.classList.remove('ph');
+    recResult.textContent = '';
+    recResult.appendChild(recCaret);
+    var demo = '这是一段实时录音的演示识别结果，接入标贝一句话识别接口后即可获得真实转写文本。';
+    setTimeout(function () {
+      streamText(recResult, recCaret, demo, 70, function () {
+        setStatus(recStatus, '识别完成 · 演示', 'done');
+      });
+    }, 650);
+  }
+
+  recBtn.addEventListener('click', function () {
+    if (recording) { finishRecording(); }
+    else { startRecording(); }
+  });
+
+  window.addEventListener('beforeunload', stopRecording);
+
+  /* 初始化 */
+  resetSample();
+})();
+</script>
+</body>
+</html>

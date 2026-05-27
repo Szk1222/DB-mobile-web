@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数据标注服务 · 标贝科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="_shared.css" />
+<style>
+/* ==== 数据标注 · 页面专属 ==== */
+.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+
+/* 标注画布 mock */
+.anno-mock { padding: 24px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg, rgba(10,20,46,0.85), rgba(7,13,32,0.85)); box-shadow: var(--shadow-card); position: relative; }
+.anno-mock::before { content: ""; position: absolute; top: -1px; left: 32px; right: 32px; height: 2px; background: var(--grad-line); }
+.anno-toolbar { display: flex; flex-direction: column; gap: 8px; position: absolute; left: 14px; top: 70px; }
+.anno-toolbar i { width: 36px; height: 36px; border-radius: 8px; background: rgba(76,201,240,0.06); border: 1px solid var(--line); display: grid; place-items: center; color: var(--text-mute); cursor: pointer; transition: all 220ms ease; }
+.anno-toolbar i:hover { color: var(--brand-hi); border-color: var(--brand-hi); }
+.anno-toolbar i.active { background: rgba(76,201,240,0.18); color: var(--brand-hi); border-color: var(--brand-hi); box-shadow: 0 0 12px rgba(76,201,240,0.4); }
+.anno-canvas { margin-left: 56px; padding: 12px; border-radius: 8px; background: linear-gradient(135deg, rgba(24,166,184,0.08), rgba(112,87,200,0.08)); height: 320px; position: relative; overflow: hidden; }
+.anno-canvas::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--cyan-hi), transparent); animation: scan 2.6s ease-in-out infinite; box-shadow: 0 0 12px var(--cyan-hi); }
+@keyframes scan { 0%{ top: 0; } 50%{ top: calc(100% - 2px); } 100%{ top: 0; } }
+.anno-bbox { position: absolute; border: 1.5px dashed; border-radius: 3px; animation: bboxBlink 2.4s ease-in-out infinite; }
+.anno-bbox b { position: absolute; top: -18px; left: -1px; padding: 2px 8px; font-family: var(--font-mono); font-size: 9px; font-weight: 600; color: #060d22; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 2px; }
+.anno-bbox.b1 { left: 10%; top: 14%; width: 36%; height: 56%; border-color: var(--brand-hi); }
+.anno-bbox.b1 b { background: var(--brand-hi); }
+.anno-bbox.b2 { left: 54%; top: 22%; width: 32%; height: 44%; border-color: var(--violet-hi); animation-delay: 0.5s; }
+.anno-bbox.b2 b { background: var(--violet-hi); color: #fff; }
+.anno-bbox.b3 { left: 8%; top: 78%; width: 80%; height: 16%; border-color: #44e08a; animation-delay: 1s; }
+.anno-bbox.b3 b { background: #44e08a; }
+@keyframes bboxBlink { 50% { opacity: 0.55; } }
+.anno-foot { display: flex; align-items: center; gap: 14px; margin-top: 16px; padding: 12px 14px; border-radius: var(--r); background: rgba(76,201,240,0.06); border: 1px solid rgba(76,201,240,0.2); color: var(--brand-hi); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; }
+.anno-foot .led { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-hi); box-shadow: 0 0 8px var(--brand-hi); animation: blink 1.2s infinite; }
+.anno-foot .gap { flex: 1; }
+.anno-foot b { color: var(--text-hi); }
+
+/* Annotation type cards */
+.types-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.type-card { position: relative; padding: 28px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg, rgba(13,26,58,0.55), rgba(10,20,46,0.55)); overflow: hidden; transition: all 240ms ease; }
+.type-card:hover { border-color: rgba(76,201,240,0.4); transform: translateY(-4px); }
+.type-card .head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.type-card h3 { font-family: var(--font-display); font-size: 1.18rem; font-weight: 600; margin: 0; }
+.type-card .featured { background: linear-gradient(180deg, rgba(177,77,255,0.12), rgba(13,26,58,0.55)); border-color: rgba(177,77,255,0.35); }
+.type-card .hot { display: inline-block; padding: 2px 8px; border-radius: 3px; background: var(--violet-hi); color: #fff; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; margin-left: 8px; }
+.type-card .pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.type-card .pills span { padding: 4px 9px; border: 1px solid var(--line); border-radius: 4px; color: var(--text); background: rgba(76,201,240,0.04); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; }
+.type-card p { color: var(--text-mute); font-size: 0.9rem; margin: 0; line-height: 1.72; }
+
+/* Quality split */
+.quality-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.q-step-list { display: grid; gap: 0; }
+.q-step { display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding: 20px 0; border-top: 1px solid var(--line); position: relative; }
+.q-step:last-child { border-bottom: 1px solid var(--line); }
+.q-step .num { width: 36px; height: 36px; border-radius: 9px; background: linear-gradient(135deg, var(--brand), var(--cyan)); display: grid; place-items: center; color: #fff; font-family: var(--font-tech); font-weight: 700; font-size: 0.92rem; box-shadow: 0 0 14px rgba(76,201,240,0.35); }
+.q-step h4 { font-family: var(--font-display); font-size: 1.04rem; font-weight: 600; margin: 4px 0 6px; }
+.q-step p { color: var(--text-mute); font-size: 0.9rem; margin: 0; line-height: 1.72; }
+
+.q-overview { padding: 28px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg, rgba(13,26,58,0.7), rgba(10,20,46,0.55)); position: relative; overflow: hidden; }
+.q-overview::before { content: ""; position: absolute; top: -1px; left: 24px; right: 24px; height: 2px; background: var(--grad-line); }
+.q-overview .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+.q-overview h4 { font-family: var(--font-display); font-size: 1.06rem; font-weight: 600; margin: 0; }
+.q-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
+.q-metric { padding: 18px; border: 1px solid var(--line); border-radius: var(--r); background: rgba(7,13,32,0.5); }
+.q-metric .v { display: block; font-family: var(--font-tech); font-size: 1.7rem; font-weight: 700; color: var(--text-hi); line-height: 1; }
+.q-metric .v em { color: var(--brand-hi); font-style: normal; font-size: 1.05rem; }
+.q-metric .l { display: block; margin-top: 6px; color: var(--text-mute); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+.q-tools { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding-top: 18px; border-top: 1px solid var(--line); }
+.q-tool { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px; border-radius: var(--r); background: rgba(76,201,240,0.04); border: 1px solid var(--line); }
+.q-tool svg { color: var(--brand-hi); }
+.q-tool span { color: var(--text-mute); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+@media (max-width: 1100px) {
+  .hero-grid, .quality-grid { grid-template-columns: 1fr; }
+  .types-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 720px) {
+  .types-grid { grid-template-columns: 1fr; }
+  .q-metrics, .q-tools { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div data-reveal>
+        <nav class="crumbs" aria-label="面包局>
+          <a href="homepage.html">首页</a>
+          <span class="sep">/</span>
+          <span>数据服务</span>
+          <span class="sep">/</span>
+          <span class="cur">数据标注</span>
+        </nav>
+        <span class="eyebrow">Data Annotation · 数据标注</span>
+        <h1 class="display">
+          <span class="line">AI 驱动</span>
+          <span class="line glow-text">高精度多模态标</span>
+        </h1>
+        <p class="lead">AI 预标法+ 专业标注呀+ 质检员交叉审核，叠加自研标注平台，让大规模数据生产同时具备精度、效率与可追溯性，适配各类训练与评测任务</p>
+        <div class="page-actions">
+          <a href="homepage.html#contact" class="btn btn-primary">
+            预约标注试点
+            <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="data_service_collection.html" class="btn btn-ghost">了解采集服务</a>
+        </div>
+      </div>
+
+      <div class="anno-mock" data-reveal>
+        <div class="viz-title-bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <span class="title">annotator.workspace</span>
+          <span class="badge">●LIVE</span>
+        </div>
+        <div class="anno-toolbar">
+          <i class="active" title="框通><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2" width="12" height="12" rx="1"/></svg></i>
+          <i title="多边当><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><polygon points="8,2 14,6 12,13 4,13 2,6"/></svg></i>
+          <i title="关键点><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="4" cy="4" r="1.5"/><circle cx="12" cy="4" r="1.5"/><circle cx="8" cy="12" r="1.5"/></svg></i>
+          <i title="语义分割"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 8c2-3 4-3 6 0s4 3 6 0"/><path d="M2 12c2-3 4-3 6 0s4 3 6 0"/></svg></i>
+        </div>
+        <div class="anno-canvas">
+          <div class="anno-bbox b1"><b>PERSON · 0.98</b></div>
+          <div class="anno-bbox b2"><b>BAG · 0.94</b></div>
+          <div class="anno-bbox b3"><b>SIDEWALK · 0.91</b></div>
+        </div>
+        <div class="anno-foot">
+          <span class="led"></span>
+          <span>AI 预标法· <b>已识分18 个目栀/b></span>
+          <span class="gap"></span>
+          <span>IoU <b>0.92</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANNOTATION TYPES -->
+<section class="section">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">01 · Types</span>
+      <h2 class="display">全模态span class="glow-text">标注能力矩阵</span></h2>
+      <p>覆盖图像、视频、语音、文本、D 点云与大模型偏好评测六大类，单一项目可融合多种标注形式</p>
+    </div>
+    <div class="types-grid" data-reveal>
+      <article class="type-card">
+        <div class="head">
+          <div class="icb icb-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><rect x="7" y="7" width="6" height="6" rx="1"/><rect x="14" y="10" width="5" height="5" rx="1" stroke-dasharray="2 1"/></svg></div>
+          <h3>图像标注</h3>
+        </div>
+        <div class="pills"><span>目标检</span><span>语义分割</span><span>关键</span><span>3D </span></div>
+        <p>BBox / Polygon / Mask / Keypoint 等多形态标注，支持稠密目标、遮挡场景与超大分辨率图像</p>
+      </article>
+      <article class="type-card">
+        <div class="head">
+          <div class="icb icb-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9v6M7 6v12M10 8v8M13 5v14M16 7v10M19 9v6" stroke-linecap="round"/></svg></div>
+          <h3>语音标注</h3>
+        </div>
+        <div class="pills"><span>转写</span><span>音素对齐</span><span>情感</span><span>说话</span></div>
+        <p>逐字时间戳对齐、说话人分离、情感分类、噪声事件标记，适配 ASR / TTS / 声纹模型训练</p>
+      </article>
+      <article class="type-card">
+        <div class="head">
+          <div class="icb icb-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></div>
+          <h3>文本标注</h3>
+        </div>
+        <div class="pills"><span>NER</span><span>关系</span><span>意图</span><span>分类</span></div>
+        <p>命名实体、关系抽取、意图识别、情感分类、对话状态等多种文本标注任务支持</p>
+      </article>
+      <article class="type-card">
+        <div class="head">
+          <div class="icb icb-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg></div>
+          <h3>视频标注</h3>
+        </div>
+        <div class="pills"><span>目标追踪</span><span>行为识别</span><span>时序切分</span></div>
+        <p>帧级 BBox / 时序切片 / 动作分类 / 多目栀ID 追踪，适配自动驾驶与行为识别场景</p>
+      </article>
+      <article class="type-card">
+        <div class="head">
+          <div class="icb icb-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L22 7v10L12 22 2 17V7L12 2z"/><path d="M12 2v20M2 7l10 5 10-5" opacity=".6"/></svg></div>
+          <h3>3D / 激光雷</h3>
+        </div>
+        <div class="pills"><span>点云 3D </span><span>融合标注</span><span>语义分割</span></div>
+        <p>点云 3D BBox、点云语义分割、相机与雷达多传感器融合标注，原生支持自动驾驶数据集格式</p>
+      </article>
+      <article class="type-card featured">
+        <div class="head">
+          <div class="icb icb-sm" style="border-color:rgba(177,77,255,0.4);color:var(--violet-hi)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 6-6"/></svg></div>
+          <h3>大模型标法span class="hot">HOT</span></h3>
+        </div>
+        <div class="pills"><span>RLHF 偏好</span><span>SFT 指令</span><span>评测打分</span></div>
+        <p>RLHF 偏好对比、SFT 指令微调、对齐评测、安全红队等大模型专属标注任务，支持多人交叉打分</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY SYSTEM -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="quality-grid">
+      <div data-reveal>
+        <span class="eyebrow">02 · QA System</span>
+        <h2 class="display" style="font-size:clamp(1.8rem,3.2vw,2.6rem);margin:18px 0 18px">多重<span class="glow-text">质量保障体系</span></h2>
+        <p style="color:var(--text-mute); max-width:520px; margin:0 0 24px;">AI 预检 + 专业标注员初栀+ 质检员交叉审栀+ 客户验收，四道关卡保障标注精度与一致性，所有环节皆可追溯</p>
+        <div class="q-step-list">
+          <div class="q-step">
+            <div class="num">01</div>
+            <div>
+              <h4>AI 预标注与辅助检</h4>
+              <p>引入自研预标模型，自动识别明显目标并输出置信度，大幅压缩重复劳动</p>
+            </div>
+          </div>
+          <div class="q-step">
+            <div class="num">02</div>
+            <div>
+              <h4>专业标注员初</h4>
+              <p>分领域培训认证的标注员负责精修与复杂场景判断，按任务难度分级派单</p>
+            </div>
+          </div>
+          <div class="q-step">
+            <div class="num">03</div>
+            <div>
+              <h4>质检员交叉审</h4>
+              <p>独立质检团队按抽样率与全检规则进行交叉复核，记录返工原因形成迭代闭环</p>
+            </div>
+          </div>
+          <div class="q-step">
+            <div class="num">04</div>
+            <div>
+              <h4>客户验收与反馈闭</h4>
+              <p>客户验收意见直接进入工单系统，复训规则同步至 AI 预标模型与标注员培训</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal style="display:grid;gap:18px">
+        <div class="q-overview">
+          <div class="top">
+            <h4>标注质量概览</h4>
+            <span class="pill pill-green">●实时监控</span>
+          </div>
+          <div class="q-metrics">
+            <div class="q-metric"><span class="v">99.2<em>%</em></span><span class="l">标注准确</span></div>
+            <div class="q-metric"><span class="v">98.6<em>%</em></span><span class="l">客户验收</span></div>
+            <div class="q-metric"><span class="v">3.4<em>×</em></span><span class="l">AI 提速倍率</span></div>
+            <div class="q-metric"><span class="v">72<em>h</em></span><span class="l">平均交付周期</span></div>
+          </div>
+          <div class="q-tools">
+            <div class="q-tool">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2" width="7" height="7" rx="1"/><rect x="11" y="2" width="7" height="7" rx="1"/><rect x="2" y="11" width="7" height="7" rx="1"/><rect x="11" y="11" width="7" height="7" rx="1"/></svg>
+              <span>框</span>
+            </div>
+            <div class="q-tool">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><polygon points="10,3 17,7 15,15 5,15 3,7"/></svg>
+              <span>多边</span>
+            </div>
+            <div class="q-tool">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="6" cy="6" r="1.6"/><circle cx="14" cy="6" r="1.6"/><circle cx="10" cy="15" r="1.6"/></svg>
+              <span>关键</span>
+            </div>
+            <div class="q-tool">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 2L18 6v8L10 18 2 14V6L10 2z"/></svg>
+              <span>3D 点云</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card" data-reveal>
+      <div class="cta-inner">
+        <span class="eyebrow">Next Step</span>
+        <h2>启动高质量数据标</h2>
+        <p>把标注规范交给我们，从规则确认到数据交付，标贝团队提供端到端的项目管理与质量保障</p>
+        <div class="cta-actions">
+          <a href="homepage.html#contact" class="btn btn-primary">
+            预约方案沟通            <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="dataset_llm.html" class="btn btn-ghost">大模型数据集</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="_shared.js"></script>
+</body>
+</html>
+

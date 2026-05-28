@@ -317,6 +317,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         <span class="sb-label">咨询</span>
       </button>
+      <button class="sidebar-btn" onclick="openMessageModal()" title="留言">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H8l-4 4V6c0-1.1.9-2 2-2z"/><path d="M8 9h8M8 13h5"/></svg>
+        <span class="sb-label">留言</span>
+      </button>
       <button class="sidebar-btn" title="客服二维码">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2z"/></svg>
         <span class="sb-label">客服</span>
@@ -423,12 +427,64 @@
         </div>
       </div>`;
 
+    /* 留言弹窗 */
+    const msgModal = document.createElement('div');
+    msgModal.className = 'msg-modal';
+    msgModal.id = 'messageModal';
+    msgModal.innerHTML = `
+      <div class="msg-box" role="dialog" aria-labelledby="msgModalTitle" aria-modal="true">
+        <div class="msg-head">
+          <span id="msgModalTitle">请您留言</span>
+          <button class="msg-min" onclick="closeMessageModal()" aria-label="关闭" title="关闭">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg>
+          </button>
+        </div>
+        <form class="msg-body" onsubmit="return submitMessageForm(event)" novalidate>
+          <div class="msg-corp">
+            <p class="msg-corp-name">北京标贝科技股份有限公司</p>
+            <p class="msg-corp-tel">400-898-2016、010-8260-3083</p>
+          </div>
+          <div class="msg-field">
+            <textarea name="content" rows="3" required placeholder="请在此输入留言内容，我们会尽快与您联系。（必填）"></textarea>
+          </div>
+          <div class="msg-field">
+            <span class="msg-pre">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <input type="text" name="name" required placeholder="姓名（必填）" />
+          </div>
+          <div class="msg-field">
+            <span class="msg-pre">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2z"/></svg>
+            </span>
+            <input type="tel" name="phone" required pattern="^[0-9+\\-\\s()]{6,20}$" placeholder="电话（必填）" />
+          </div>
+          <div class="msg-field">
+            <span class="msg-pre">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            </span>
+            <input type="text" name="org" required placeholder="学校/企业（必填）" />
+          </div>
+          <div class="msg-field">
+            <span class="msg-pre">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+            </span>
+            <input type="email" name="email" placeholder="邮箱" />
+          </div>
+          <div class="msg-actions">
+            <button type="submit" class="msg-submit">提交</button>
+          </div>
+        </form>
+      </div>`;
+
     document.body.appendChild(sidebar);
     document.body.appendChild(modal);
     document.body.appendChild(chat);
+    document.body.appendChild(msgModal);
 
     /* 点击背景关闭弹窗 */
     modal.addEventListener('click', e => { if (e.target === modal) closeTrialModal(); });
+    msgModal.addEventListener('click', e => { if (e.target === msgModal) closeMessageModal(); });
   }
 
   /* 全局暴露弹窗方法 */
@@ -436,6 +492,51 @@
   window.closeTrialModal = () => document.getElementById('trialModal').classList.remove('is-open');
   window.openChatPopup   = () => document.getElementById('chatPopup').classList.add('is-open');
   window.closeChatPopup  = () => document.getElementById('chatPopup').classList.remove('is-open');
+  window.openMessageModal = () => {
+    const m = document.getElementById('messageModal');
+    if (!m) return;
+    m.classList.add('is-open');
+    setTimeout(() => { const t = m.querySelector('textarea'); if (t) t.focus(); }, 80);
+  };
+  window.closeMessageModal = () => {
+    const m = document.getElementById('messageModal');
+    if (m) m.classList.remove('is-open');
+  };
+  window.submitMessageForm = (ev) => {
+    ev.preventDefault();
+    const form = ev.target;
+    const fields = ['content','name','phone','org'];
+    let firstInvalid = null;
+    fields.forEach(n => {
+      const el = form.elements[n];
+      if (!el) return;
+      const v = (el.value || '').trim();
+      const ok = v && (n !== 'phone' || /^[0-9+\-\s()]{6,20}$/.test(v));
+      el.closest('.msg-field').classList.toggle('is-invalid', !ok);
+      if (!ok && !firstInvalid) firstInvalid = el;
+    });
+    if (firstInvalid) { firstInvalid.focus(); return false; }
+    /* 模拟提交：实际项目可在此处替换为接口调用 */
+    const btn = form.querySelector('.msg-submit');
+    const old = btn.textContent;
+    btn.disabled = true; btn.textContent = '提交中…';
+    setTimeout(() => {
+      btn.textContent = '✓ 提交成功';
+      setTimeout(() => {
+        form.reset();
+        btn.disabled = false; btn.textContent = old;
+        window.closeMessageModal();
+      }, 900);
+    }, 500);
+    return false;
+  };
+  /* ESC 关闭留言弹窗 */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const m = document.getElementById('messageModal');
+      if (m && m.classList.contains('is-open')) window.closeMessageModal();
+    }
+  });
 
   /* ── Cursor ─────────────────────────────────────── */
   function cursor() {

@@ -168,8 +168,10 @@
 /* =========================================================
    ABOUT · Timeline · 5-column vertical
    ========================================================= */
+/* widen timeline beyond the default container for more breathing room */
+#timeline .container { max-width: min(1480px, 96vw); }
 .timeline-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px;
   position: relative;
 }
 /* shared horizontal "spine" line behind the column heads */
@@ -213,63 +215,69 @@
 .tl-col[data-phase="p4"] .tl-dot-big { background: var(--violet-hi);box-shadow: 0 0 16px var(--violet-hi); }
 .tl-col[data-phase="p5"] .tl-dot-big { background: var(--magenta);  box-shadow: 0 0 16px var(--magenta); }
 
-.tl-col-line {
-  position: absolute; left: 50%; top: 102px; bottom: 28px; width: 1px;
-  background: linear-gradient(180deg, rgba(76,201,240,0.45), rgba(76,201,240,0.04));
-  transform: translateX(-50%);
-}
-.tl-col[data-phase="p1"] .tl-col-line { background: linear-gradient(180deg, rgba(68,224,138,0.45), rgba(68,224,138,0.04)); }
-.tl-col[data-phase="p3"] .tl-col-line { background: linear-gradient(180deg, rgba(103,232,249,0.45), rgba(103,232,249,0.04)); }
-.tl-col[data-phase="p4"] .tl-col-line { background: linear-gradient(180deg, rgba(177,77,255,0.45), rgba(177,77,255,0.04)); }
-.tl-col[data-phase="p5"] .tl-col-line { background: linear-gradient(180deg, rgba(255,77,203,0.45), rgba(255,77,203,0.04)); }
+/* legacy centered spine — replaced by per-column left spine on .tl-events */
+.tl-col-line { display: none; }
 
-.tl-events { display: grid; gap: 6px; margin-top: 22px; }
+.tl-events {
+  display: grid; gap: 10px; margin-top: 22px;
+  position: relative;
+  padding-left: 18px;
+}
+/* per-column left spine (replaces the centered one) */
+.tl-events::before {
+  content: ""; position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(76,201,240,0.55), rgba(76,201,240,0.05));
+}
+.tl-col[data-phase="p1"] .tl-events::before { background: linear-gradient(180deg, rgba(68,224,138,0.55), rgba(68,224,138,0.05)); }
+.tl-col[data-phase="p3"] .tl-events::before { background: linear-gradient(180deg, rgba(103,232,249,0.55), rgba(103,232,249,0.05)); }
+.tl-col[data-phase="p4"] .tl-events::before { background: linear-gradient(180deg, rgba(177,77,255,0.55), rgba(177,77,255,0.05)); }
+.tl-col[data-phase="p5"] .tl-events::before { background: linear-gradient(180deg, rgba(255,77,203,0.55), rgba(255,77,203,0.05)); }
 
 .tl-event {
-  position: relative; padding: 8px 8px 8px 22px;
+  position: relative;
+  padding: 8px 10px 10px 16px;
   border-radius: 8px;
+  text-align: left;
   transition: background 200ms ease;
 }
-.tl-event:hover { background: rgba(76,201,240,0.05); }
+.tl-event:hover { background: rgba(76,201,240,0.06); }
 .tl-event::before {
-  content: ""; position: absolute; left: 50%; top: 14px;
-  width: 8px; height: 8px; border-radius: 50%;
-  transform: translateX(-50%);
+  content: ""; position: absolute;
+  left: -13px; top: 13px;
+  width: 9px; height: 9px; border-radius: 50%;
   background: var(--bg-0);
   border: 1.5px solid var(--brand-hi);
-  box-shadow: 0 0 0 2px rgba(76,201,240,0.12);
+  box-shadow: 0 0 0 2px rgba(76,201,240,0.18), 0 0 8px rgba(76,201,240,0.4);
 }
-.tl-col[data-phase="p1"] .tl-event::before { border-color: #44e08a;          box-shadow: 0 0 0 2px rgba(68,224,138,0.12); }
-.tl-col[data-phase="p3"] .tl-event::before { border-color: var(--cyan-hi);   box-shadow: 0 0 0 2px rgba(103,232,249,0.12); }
-.tl-col[data-phase="p4"] .tl-event::before { border-color: var(--violet-hi); box-shadow: 0 0 0 2px rgba(177,77,255,0.12); }
-.tl-col[data-phase="p5"] .tl-event::before { border-color: var(--magenta);   box-shadow: 0 0 0 2px rgba(255,77,203,0.12); }
-
-/* even-indexed events float to the left, odd to the right of the spine */
-.tl-event { width: calc(50% - 4px); }
-.tl-event:nth-child(odd)  { margin-right: auto; text-align: right; padding: 8px 22px 8px 8px; }
-.tl-event:nth-child(even) { margin-left: auto;  text-align: left;  padding: 8px 8px 8px 22px; }
-.tl-event:nth-child(odd)::before  { left: auto; right: -4px; }
-.tl-event:nth-child(even)::before { left: -4px; right: auto; }
+.tl-col[data-phase="p1"] .tl-event::before { border-color: #44e08a;          box-shadow: 0 0 0 2px rgba(68,224,138,0.18),  0 0 8px rgba(68,224,138,0.4); }
+.tl-col[data-phase="p3"] .tl-event::before { border-color: var(--cyan-hi);   box-shadow: 0 0 0 2px rgba(103,232,249,0.18), 0 0 8px rgba(103,232,249,0.4); }
+.tl-col[data-phase="p4"] .tl-event::before { border-color: var(--violet-hi); box-shadow: 0 0 0 2px rgba(177,77,255,0.18), 0 0 8px rgba(177,77,255,0.4); }
+.tl-col[data-phase="p5"] .tl-event::before { border-color: var(--magenta);   box-shadow: 0 0 0 2px rgba(255,77,203,0.18), 0 0 8px rgba(255,77,203,0.4); }
 
 .tl-event .tl-when {
-  color: var(--brand-hi); font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 0.1em; display: block; margin-bottom: 4px;
+  color: var(--brand-hi); font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: 0.1em; display: block; margin-bottom: 6px;
+  font-weight: 600;
 }
 .tl-col[data-phase="p1"] .tl-event .tl-when { color: #44e08a; }
 .tl-col[data-phase="p3"] .tl-event .tl-when { color: var(--cyan-hi); }
 .tl-col[data-phase="p4"] .tl-event .tl-when { color: var(--violet-hi); }
 .tl-col[data-phase="p5"] .tl-event .tl-when { color: var(--magenta); }
 
-.tl-event ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 3px; }
-.tl-event li { color: var(--text); font-size: 0.82rem; line-height: 1.5; }
+.tl-event ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+.tl-event li {
+  color: var(--text); font-size: 0.84rem; line-height: 1.6;
+  word-break: break-word;
+}
 
 @media (max-width: 1280px) {
-  .timeline-grid { grid-template-columns: repeat(5, 1fr); gap: 10px; }
-  .tl-col { padding: 18px 10px 22px; }
-  .tl-event { padding: 6px 12px 6px 4px; }
-  .tl-event:nth-child(odd)  { padding: 6px 16px 6px 4px; }
-  .tl-event:nth-child(even) { padding: 6px 4px 6px 16px; }
-  .tl-event li { font-size: 0.78rem; }
+  .timeline-grid { grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .tl-col { padding: 18px 14px 22px; }
+  .tl-events { padding-left: 16px; }
+  .tl-event { padding: 6px 8px 8px 12px; }
+  .tl-event li { font-size: 0.79rem; }
 }
 @media (max-width: 980px) {
   .timeline-grid { grid-template-columns: 1fr 1fr; }
@@ -300,29 +308,80 @@
 .map-body { display: block; }
 .map-canvas {
   position: relative;
-  aspect-ratio: 1600 / 700;
+  aspect-ratio: 1600 / 760;
   width: 100%;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--r);
   background:
-    radial-gradient(circle at 20% 45%, rgba(76,201,240,0.12), transparent 55%),
-    radial-gradient(circle at 80% 45%, rgba(103,232,249,0.08), transparent 55%);
+    radial-gradient(ellipse 60% 80% at 32% 55%, rgba(76,201,240,0.18), transparent 60%),
+    radial-gradient(ellipse 45% 60% at 78% 50%, rgba(103,232,249,0.10), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 100%, rgba(177,77,255,0.10), transparent 70%),
+    linear-gradient(180deg, #050817 0%, #0a1230 60%, #050817 100%);
   overflow: hidden;
+  isolation: isolate;
 }
-.map-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* faint starfield + scan-line overlay for sci-fi depth */
+.map-canvas::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(143,214,255,0.55), transparent 60%),
+    radial-gradient(1px 1px at 28% 72%, rgba(143,214,255,0.4),  transparent 60%),
+    radial-gradient(1px 1px at 55% 12%, rgba(177,77,255,0.5),   transparent 60%),
+    radial-gradient(1px 1px at 73% 60%, rgba(103,232,249,0.5),  transparent 60%),
+    radial-gradient(1px 1px at 88% 28%, rgba(143,214,255,0.5),  transparent 60%),
+    radial-gradient(1.5px 1.5px at 42% 40%, rgba(255,255,255,0.45), transparent 60%);
+  background-size: 100% 100%;
+  mix-blend-mode: screen;
+}
+.map-canvas::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background-image:
+    linear-gradient(rgba(143,214,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143,214,255,0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 55%, #000 35%, transparent 92%);
+}
+.map-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 2; }
 
 /* lat/lon grid */
 .map-svg .grat        { stroke: rgba(143,214,255,0.08); stroke-width: 0.6; fill: none; }
-.map-svg .grat-bold   { stroke: rgba(143,214,255,0.16); stroke-width: 0.6; fill: none; stroke-dasharray: 2 4; }
-.map-svg .grat-label  { fill: rgba(143,214,255,0.35); font: 9px/1 "JetBrains Mono", monospace; letter-spacing: 0.08em; }
-.map-svg .country     { fill: rgba(76,201,240,0.06); stroke: rgba(76,201,240,0.6); stroke-width: 1.2; stroke-linejoin: round; }
-.map-svg .country.cn  { fill: url(#cnFill); stroke: rgba(76,201,240,0.9); stroke-width: 1.5; filter: drop-shadow(0 0 8px rgba(76,201,240,0.35)); }
-.map-svg .country.ctx { fill: rgba(143,214,255,0.04); stroke: rgba(143,214,255,0.22); stroke-width: 0.8; stroke-dasharray: 3 3; }
-.map-svg .route       { fill: none; stroke: rgba(76,201,240,0.55); stroke-width: 0.9; stroke-dasharray: 3 4; }
-.map-svg .route.dim   { stroke: rgba(177,77,255,0.45); }
+.map-svg .grat-bold   { stroke: rgba(143,214,255,0.18); stroke-width: 0.6; fill: none; stroke-dasharray: 2 4; }
+.map-svg .grat-label  { fill: rgba(143,214,255,0.42); font: 9px/1 "JetBrains Mono", monospace; letter-spacing: 0.08em; }
+
+/* =====  Multi-layer 伪3D country rendering  =====
+   Each country gets 4 stacked paths offset down (Y+) to fake thickness:
+     · .country-shadow : darkest, lowest, soft-blurred halo at the base
+     · .country-deep   : mid-deep tone, +8px
+     · .country-mid    : interpolated tone, +4px
+     · .country        : top layer with glowing outline   */
+.map-svg .country-shadow { fill: rgba(76,201,240,0.18); stroke: none; filter: url(#mapBlurStrong); opacity: 0.85; }
+.map-svg .country-deep   { fill: rgba(20,55,110,0.95);  stroke: rgba(76,201,240,0.18); stroke-width: 0.6; stroke-linejoin: round; }
+.map-svg .country-mid    { fill: rgba(34,82,150,0.85);  stroke: rgba(76,201,240,0.28); stroke-width: 0.8; stroke-linejoin: round; }
+.map-svg .country {
+  fill: url(#countryFill);
+  stroke: rgba(143,224,255,0.95); stroke-width: 1.2; stroke-linejoin: round;
+  filter: url(#mapGlow);
+}
+/* China focal layers — brighter, gradient fill, stronger glow */
+.map-svg .country-deep.cn { fill: rgba(48,28,120,0.95); stroke: rgba(177,77,255,0.30); }
+.map-svg .country-mid.cn  { fill: rgba(70,46,170,0.85); stroke: rgba(177,77,255,0.40); }
+.map-svg .country.cn      { fill: url(#cnFill); stroke: rgba(177,224,255,1); stroke-width: 1.6; filter: url(#mapGlowStrong); }
+.map-svg .country-shadow.cn { fill: rgba(177,77,255,0.25); }
+/* context / overseas region styling — subtler */
+.map-svg .country-deep.ctx { fill: rgba(18,40,80,0.7); stroke: rgba(143,214,255,0.18); }
+.map-svg .country-mid.ctx  { fill: rgba(28,60,110,0.65); stroke: rgba(143,214,255,0.22); }
+.map-svg .country.ctx      { fill: rgba(76,201,240,0.10); stroke: rgba(143,214,255,0.6); stroke-width: 0.9; stroke-dasharray: 3 3; filter: none; }
+.map-svg .country-shadow.ctx { fill: rgba(76,201,240,0.10); }
+
+.map-svg .route       { fill: none; stroke: rgba(76,201,240,0.6); stroke-width: 1; stroke-dasharray: 4 5; filter: drop-shadow(0 0 4px rgba(76,201,240,0.4)); }
+.map-svg .route.dim   { stroke: rgba(177,77,255,0.55); filter: drop-shadow(0 0 4px rgba(177,77,255,0.4)); }
+/* animated route dash flow */
+@keyframes route-flow { to { stroke-dashoffset: -180; } }
+.map-svg .route { animation: route-flow 8s linear infinite; }
+.map-svg .route.dim { animation: route-flow 12s linear infinite; }
 
 /* pins absolutely positioned over the canvas */
-.map-pin-layer { position: absolute; inset: 0; pointer-events: none; }
+.map-pin-layer { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
 .map-pin {
   position: absolute; transform: translate(-50%,-50%);
   pointer-events: auto;
@@ -429,8 +488,22 @@
 }
 .honor-badge::before { bottom: -10px; border-top: 12px solid rgba(76,201,240,0.5); }
 .honor-badge svg { width: 28px; height: 28px; color: var(--brand-hi); }
-.honor-card h4 { font-family: var(--font-cn); font-size: 0.92rem; font-weight: 600; color: var(--text-hi); margin: 0 0 4px; line-height: 1.3; }
-.honor-card small { color: var(--text-dim); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; }
+.honor-card h4 { font-family: var(--font-cn); font-size: 0.92rem; font-weight: 600; color: var(--text-hi); margin: 0 0 4px; line-height: 1.35; }
+.honor-card small {
+  display: block;
+  color: var(--text-mute);
+  font-family: var(--font-cn);
+  font-size: 11.5px;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+}
+.honor-card small i {
+  font-style: normal;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  letter-spacing: 0.12em;
+  margin-right: 6px;
+}
 
 /* partners */
 .partner-card {
@@ -851,23 +924,56 @@
       <div class="map-body">
         <!-- Mercator-projected canvas · 横向「扁平」视图覆盖中国 + 海外服务中心 -->
         <div class="map-canvas" id="mapCanvas">
-          <svg id="mapSvg" class="map-svg" viewBox="-800 -660 1600 700" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <svg id="mapSvg" class="map-svg" viewBox="-800 -680 1600 760" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
             <defs>
-              <linearGradient id="cnFill" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%"   stop-color="rgba(76,201,240,0.18)"/>
-                <stop offset="100%" stop-color="rgba(177,77,255,0.10)"/>
+              <!-- Country top-layer fill: cyan→violet gradient with subtle vertical falloff -->
+              <linearGradient id="countryFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="rgba(76,201,240,0.42)"/>
+                <stop offset="100%" stop-color="rgba(76,201,240,0.18)"/>
               </linearGradient>
-              <radialGradient id="mapGlow" cx="35%" cy="50%" r="40%">
-                <stop offset="0%"   stop-color="rgba(76,201,240,0.18)"/>
+              <linearGradient id="cnFill" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"   stop-color="rgba(177,77,255,0.55)"/>
+                <stop offset="55%"  stop-color="rgba(76,201,240,0.45)"/>
+                <stop offset="100%" stop-color="rgba(103,232,249,0.40)"/>
+              </linearGradient>
+              <radialGradient id="oceanGlow" cx="35%" cy="50%" r="55%">
+                <stop offset="0%"   stop-color="rgba(76,201,240,0.20)"/>
                 <stop offset="100%" stop-color="rgba(76,201,240,0)"/>
               </radialGradient>
+
+              <!-- Glow filter for top country layer outline -->
+              <filter id="mapGlow" x="-25%" y="-25%" width="150%" height="150%">
+                <feGaussianBlur stdDeviation="2.4" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <filter id="mapGlowStrong" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="4" result="b1"/>
+                <feGaussianBlur stdDeviation="1.6" result="b2"/>
+                <feMerge>
+                  <feMergeNode in="b1"/>
+                  <feMergeNode in="b1"/>
+                  <feMergeNode in="b2"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <!-- Strong blur for the bottom "ground halo" layer -->
+              <filter id="mapBlurStrong" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="9"/>
+              </filter>
             </defs>
 
-            <rect x="-800" y="-660" width="1600" height="700" fill="url(#mapGlow)"/>
+            <rect x="-800" y="-680" width="1600" height="760" fill="url(#oceanGlow)"/>
 
-            <!-- groups populated by JS for clean lat/lon math -->
+            <!-- groups populated by JS — ordered back→front for the pseudo-3D stack -->
             <g id="mapGraticule"></g>
-            <g id="mapCountries"></g>
+            <g id="mapShadows"></g>   <!-- bottom: blurred halos -->
+            <g id="mapDeep"></g>      <!-- deepest plate (+8) -->
+            <g id="mapMid"></g>       <!-- middle plate (+4) -->
+            <g id="mapCountries"></g> <!-- top plate with glow stroke -->
             <g id="mapRoutes"></g>
           </svg>
 
@@ -880,7 +986,7 @@
         <span class="lg-hq">总部 Headquarters</span>
         <span class="lg-base">国内数据基地 Domestic bases</span>
         <span class="lg-office">海外服务中心 Overseas offices</span>
-        <span style="margin-left:auto;color:var(--text-dim);">* 地图为 Mercator 投影 · 主视角聚焦国内区域</span>
+        <span style="margin-left:auto;color:var(--text-dim);">* 多图层叠加 · 发光外轮廓 · 伪 3D 主视角</span>
       </div>
     </div>
   </div>
@@ -990,20 +1096,17 @@
    ========================================================= */
 (function() {
 
-  // ── 荣誉资质 数据 ─────────────────────────────
+  // ── 荣誉资质 数据（对齐旧版官网实际资质）─────────────────────────────
   const HONORS = [
-    { name: '国家专精特新「小巨人」企业',     en: 'Little Giant · National', icon: 'trophy' },
-    { name: '北京专精特新「小巨人」',         en: 'Little Giant · Beijing',  icon: 'star' },
-    { name: '国家高新技术企业',                en: 'National High-Tech',      icon: 'shield' },
-    { name: '国家数据局·首批数据标注优秀案例', en: 'Data Annotation Top',     icon: 'medal' },
-    { name: '国家数据局·首批高质量数据集典型', en: 'High-Quality Dataset',    icon: 'badge' },
-    { name: '中国信通院·语音合成评测优秀',     en: 'CAICT · TTS Eval',        icon: 'trophy' },
-    { name: 'ISO/IEC 27001 信息安全管理体系',  en: 'ISO 27001',               icon: 'shield' },
-    { name: 'ISO 9001 质量管理体系认证',       en: 'ISO 9001',                icon: 'shield' },
-    { name: 'CMMI 软件能力成熟度认证',         en: 'CMMI Certified',          icon: 'badge' },
-    { name: '中关村高新技术企业',              en: 'Z-Park High-Tech',        icon: 'star' },
-    { name: '软件著作权 50+',                  en: 'Software Copyrights',     icon: 'medal' },
-    { name: '人工智能产业联盟核心成员',         en: 'AIIA Core Member',        icon: 'trophy' },
+    { name: '2024语解风云榜·中国 Top10',          en: '大模型语料数据联盟',                  icon: 'trophy' },
+    { name: '2024 金融科技竞争力百强企业',         en: '中关村互联网金融研究院',              icon: 'star'   },
+    { name: '核心竞争力评价',                      en: '2020 获得创新型企业评价',             icon: 'badge'  },
+    { name: '光合组织 · 成员单位',                 en: '2021 年成为海光产业生态合作组织成员', icon: 'medal'  },
+    { name: '华为技术认证',                        en: '2020 年与华为完成鲲鹏兼容性认证',     icon: 'shield' },
+    { name: '优秀服务机器人企业奖',                en: '2019 年荣获 RFC 联盟优秀服务机器人企业奖', icon: 'trophy' },
+    { name: '北京市「专精特新」中小企业',           en: '2021 获得北京市「专精特新」中小企业', icon: 'star'   },
+    { name: '青岛市创新型中小企业',                en: '青岛市民营经济发展局',                icon: 'badge'  },
+    { name: '人工智能融合发展和安全应用典型案例',   en: '国家工业信息安全发展研究中心',        icon: 'medal'  },
   ];
 
   const ICONS = {
@@ -1019,7 +1122,7 @@
       <div class="honor-badge">${ICONS[h.icon] || ICONS.trophy}</div>
       <div>
         <h4>${h.name}</h4>
-        <small>${String(i+1).padStart(2,'0')} · ${h.en}</small>
+        <small><i>${String(i+1).padStart(2,'0')}</i>${h.en}</small>
       </div>
     </div>`;
   }
@@ -1090,7 +1193,9 @@
   //
   // viewBox = "-800 -660 1600 700"   覆盖 lon 100°E 经太平洋至 100°W、lat 约 -2..55
   const LON0 = 180, SCALE = 10;
-  const VB = { x: -800, y: -660, w: 1600, h: 700 };
+  const VB = { x: -800, y: -680, w: 1600, h: 760 };
+  // Y-offset stack for pseudo-3D depth (deepest at the back, top stays at 0)
+  const DEPTH = { shadow: 16, deep: 10, mid: 5, top: 0 };
   function proj(lon, lat) {
     let nlon = lon;
     // wrap so any lon is at most ±180° from LON0
@@ -1147,8 +1252,21 @@
     })).textContent = label;
   });
 
-  // ── countries · China outline (focal) + USA west + context ──
-  const countries = document.getElementById('mapCountries');
+  // ── countries · multi-layer stack for pseudo-3D depth ──
+  const layerShadow = document.getElementById('mapShadows');
+  const layerDeep   = document.getElementById('mapDeep');
+  const layerMid    = document.getElementById('mapMid');
+  const layerTop    = document.getElementById('mapCountries');
+
+  // helper: render one polygon to all 4 stacked layers with Y offsets
+  function renderRegion(latlon, variant /* '' | 'cn' | 'ctx' */) {
+    const v = variant ? ' ' + variant : '';
+    const d = pathFromLatLon(latlon, true);
+    layerShadow.appendChild(el('path', { d, class: 'country-shadow' + v, transform: `translate(0 ${DEPTH.shadow})` }));
+    layerDeep  .appendChild(el('path', { d, class: 'country-deep'   + v, transform: `translate(0 ${DEPTH.deep})`   }));
+    layerMid   .appendChild(el('path', { d, class: 'country-mid'    + v, transform: `translate(0 ${DEPTH.mid})`    }));
+    layerTop   .appendChild(el('path', { d, class: 'country'        + v }));
+  }
 
   // simplified China outline (lon, lat) — clockwise from NW Xinjiang
   const CN_OUTLINE = [
@@ -1161,11 +1279,10 @@
     [75,36],[75,38]
   ];
   const CN_HAINAN = [[109,20],[110.5,20.2],[111,19.2],[110,18.2],[108.6,18.4],[108.6,19.3],[109,20]];
-  countries.appendChild(el('path', { d: pathFromLatLon(CN_OUTLINE, true), class: 'country cn' }));
-  countries.appendChild(el('path', { d: pathFromLatLon(CN_HAINAN, true),  class: 'country cn' }));
+  renderRegion(CN_OUTLINE, 'cn');
+  renderRegion(CN_HAINAN,  'cn');
 
-  // 美国本土西海岸 + 北美西部（简化轮廓） + 阿拉斯加南缘
-  // 注意：负经度会被 proj() 自动 wrap 到 LON0 = 180 的右侧
+  // 美国本土西海岸 + 北美西部 + 阿拉斯加南缘 (context)
   const USA_WEST = [
     [-125, 49], [-124, 48], [-124, 45], [-123, 42], [-124, 40], [-122, 38],
     [-120, 35], [-118, 34], [-117, 33], [-115, 32.5], [-114, 32.5],
@@ -1175,10 +1292,10 @@
     [-168, 65], [-160, 67], [-155, 70], [-148, 70], [-141, 70], [-141, 60],
     [-148, 60], [-155, 58], [-162, 56], [-167, 60], [-168, 65],
   ];
-  countries.appendChild(el('path', { d: pathFromLatLon(USA_WEST, true), class: 'country ctx' }));
-  countries.appendChild(el('path', { d: pathFromLatLon(ALASKA,   true), class: 'country ctx' }));
+  renderRegion(USA_WEST, 'ctx');
+  renderRegion(ALASKA,   'ctx');
 
-  // 周边地理上下文 —— 朝鲜半岛 / 日本 / 台湾 / 东南亚 / 印度南端 / 菲律宾 / 新加坡岛
+  // 周边地理上下文 —— 朝鲜半岛 / 日本 / 台湾 / 东南亚 / 印度南端 / 菲律宾 / 斯里兰卡 / 新加坡岛 / 夏威夷
   const CTX = [
     [[125,38.5],[127,40],[129,38],[129,36],[127.5,35],[126.5,35],[125.5,36.5],[125,38.5]],
     [[131,33.5],[135,34],[139,35.5],[141.5,38],[141.5,41],[140,41],[136,37],[133,34.5],[131,33.5]],
@@ -1188,10 +1305,9 @@
     [[120,14],[122,18],[121,16.5],[120.5,14],[120,14]],
     [[77,8],[80,13],[82,17],[80,20],[77,16],[76,11],[77,8]],
     [[103.6,1.2],[104,1.2],[104,1.5],[103.6,1.5],[103.6,1.2]],
-    // 夏威夷
     [[-156,19.5],[-154.8,19.5],[-154.8,20.3],[-156,20.3],[-156,19.5]],
   ];
-  CTX.forEach(poly => countries.appendChild(el('path', { d: pathFromLatLon(poly, true), class: 'country ctx' })));
+  CTX.forEach(poly => renderRegion(poly, 'ctx'));
 
   // ── routes · Beijing → other locations (含跨太平洋至美国) ──
   const routes = document.getElementById('mapRoutes');

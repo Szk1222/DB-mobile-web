@@ -39,7 +39,7 @@
   --grad-cta:   linear-gradient(120deg, #0469cf 0%, #18a6b8 50%, #7057c8 100%);
 
   --shadow-card: 0 12px 28px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(143,214,255,0.06);
-  --glow-cyan:   0 0 18px rgba(76,201,240,0.32);
+  --glow-cyan:   0 0 18px rgba(63, 171, 204, 0.684);
 
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   --font-tech: "Orbitron", "Rajdhani", "JetBrains Mono", var(--font-cn);
@@ -200,30 +200,12 @@ body::after {
   border-bottom: 1px solid var(--line);
 }
 .m-topbar .logo {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--text-hi);
-  letter-spacing: 0.02em;
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center;
 }
-.m-topbar .logo-mark {
-  width: 22px; height: 22px;
-  border-radius: 6px;
-  background: var(--grad-cta);
-  display: grid; place-items: center;
-  box-shadow: var(--glow-cyan);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  color: #fff;
-}
-.m-topbar .logo small {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-mute);
-  letter-spacing: 0.1em;
-  margin-left: 4px;
+.m-topbar .logo-img {
+  height: 26px;
+  width: auto;
+  display: block;
 }
 .m-topbar .top-cta {
   font-size: 12px;
@@ -238,8 +220,25 @@ body::after {
    ========================================================= */
 .hero {
   position: relative;
-  padding: 32px 16px 40px;
+  padding: 16px 16px 32px;
   overflow: hidden;
+}
+.hero-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.hero-text { flex: 1; min-width: 0; }
+.hero-visual {
+  flex: 0 0 40%;
+  max-width: 40%;
+  margin-top: 8px;
+}
+.hero-visual img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--r);
+  filter: drop-shadow(0 8px 24px rgba(76,201,240,0.18));
 }
 .hero-glow {
   position: absolute;
@@ -251,7 +250,7 @@ body::after {
   pointer-events: none;
   z-index: 0;
 }
-.hero > * { position: relative; z-index: 1; }
+.hero > *:not(.hero-glow) { position: relative; z-index: 1; }
 .hero h1 {
   font-size: 32px;
   margin: 14px 0 16px;
@@ -341,89 +340,87 @@ body::after {
 .biz-card .chip { font-size: 10px; padding: 2px 7px; }
 
 /* =========================================================
-   应用场景 · 双层 Tab
+   应用场景 · 左栏筛选 + 右栏卡片
    ========================================================= */
 .scene-section .container { padding: 0; }
 .scene-head { padding: 0 16px; }
-.tab-bar {
-  position: relative;
-  margin-top: 18px;
-  padding: 0 16px;
-}
-.tab-row {
+
+.scene-layout {
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding-bottom: 8px;
-  margin-bottom: 4px;
-  scroll-snap-type: x proximity;
+  gap: 12px;
+  padding: 18px 16px 0;
+  align-items: flex-start;
 }
-.tab-row::-webkit-scrollbar { display: none; }
-.tab-row.row-2 { margin-bottom: 0; }
-.tab-row .tab-label {
-  flex-shrink: 0;
+.scene-sidebar {
+  flex: 0 0 72px;
+  position: sticky;
+  top: 60px;
+}
+.scene-sidebar .filter-group { margin-bottom: 10px; }
+.scene-sidebar .filter-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9px;
   color: var(--text-dim);
-  letter-spacing: 0.12em;
-  align-self: center;
-  padding-right: 4px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  margin-bottom: 6px;
+  padding-left: 2px;
 }
-.tab {
-  flex-shrink: 0;
-  padding: 6px 13px;
+.filter-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 6px 8px;
   border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(143,214,255,0.03);
+  border-radius: var(--r-sm);
+  background: transparent;
   color: var(--text-mute);
-  font-size: 12px;
-  white-space: nowrap;
-  scroll-snap-align: start;
+  font-size: 11px;
+  margin-bottom: 4px;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
-.tab.active {
+.filter-btn.active {
   color: var(--brand-hi);
   border-color: rgba(76,201,240,0.5);
   background: rgba(76,201,240,0.1);
-  box-shadow: var(--glow-cyan);
+  box-shadow: 0 0 10px rgba(76,201,240,0.15);
 }
-.tab.row-industry.active {
+.filter-btn.industry.active {
   color: var(--violet-hi);
   border-color: rgba(177,77,255,0.5);
   background: rgba(177,77,255,0.1);
-  box-shadow: 0 0 18px rgba(177,77,255,0.28);
+  box-shadow: 0 0 10px rgba(177,77,255,0.15);
 }
 
-.scene-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.scene-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-  padding: 14px 16px 0;
 }
 .scene-card {
   background: linear-gradient(160deg, rgba(13,26,58,0.7), rgba(7,13,32,0.7));
   border: 1px solid var(--line);
   border-radius: var(--r);
-  padding: 12px 10px;
+  padding: 12px 12px;
   box-shadow: var(--shadow-card);
-  display: flex; flex-direction: column;
-  min-height: 138px;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  transition: opacity 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
 }
-.scene-card.hide {
-  display: none;
-}
+.scene-card.hide { display: none; }
 .scene-card .ic {
-  width: 30px; height: 30px;
+  flex-shrink: 0;
+  width: 34px; height: 34px;
   border-radius: 8px;
   background: rgba(76,201,240,0.1);
   display: grid; place-items: center;
   color: var(--brand-hi);
-  margin-bottom: 10px;
 }
+.scene-card .card-body { flex: 1; min-width: 0; }
 .scene-card h4 {
   margin: 0;
   font-size: 13px;
@@ -432,20 +429,17 @@ body::after {
   line-height: 1.4;
 }
 .scene-card p {
-  margin: 4px 0 8px;
+  margin: 3px 0 6px;
   font-size: 11px;
   color: var(--text-mute);
   line-height: 1.5;
-  flex: 1;
 }
 .scene-card .chip-row {
   display: flex; flex-wrap: wrap; gap: 4px;
-  margin-top: auto;
 }
 .scene-card .chip { font-size: 9.5px; padding: 1px 6px; }
 
 .scene-empty {
-  grid-column: 1 / -1;
   padding: 30px 16px;
   text-align: center;
   color: var(--text-dim);
@@ -952,6 +946,191 @@ body::after {
   transform: translateY(0);
 }
 
+/* =========================================================
+   Enhanced Flow Timeline
+   ========================================================= */
+@keyframes flowStream {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 200px; }
+}
+@keyframes flowGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(76,201,240,0.5); }
+  50% { box-shadow: 0 0 20px rgba(76,201,240,0.8), 0 0 40px rgba(76,201,240,0.2); }
+}
+@keyframes particleFloat {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.timeline-v2 {
+  position: relative;
+  padding: 0 16px 0 56px;
+}
+.timeline-v2::before {
+  content: "";
+  position: absolute;
+  left: 37px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: linear-gradient(180deg,
+    rgba(76,201,240,0.6), rgba(112,87,200,0.5) 30%,
+    rgba(76,201,240,0.6) 50%, rgba(177,77,255,0.5) 70%,
+    rgba(76,201,240,0.4));
+  background-size: 2px 200px;
+  animation: flowStream 3s linear infinite;
+  border-radius: 1px;
+}
+.timeline-v2::after {
+  content: "";
+  position: absolute;
+  left: 34px; top: 8px; bottom: 8px;
+  width: 8px;
+  background: linear-gradient(180deg,
+    rgba(76,201,240,0.12), rgba(177,77,255,0.08) 50%, rgba(76,201,240,0.12));
+  border-radius: 4px;
+  filter: blur(6px);
+  animation: flowGlow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+.flow-particle-track {
+  position: absolute;
+  left: 36px; top: 8px; bottom: 8px;
+  width: 4px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.flow-particle-track span {
+  position: absolute;
+  left: 0;
+  width: 4px; height: 16px;
+  border-radius: 2px;
+  background: var(--brand-hi);
+  filter: blur(1px);
+  box-shadow: 0 0 8px var(--brand-hi);
+  animation: particleFloat 4s linear infinite;
+}
+.flow-particle-track span:nth-child(2) { animation-delay: 1.3s; }
+.flow-particle-track span:nth-child(3) { animation-delay: 2.6s; }
+
+.flow-card {
+  position: relative;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: linear-gradient(160deg, rgba(13,26,58,0.65), rgba(7,13,32,0.5));
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.flow-card:last-child { margin-bottom: 0; }
+.flow-card::before {
+  content: attr(data-step);
+  position: absolute;
+  left: -36px; top: 14px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--grad-cta);
+  display: grid; place-items: center;
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 700;
+  color: #fff;
+  z-index: 2;
+  animation: dotPulse 3s ease-in-out infinite;
+}
+.flow-card:nth-child(2)::before { animation-delay: 0.5s; }
+.flow-card:nth-child(3)::before { animation-delay: 1s; }
+.flow-card:nth-child(4)::before { animation-delay: 1.5s; }
+.flow-card:nth-child(5)::before { animation-delay: 2s; }
+.flow-card:nth-child(6)::before { animation-delay: 2.5s; }
+.flow-card::after {
+  content: "";
+  position: absolute;
+  left: -14px; top: 20px;
+  width: 12px; height: 1px;
+  background: linear-gradient(90deg, rgba(76,201,240,0.4), rgba(76,201,240,0.1));
+}
+.flow-card h4 {
+  margin: 0;
+  font-size: 14px; font-weight: 600;
+  color: var(--text-hi);
+}
+.flow-card .flow-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--brand-hi);
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+.flow-card p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--text-mute);
+  line-height: 1.6;
+}
+
+/* =========================================================
+   Partners Carousel
+   ========================================================= */
+.partners-section { padding: 40px 0 30px; }
+.m-carousel {
+  position: relative;
+  overflow: hidden;
+  padding: 10px 0;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.m-carousel + .m-carousel { padding-top: 0; }
+.m-carousel-track {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  animation: m-marquee var(--dur, 40s) linear infinite;
+}
+@keyframes m-marquee { to { transform: translateX(calc(-50% - 5px)); } }
+.m-partner-card {
+  flex: 0 0 110px;
+  height: 56px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: linear-gradient(180deg, rgba(20,36,72,0.55), rgba(10,20,46,0.55));
+  display: grid;
+  place-items: center;
+  text-align: center;
+  line-height: 1.15;
+}
+.m-partner-card b {
+  display: block;
+  color: var(--text-hi);
+  font-size: 12px;
+  font-weight: 600;
+}
+.m-partner-card small {
+  display: block;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* Drawer contact form */
+.drawer-body .contact-form {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+.drawer-body .contact-info {
+  margin: 16px 0 0;
+}
+
 /* small viewport guard */
 @media (max-width: 340px) {
   html, body { font-size: 13px; }
@@ -966,8 +1145,7 @@ body::after {
      ========================================================= -->
 <header class="m-topbar">
   <div class="logo">
-    <div class="logo-mark">DB</div>
-    <span>标贝科技<small>DATABAKER</small></span>
+    <img src="images/logo.png" alt="标贝科技" class="logo-img" />
   </div>
   <a href="#contact" class="top-cta">咨询</a>
 </header>
@@ -977,12 +1155,19 @@ body::after {
      ========================================================= -->
 <section class="hero" data-reveal>
   <div class="hero-glow"></div>
-  <span class="eyebrow">AI DATA · 数据基础设施</span>
-  <h1 class="display">
-    <span>让 AI 训练数据</span>
-    <span class="glow-text">从"能用"到"可交付"</span>
-  </h1>
-  <p class="lead">覆盖采集 · 标注 · 成品数据集 · 工具平台<br/>全栈自研、合规可追溯</p>
+  <div class="hero-row">
+    <div class="hero-text">
+      <span class="eyebrow">AI DATA · 数据基础设施</span>
+      <h1 class="display">
+        <span>让 AI 训练数据</span>
+        <span class="glow-text">从"能用"到"可交付"</span>
+      </h1>
+      <p class="lead">覆盖采集 · 标注 · 成品数据集 · 工具平台<br/>全栈自研、合规可追溯</p>
+    </div>
+    <div class="hero-visual">
+      <img src="images/ai-data-hero.png" alt="AI 数据基础设施" />
+    </div>
+  </div>
   <div class="data-row">
     <div class="data-chip"><b>20+</b><span>语种覆盖</span></div>
     <div class="data-chip"><b>100+</b><span>行业场景</span></div>
@@ -1066,96 +1251,104 @@ body::after {
     <p class="lead" style="margin:0;">按产品 × 行业双维度筛选，找到你的最近落地路径</p>
   </div>
 
-  <div class="tab-bar">
-    <div class="tab-row" id="tabProduct">
-      <span class="tab-label">// PRODUCT</span>
-      <button class="tab active" data-product="all">全部</button>
-      <button class="tab" data-product="collection">采集</button>
-      <button class="tab" data-product="annotation">标注</button>
-      <button class="tab" data-product="dataset">数据集</button>
-      <button class="tab" data-product="platform">工具平台</button>
+  <div class="scene-layout">
+    <div class="scene-sidebar">
+      <div class="filter-group" id="filterProduct">
+        <div class="filter-label">产品</div>
+        <button class="filter-btn active" data-product="all">全部</button>
+        <button class="filter-btn" data-product="collection">采集</button>
+        <button class="filter-btn" data-product="annotation">标注</button>
+        <button class="filter-btn" data-product="dataset">数据集</button>
+        <button class="filter-btn" data-product="platform">平台</button>
+      </div>
+      <div class="filter-group" id="filterIndustry">
+        <div class="filter-label">行业</div>
+        <button class="filter-btn industry active" data-industry="all">全部</button>
+        <button class="filter-btn industry" data-industry="llm">大模型</button>
+        <button class="filter-btn industry" data-industry="auto">智驾</button>
+        <button class="filter-btn industry" data-industry="finance">金融</button>
+        <button class="filter-btn industry" data-industry="gov">政务</button>
+        <button class="filter-btn industry" data-industry="edu">教育</button>
+        <button class="filter-btn industry" data-industry="ent">文娱</button>
+        <button class="filter-btn industry" data-industry="cs">客服</button>
+      </div>
     </div>
-    <div class="tab-row row-2" id="tabIndustry">
-      <span class="tab-label">// INDUSTRY</span>
-      <button class="tab row-industry active" data-industry="all">全部</button>
-      <button class="tab row-industry" data-industry="llm">大模型</button>
-      <button class="tab row-industry" data-industry="auto">智驾</button>
-      <button class="tab row-industry" data-industry="finance">金融</button>
-      <button class="tab row-industry" data-industry="gov">政务</button>
-      <button class="tab row-industry" data-industry="edu">教育</button>
-      <button class="tab row-industry" data-industry="ent">文娱</button>
-      <button class="tab row-industry" data-industry="cs">客服</button>
-    </div>
-  </div>
 
-  <div class="scene-grid" id="sceneGrid">
-    <!-- 1 -->
-    <div class="scene-card" data-products="dataset annotation" data-industries="llm">
-      <div class="ic">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+    <div class="scene-content" id="sceneGrid">
+      <div class="scene-card" data-products="dataset annotation" data-industries="llm">
+        <div class="ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        </div>
+        <div class="card-body">
+          <h4>大模型对齐语料</h4>
+          <p>SFT / RLHF 高质量指令与偏好数据</p>
+          <div class="chip-row">
+            <span class="chip accent">数据集</span><span class="chip">大模型</span>
+          </div>
+        </div>
       </div>
-      <h4>大模型对齐语料</h4>
-      <p>SFT / RLHF 高质量指令与偏好数据</p>
-      <div class="chip-row">
-        <span class="chip accent">数据集</span><span class="chip">大模型</span>
+      <div class="scene-card" data-products="collection dataset" data-industries="cs">
+        <div class="ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-7 9a7 7 0 0 0 14 0"/></svg>
+        </div>
+        <div class="card-body">
+          <h4>ASR 方言/远场</h4>
+          <p>20+ 方言、远场嘈杂环境语料</p>
+          <div class="chip-row">
+            <span class="chip accent">采集</span><span class="chip">客服</span>
+          </div>
+        </div>
       </div>
+      <div class="scene-card" data-products="dataset platform" data-industries="ent">
+        <div class="ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13M6 15a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+        </div>
+        <div class="card-body">
+          <h4>TTS 多音色定制</h4>
+          <p>明星/虚拟人音色克隆与情感合成</p>
+          <div class="chip-row">
+            <span class="chip accent">数据集</span><span class="chip">文娱</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-card" data-products="annotation platform" data-industries="auto">
+        <div class="ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8M14 7h7v7"/></svg>
+        </div>
+        <div class="card-body">
+          <h4>自动驾驶 3D 标注</h4>
+          <p>点云融合 + 4D BBox 时序标注</p>
+          <div class="chip-row">
+            <span class="chip accent">标注</span><span class="chip">智驾</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-card" data-products="annotation dataset" data-industries="finance">
+        <div class="ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
+        </div>
+        <div class="card-body">
+          <h4>金融票据 OCR</h4>
+          <p>发票/合同/银行单据结构化标注</p>
+          <div class="chip-row">
+            <span class="chip accent">标注</span><span class="chip">金融</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-card" data-products="collection platform" data-industries="gov">
+        <div class="ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2zM14 2v5a1 1 0 0 0 1 1h5"/></svg>
+        </div>
+        <div class="card-body">
+          <h4>政务档案数字化</h4>
+          <p>历史档案 OCR + 知识图谱抽取</p>
+          <div class="chip-row">
+            <span class="chip accent">采集</span><span class="chip">政务</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-empty" id="sceneEmpty" style="display:none;">// 当前筛选下暂无场景，试试其他组合</div>
     </div>
-    <!-- 2 -->
-    <div class="scene-card" data-products="collection dataset" data-industries="cs">
-      <div class="ic">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-7 9a7 7 0 0 0 14 0"/></svg>
-      </div>
-      <h4>ASR 方言/远场</h4>
-      <p>20+ 方言、远场嘈杂环境语料</p>
-      <div class="chip-row">
-        <span class="chip accent">采集</span><span class="chip">客服</span>
-      </div>
-    </div>
-    <!-- 3 -->
-    <div class="scene-card" data-products="dataset platform" data-industries="ent">
-      <div class="ic">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13M6 15a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
-      </div>
-      <h4>TTS 多音色定制</h4>
-      <p>明星/虚拟人音色克隆与情感合成</p>
-      <div class="chip-row">
-        <span class="chip accent">数据集</span><span class="chip">文娱</span>
-      </div>
-    </div>
-    <!-- 4 -->
-    <div class="scene-card" data-products="annotation platform" data-industries="auto">
-      <div class="ic">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8M14 7h7v7"/></svg>
-      </div>
-      <h4>自动驾驶 3D 标注</h4>
-      <p>点云融合 + 4D BBox 时序标注</p>
-      <div class="chip-row">
-        <span class="chip accent">标注</span><span class="chip">智驾</span>
-      </div>
-    </div>
-    <!-- 5 -->
-    <div class="scene-card" data-products="annotation dataset" data-industries="finance">
-      <div class="ic">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
-      </div>
-      <h4>金融票据 OCR</h4>
-      <p>发票/合同/银行单据结构化标注</p>
-      <div class="chip-row">
-        <span class="chip accent">标注</span><span class="chip">金融</span>
-      </div>
-    </div>
-    <!-- 6 -->
-    <div class="scene-card" data-products="collection platform" data-industries="gov">
-      <div class="ic">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2zM14 2v5a1 1 0 0 0 1 1h5"/></svg>
-      </div>
-      <h4>政务档案数字化</h4>
-      <p>历史档案 OCR + 知识图谱抽取</p>
-      <div class="chip-row">
-        <span class="chip accent">采集</span><span class="chip">政务</span>
-      </div>
-    </div>
-    <div class="scene-empty" id="sceneEmpty" style="display:none;">// 当前筛选下暂无场景，试试其他组合</div>
   </div>
 </section>
 
@@ -1173,29 +1366,36 @@ body::after {
   <div class="flow-promise">
     <b> SLA</b>　1 个工作日响应 · 单批次最快 <b>72h</b> 交付 · 全过程留痕可审计
   </div>
-  <div class="timeline">
-    <div class="tl-node">
-      <div class="tl-head"><span class="tl-num"> 01</span><h4>需求对接</h4></div>
+  <div class="timeline-v2">
+    <div class="flow-particle-track"><span></span><span></span><span></span></div>
+    <div class="flow-card" data-step="01">
+      <span class="flow-tag">STEP 01</span>
+      <h4>需求对接</h4>
       <p>方案顾问 1V1 沟通数据规模、模态与质量标准</p>
     </div>
-    <div class="tl-node">
-      <div class="tl-head"><span class="tl-num"> 02</span><h4>方案设计</h4></div>
+    <div class="flow-card" data-step="02">
+      <span class="flow-tag">STEP 02</span>
+      <h4>方案设计</h4>
       <p>样本配比、采集脚本、标注规范、验收口径同步确认</p>
     </div>
-    <div class="tl-node">
-      <div class="tl-head"><span class="tl-num"> 03</span><h4>采集生产</h4></div>
+    <div class="flow-card" data-step="03">
+      <span class="flow-tag">STEP 03</span>
+      <h4>采集生产</h4>
       <p>全球资源池调度，多模态并行生产，实时进度看板</p>
     </div>
-    <div class="tl-node">
-      <div class="tl-head"><span class="tl-num"> 04</span><h4>多轮质检</h4></div>
+    <div class="flow-card" data-step="04">
+      <span class="flow-tag">STEP 04</span>
+      <h4>多轮质检</h4>
       <p>AI 预检 + 人工抽检 + 客户回检，三道关卡保质量</p>
     </div>
-    <div class="tl-node">
-      <div class="tl-head"><span class="tl-num"> 05</span><h4>安全交付</h4></div>
+    <div class="flow-card" data-step="05">
+      <span class="flow-tag">STEP 05</span>
+      <h4>安全交付</h4>
       <p>加密通道 + 私有化通道 + 脱敏后台，附验收报告</p>
     </div>
-    <div class="tl-node">
-      <div class="tl-head"><span class="tl-num"> 06</span><h4>持续迭代</h4></div>
+    <div class="flow-card" data-step="06">
+      <span class="flow-tag">STEP 06</span>
+      <h4>持续迭代</h4>
       <p>训练反馈驱动 badcase 补采，模型表现持续上升</p>
     </div>
   </div>
@@ -1327,11 +1527,17 @@ body::after {
       <b>5000 万+ 条</b>
       <span>情感 / 实体 / 翻译</span>
     </div>
-    <div class="ds-card" style="grid-column: span 2;">
+    <div class="ds-card">
       <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
       <h5>LLM 大模型语料</h5>
       <b>500 万+ 指令 · 偏好对</b>
       <span>SFT / DPO / 评测集</span>
+    </div>
+    <div class="ds-card">
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div>
+      <h5>具身智能</h5>
+      <b>***</b>
+      <span>运动健康 / UAV无人机 / 自动驾驶</span>
     </div>
   </div>
   <a class="detail-cta" href="#contact">查看全部数据集
@@ -1353,7 +1559,7 @@ body::after {
   <div class="tool-grid">
     <div class="tool-card">
       <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg></div>
-      <h5>采集端 APP</h5>
+      <h5>采集端 APP-标贝易采</h5>
       <p>多端任务下发，全球采集者协同</p>
     </div>
     <div class="tool-card">
@@ -1368,7 +1574,7 @@ body::after {
     </div>
     <div class="tool-card">
       <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h20v18H2zM2 9h20M8 3v18"/></svg></div>
-      <h5>阅读评测平台</h5>
+      <h5>阅读评测平台-标贝悦读</h5>
       <p>大模型偏好排序 + 多模态评测</p>
     </div>
   </div>
@@ -1380,69 +1586,19 @@ body::after {
 <div class="section-divider"></div>
 
 <!-- =========================================================
-     09 · 留言 & 联系
+     09 · 合作伙伴
      ========================================================= -->
-<section class="section-tight contact-section" id="contact" data-reveal>
+<section class="section-tight partners-section" data-reveal>
   <div class="container">
-    <span class="eyebrow"> 08 · CONTACT</span>
-    <h2 class="display" style="font-size:22px;margin:10px 0 6px;">告诉我们你的需求</h2>
-    <p class="lead" style="margin:0;">方案顾问将在 1 个工作日内回复并提供定制方案</p>
+    <span class="eyebrow"> 08 · COOPERATION</span>
+    <h2 class="display" style="font-size:22px;margin:10px 0 6px;">合作伙伴</h2>
+    <p class="lead" style="margin:0;">与全球领先企业和机构携手共建 AI 数据生态</p>
   </div>
-
-  <form class="contact-form" id="leadForm" novalidate>
-    <div class="field">
-      <label>姓名</label>
-      <input type="text" name="name" placeholder="如何称呼您" required />
-    </div>
-    <div class="field">
-      <label>公司</label>
-      <input type="text" name="company" placeholder="您所在的公司" />
-    </div>
-    <div class="field">
-      <label>电话 / 邮箱</label>
-      <input type="text" name="contact" placeholder="方便我们联系您的方式" required />
-    </div>
-    <div class="field">
-      <label>需求场景（可多选）</label>
-      <div class="chip-pick" id="needPicks">
-        <button type="button" class="chip-btn" data-need="采集">采集</button>
-        <button type="button" class="chip-btn" data-need="标注">标注</button>
-        <button type="button" class="chip-btn" data-need="数据集">数据集</button>
-        <button type="button" class="chip-btn" data-need="工具平台">工具平台</button>
-        <button type="button" class="chip-btn" data-need="大模型">大模型</button>
-        <button type="button" class="chip-btn" data-need="智驾">智驾</button>
-        <button type="button" class="chip-btn" data-need="具身智能">具身智能</button>
-        <button type="button" class="chip-btn" data-need="大模型">运动健康</button>
-        <button type="button" class="chip-btn" data-need="其他">其他</button>
-      </div>
-    </div>
-    <div class="field">
-      <label>留言</label>
-      <textarea name="msg" placeholder="简单描述一下您的项目背景与数据规模"></textarea>
-    </div>
-    <div class="submit-row">
-      <button type="submit" class="btn btn-primary">提交需求
-        <svg class="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-    </div>
-  </form>
-
-  <div class="contact-info">
-    <div class="info-card">
-      <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
-      <b>邮箱</b>
-      <span><!-- TODO -->bd@data-baker.com</span>
-    </div>
-    <div class="info-card">
-      <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.72 3.06a2 2 0 0 1-.45 2.11L8.09 10.4a16 16 0 0 0 6 6l1.51-1.27a2 2 0 0 1 2.11-.45c.99.35 2.01.59 3.06.72a2 2 0 0 1 1.72 2z"/></svg></div>
-      <b>电话</b>
-      <span><!-- TODO -->400-009-0218</span>
-    </div>
-    <div class="info-card">
-      <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-      <b>微信</b>
-      <span><!-- TODO -->扫码加顾问</span>
-    </div>
+  <div class="m-carousel" style="--dur:45s; margin-top:18px;">
+    <div class="m-carousel-track" id="partnersTrack1"></div>
+  </div>
+  <div class="m-carousel" style="--dur:55s;">
+    <div class="m-carousel-track" id="partnersTrack2"></div>
   </div>
 </section>
 
@@ -1503,27 +1659,67 @@ body::after {
 <div class="drawer" id="drawerLeave" role="dialog" aria-modal="true">
   <div class="drawer-handle"></div>
   <div class="drawer-head">
-    <h3>留言给我们</h3>
+    <h3>告诉我们你的需求</h3>
     <button class="drawer-close" data-close>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
   </div>
   <div class="drawer-body">
-    <div class="field">
-      <label>姓名</label>
-      <input type="text" placeholder="如何称呼您" />
+    <p style="font-size:12px;color:var(--text-mute);margin:0 0 14px;">方案顾问将在 1 个工作日内回复并提供定制方案</p>
+    <form class="contact-form" id="leadForm" novalidate>
+      <div class="field">
+        <label>姓名</label>
+        <input type="text" name="name" placeholder="如何称呼您" required />
+      </div>
+      <div class="field">
+        <label>公司</label>
+        <input type="text" name="company" placeholder="您所在的公司" />
+      </div>
+      <div class="field">
+        <label>电话 / 邮箱</label>
+        <input type="text" name="contact" placeholder="方便我们联系您的方式" required />
+      </div>
+      <div class="field">
+        <label>需求场景（可多选）</label>
+        <div class="chip-pick" id="needPicks">
+          <button type="button" class="chip-btn" data-need="采集">采集</button>
+          <button type="button" class="chip-btn" data-need="标注">标注</button>
+          <button type="button" class="chip-btn" data-need="数据集">数据集</button>
+          <button type="button" class="chip-btn" data-need="工具平台">工具平台</button>
+          <button type="button" class="chip-btn" data-need="大模型">大模型</button>
+          <button type="button" class="chip-btn" data-need="智驾">智驾</button>
+          <button type="button" class="chip-btn" data-need="具身智能">具身智能</button>
+          <button type="button" class="chip-btn" data-need="运动健康">运动健康</button>
+          <button type="button" class="chip-btn" data-need="其他">其他</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>留言</label>
+        <textarea name="msg" placeholder="简单描述一下您的项目背景与数据规模"></textarea>
+      </div>
+      <div class="submit-row">
+        <button type="submit" class="btn btn-primary" style="width:100%;">提交需求
+          <svg class="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </form>
+    <div class="contact-info">
+      <div class="info-card">
+        <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+        <b>邮箱</b>
+        <span>bd@data-baker.com</span>
+      </div>
+      <div class="info-card">
+        <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.72 3.06a2 2 0 0 1-.45 2.11L8.09 10.4a16 16 0 0 0 6 6l1.51-1.27a2 2 0 0 1 2.11-.45c.99.35 2.01.59 3.06.72a2 2 0 0 1 1.72 2z"/></svg></div>
+        <b>电话</b>
+        <span>400-009-0218</span>
+      </div>
+      <div class="info-card">
+        <div class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <b>微信</b>
+        <span>扫码加顾问</span>
+      </div>
     </div>
-    <div class="field">
-      <label>电话 / 邮箱</label>
-      <input type="text" placeholder="方便我们联系您的方式" />
-    </div>
-    <div class="field">
-      <label>留言内容</label>
-      <textarea placeholder="简单描述您的需求"></textarea>
-    </div>
-    <button type="button" class="btn btn-primary" data-fake-submit style="width:100%;">提交留言
-      <svg class="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </button>
   </div>
 </div>
 
@@ -1556,7 +1752,7 @@ body::after {
 })();
 
 /* =========================================================
-   交互：应用场景双层 Tab 过滤
+   交互：应用场景 · 左栏筛选
    ========================================================= */
 (function(){
   let curProduct = 'all';
@@ -1578,19 +1774,19 @@ body::after {
     empty.style.display = visible === 0 ? 'block' : 'none';
   }
 
-  function bindRow(rowId, attr, setter) {
-    const row = document.getElementById(rowId);
-    row.querySelectorAll('.tab').forEach(btn => {
+  function bindGroup(groupId, attr, setter) {
+    const group = document.getElementById(groupId);
+    group.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        row.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+        group.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         setter(btn.dataset[attr]);
         apply();
       });
     });
   }
-  bindRow('tabProduct', 'product', v => curProduct = v);
-  bindRow('tabIndustry', 'industry', v => curIndustry = v);
+  bindGroup('filterProduct', 'product', v => curProduct = v);
+  bindGroup('filterIndustry', 'industry', v => curIndustry = v);
 })();
 
 /* =========================================================
@@ -1616,28 +1812,23 @@ function showToast(msg) {
 }
 
 /* =========================================================
-   交互：主表单提交（假成功）
-   ========================================================= */
-(function(){
-  const form = document.getElementById('leadForm');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    const name = (data.get('name') || '').toString().trim();
-    const contact = (data.get('contact') || '').toString().trim();
-    if (!name || !contact) {
-      showToast('请填写姓名与联系方式');
-      return;
-    }
-    showToast('已收到，我们将在 1 个工作日内联系您');
-    form.reset();
-    document.querySelectorAll('#needPicks .chip-btn.on').forEach(b => b.classList.remove('on'));
-  });
-})();
-
-/* =========================================================
    交互：抽屉
    ========================================================= */
+const leaveDrawer = {
+  mask: document.getElementById('maskLeave'),
+  dr: document.getElementById('drawerLeave'),
+  open() {
+    this.mask.classList.add('open');
+    this.dr.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  },
+  close() {
+    this.mask.classList.remove('open');
+    this.dr.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+};
+
 function bindDrawer(triggerId, maskId, drawerId) {
   const trig = document.getElementById(triggerId);
   const mask = document.getElementById(maskId);
@@ -1662,6 +1853,82 @@ function bindDrawer(triggerId, maskId, drawerId) {
 }
 bindDrawer('btnConsult', 'maskConsult', 'drawerConsult');
 bindDrawer('btnLeave', 'maskLeave', 'drawerLeave');
+
+/* =========================================================
+   交互：#contact 链接 → 打开留言抽屉
+   ========================================================= */
+document.querySelectorAll('a[href="#contact"]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    leaveDrawer.open();
+  });
+});
+
+/* =========================================================
+   交互：留言表单提交（假成功）
+   ========================================================= */
+(function(){
+  const form = document.getElementById('leadForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const name = (data.get('name') || '').toString().trim();
+    const contact = (data.get('contact') || '').toString().trim();
+    if (!name || !contact) {
+      showToast('请填写姓名与联系方式');
+      return;
+    }
+    leaveDrawer.close();
+    setTimeout(() => showToast('已收到，我们将在 1 个工作日内联系您'), 280);
+    form.reset();
+    document.querySelectorAll('#needPicks .chip-btn.on').forEach(b => b.classList.remove('on'));
+  });
+})();
+
+/* =========================================================
+   交互：合作伙伴轮播
+   ========================================================= */
+(function(){
+  const PARTNERS_A = [
+    { cn: '阿里巴巴', en: 'ALIBABA' },
+    { cn: '腾讯',     en: 'TENCENT' },
+    { cn: '百度',     en: 'BAIDU' },
+    { cn: '网易',     en: 'NETEASE' },
+    { cn: '京东',     en: 'JD.COM' },
+    { cn: '联想',     en: 'LENOVO' },
+    { cn: '华为',     en: 'HUAWEI' },
+    { cn: '小米',     en: 'XIAOMI' },
+    { cn: '搜狗',     en: 'SOGOU' },
+    { cn: '滴滴',     en: 'DIDI' },
+    { cn: '美的',     en: 'MIDEA' },
+    { cn: '快手',     en: 'KUAISHOU' },
+    { cn: '三星',     en: 'SAMSUNG' },
+    { cn: 'OPPO',     en: 'OPPO' },
+  ];
+  const PARTNERS_B = [
+    { cn: '微软',     en: 'MICROSOFT' },
+    { cn: '微信',     en: 'WECHAT' },
+    { cn: '中国移动', en: 'CHINA MOBILE' },
+    { cn: '中国联通', en: 'CHINA UNICOM' },
+    { cn: '喜马拉雅', en: 'XIMALAYA' },
+    { cn: '贝壳',     en: 'KE.COM' },
+    { cn: '信雅达',   en: 'SUNYARD' },
+    { cn: '虎盾',     en: 'HUDUN' },
+    { cn: '出门问问', en: 'MOBVOI' },
+    { cn: '长虹',     en: 'CHANGHONG' },
+    { cn: '新华网',   en: 'XINHUA NET' },
+    { cn: '北京大学', en: 'PEKING UNIV' },
+    { cn: '清华大学', en: 'TSINGHUA UNIV' },
+    { cn: 'E 代驾',   en: 'E-DAIJIA' },
+  ];
+  function card(p) {
+    return '<div class="m-partner-card"><b>' + p.cn + '</b><small>' + p.en + '</small></div>';
+  }
+  var a = PARTNERS_A.map(card).join('');
+  var b = PARTNERS_B.map(card).join('');
+  document.getElementById('partnersTrack1').innerHTML = a + a;
+  document.getElementById('partnersTrack2').innerHTML = b + b;
+})();
 </script>
 </body>
 </html>

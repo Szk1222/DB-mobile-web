@@ -472,7 +472,60 @@ body::after {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-height: 440px;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(76,201,240,0.3) transparent;
 }
+.scene-content::-webkit-scrollbar { width: 4px; }
+.scene-content::-webkit-scrollbar-track { background: transparent; }
+.scene-content::-webkit-scrollbar-thumb {
+  background: rgba(76,201,240,0.3);
+  border-radius: 2px;
+}
+.scene-content::-webkit-scrollbar-thumb:hover { background: rgba(76,201,240,0.5); }
+
+/* Scene pagination */
+.scene-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 14px 16px 0;
+  margin-left: 84px;
+}
+.scene-pagination .page-btn {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: rgba(7,13,32,0.5);
+  color: var(--text-mute);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.scene-pagination .page-btn:hover:not(:disabled) {
+  border-color: rgba(76,201,240,0.4);
+  color: var(--brand-hi);
+}
+.scene-pagination .page-btn.active {
+  color: var(--brand-hi);
+  border-color: rgba(76,201,240,0.5);
+  background: rgba(76,201,240,0.12);
+  box-shadow: 0 0 10px rgba(76,201,240,0.15);
+}
+.scene-pagination .page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.scene-pagination .page-btn svg { width: 12px; height: 12px; }
 .scene-card {
   background: linear-gradient(160deg, rgba(13,26,58,0.7), rgba(7,13,32,0.7));
   border: 1px solid var(--line);
@@ -1271,10 +1324,8 @@ body::after {
     </div>
   </div>
   <div class="data-row">
-    <div class="data-chip"><b>20+</b><span>语种覆盖</span></div>
-    <div class="data-chip"><b>30+</b><span>行业场景</span></div>
-    <div class="data-chip"><b>亿级</b><span>标注产能</span></div>
-    <div class="data-chip"><b>ISO 27001</b><span>合规认证</span></div>
+    <div class="data-chip"><b>10年+</b><span>AI数据与语音技术积累</span></div>
+    <div class="data-chip"><b>1000+</b><span>企业合作</span></div>
   </div>
   <div class="hero-actions">
     <a href="#contact" class="btn btn-primary">免费咨询方案
@@ -1368,6 +1419,7 @@ body::after {
         <button class="filter-btn industry active" data-industry="all">全部</button>
         <button class="filter-btn industry" data-industry="llm">大模型</button>
         <button class="filter-btn industry" data-industry="auto">智驾</button>
+        <button class="filter-btn industry" data-industry="robot">具身智能</button>
         <button class="filter-btn industry" data-industry="finance">金融</button>
         <button class="filter-btn industry" data-industry="gov">政务</button>
         <button class="filter-btn industry" data-industry="edu">教育</button>
@@ -1398,6 +1450,18 @@ body::after {
           <p>20+ 方言、远场嘈杂环境语料</p>
           <div class="chip-row">
             <span class="chip accent">采集</span><span class="chip">客服</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-card" data-products="dataset annotation" data-industries="llm">
+        <div class="ic">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        </div>
+        <div class="card-body">
+          <h4>具身人</h4>
+          <p>运动健康 / UAV 多业务多场景</p>
+          <div class="chip-row">
+            <span class="chip accent">数据集</span><span class="chip">大模型</span><span class="chip">具身智能</span>
           </div>
         </div>
       </div>
@@ -1452,6 +1516,8 @@ body::after {
       <div class="scene-empty" id="sceneEmpty" style="display:none;">// 当前筛选下暂无场景，试试其他组合</div>
     </div>
   </div>
+
+  <div class="scene-pagination" id="scenePagination" aria-label="场景分页"></div>
 </section>
 
 <div class="section-divider"></div>
@@ -1466,7 +1532,7 @@ body::after {
     <p class="lead" style="margin:0;">从需求到交付，标准化六步闭环</p>
   </div>
   <div class="flow-promise">
-    <b> SLA</b>　1 个工作日响应 · 单批次最快 <b>72h</b> 交付 · 全过程留痕可审计
+    <b> SLA</b>　及时响应 · 最快交付 · 全过程留痕可审计
   </div>
   <div class="timeline-v2">
     <div class="flow-particle-track"><span></span><span></span><span></span></div>
@@ -1482,7 +1548,7 @@ body::after {
     </div>
     <div class="flow-card" data-step="03">
       <span class="flow-tag">STEP 03</span>
-      <h4>采集生产</h4>
+      <h4>采标生产</h4>
       <p>全球资源池调度，多模态并行生产，实时进度看板</p>
     </div>
     <div class="flow-card" data-step="04">
@@ -1576,6 +1642,20 @@ body::after {
     <div class="feat-item">
       <div class="num">03</div>
       <div class="body">
+        <h5>具身智能</h5>
+        <p>机器人轨迹、操作动作、3D 物体关系与人机交互场景的多维度标注。</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="num">04</div>
+      <div class="body">
+        <h5>自动驾驶</h5>
+        <p>点云融合、4D BBox 时序追踪、车道线与可行驶区域的高精度标注。</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="num">05</div>
+      <div class="body">
         <h5>高效质检闭环</h5>
         <p>规范沉淀、试标校准、批量生产、抽检返修和验收报告构成完整交付。</p>
       </div>
@@ -1666,13 +1746,13 @@ body::after {
     </div>
     <div class="tool-card">
       <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg></div>
-      <h5>2D 标注平台</h5>
-      <p>检测框、分割、关键点、OCR 一体</p>
+      <h5>标注平台</h5>
+      <p>语音、图像、视频、点云、文本、大模型</p>
     </div>
     <div class="tool-card">
       <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-      <h5>3D 点云标注</h5>
-      <p>自动驾驶 4D BBox + 时序对齐</p>
+      <h5>数据集管理</h5>
+      <p>支持从小规模验证到百万级商用训练的全场景需求</p>
     </div>
     <div class="tool-card">
       <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h20v18H2zM2 9h20M8 3v18"/></svg></div>
@@ -1888,21 +1968,71 @@ body::after {
 (function(){
   let curProduct = 'all';
   let curIndustry = 'all';
+  let curPage = 1;
+  const PAGE_SIZE = 3;
   const grid = document.getElementById('sceneGrid');
   const empty = document.getElementById('sceneEmpty');
+  const pager = document.getElementById('scenePagination');
 
-  function apply() {
-    let visible = 0;
+  function getMatched() {
+    const out = [];
     grid.querySelectorAll('.scene-card').forEach(card => {
       const ps = (card.dataset.products || '').split(/\s+/);
       const is = (card.dataset.industries || '').split(/\s+/);
       const matchP = curProduct === 'all' || ps.includes(curProduct);
       const matchI = curIndustry === 'all' || is.includes(curIndustry);
-      const show = matchP && matchI;
-      card.classList.toggle('hide', !show);
-      if (show) visible++;
+      if (matchP && matchI) out.push(card);
     });
-    empty.style.display = visible === 0 ? 'block' : 'none';
+    return out;
+  }
+
+  function renderPager(totalPages) {
+    pager.innerHTML = '';
+    if (totalPages <= 1) { pager.style.display = 'none'; return; }
+    pager.style.display = 'flex';
+
+    const prev = document.createElement('button');
+    prev.type = 'button';
+    prev.className = 'page-btn';
+    prev.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>';
+    prev.disabled = curPage === 1;
+    prev.addEventListener('click', () => { if (curPage > 1) { curPage--; apply(); } });
+    pager.appendChild(prev);
+
+    for (let i = 1; i <= totalPages; i++) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'page-btn' + (i === curPage ? ' active' : '');
+      b.textContent = String(i).padStart(2, '0');
+      b.addEventListener('click', () => { curPage = i; apply(); });
+      pager.appendChild(b);
+    }
+
+    const next = document.createElement('button');
+    next.type = 'button';
+    next.className = 'page-btn';
+    next.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>';
+    next.disabled = curPage === totalPages;
+    next.addEventListener('click', () => { if (curPage < totalPages) { curPage++; apply(); } });
+    pager.appendChild(next);
+  }
+
+  function apply() {
+    const matched = getMatched();
+    const totalPages = Math.max(1, Math.ceil(matched.length / PAGE_SIZE));
+    if (curPage > totalPages) curPage = totalPages;
+    if (curPage < 1) curPage = 1;
+
+    const start = (curPage - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    const visibleSet = new Set(matched.slice(start, end));
+
+    grid.querySelectorAll('.scene-card').forEach(card => {
+      card.classList.toggle('hide', !visibleSet.has(card));
+    });
+    empty.style.display = matched.length === 0 ? 'block' : 'none';
+    renderPager(totalPages);
+    grid.scrollTop = 0;
   }
 
   function bindGroup(groupId, attr, setter) {
@@ -1912,12 +2042,14 @@ body::after {
         group.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         setter(btn.dataset[attr]);
+        curPage = 1;
         apply();
       });
     });
   }
   bindGroup('filterProduct', 'product', v => curProduct = v);
   bindGroup('filterIndustry', 'industry', v => curIndustry = v);
+  apply();
 })();
 
 /* =========================================================

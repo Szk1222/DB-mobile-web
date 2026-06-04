@@ -63,7 +63,7 @@ html, body {
   font-size: 14px; line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
-body { overflow-x: hidden; padding-bottom: calc(72px + var(--safe-bottom)); }
+body { overflow-x: hidden; padding-bottom: calc(var(--fb-h, 50px) + var(--safe-bottom)); }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: 0; background: transparent; color: inherit; }
 img { display: block; max-width: 100%; }
@@ -243,7 +243,7 @@ body::after {
 
 .nav-drawer {
   position: fixed; top: 0; right: 0; bottom: 0;
-  width: 78vw; max-width: 320px;
+  width: 39vw; max-width: 160px;
   background: rgba(8,11,24,0.96);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -486,25 +486,32 @@ body::after {
 }
 .scene-content::-webkit-scrollbar-thumb:hover { background: rgba(76,201,240,0.5); }
 
-/* Scene pagination */
+/* Scene head 行内布局：标题 + 紧凑分页 */
+.scene-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* Scene pagination — 紧凑窗口式 */
 .scene-pagination {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
-  padding: 14px 16px 0;
-  margin-left: 84px;
+  gap: 4px;
+  flex-shrink: 0;
 }
 .scene-pagination .page-btn {
-  min-width: 28px;
-  height: 28px;
-  padding: 0 8px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
   border: 1px solid var(--line);
-  border-radius: var(--r-sm);
+  border-radius: 6px;
   background: rgba(7,13,32,0.5);
   color: var(--text-mute);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -519,13 +526,20 @@ body::after {
   color: var(--brand-hi);
   border-color: rgba(76,201,240,0.5);
   background: rgba(76,201,240,0.12);
-  box-shadow: 0 0 10px rgba(76,201,240,0.15);
+  box-shadow: 0 0 8px rgba(76,201,240,0.15);
 }
 .scene-pagination .page-btn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
-.scene-pagination .page-btn svg { width: 12px; height: 12px; }
+.scene-pagination .page-btn svg { width: 10px; height: 10px; }
+.scene-pagination .page-ellipsis {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 0 2px;
+  user-select: none;
+}
 .scene-card {
   background: linear-gradient(160deg, rgba(13,26,58,0.7), rgba(7,13,32,0.7));
   border: 1px solid var(--line);
@@ -649,6 +663,26 @@ body::after {
 }
 .detail-head .lead {
   font-size: 13px;
+}
+
+/* 工具平台：标题与说明同行紧凑布局 */
+.detail-head-inline {
+  margin-bottom: 10px;
+}
+.detail-head-inline .display {
+  margin: 8px 0 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.detail-head-inline .title-suffix {
+  font-family: var(--font-cn);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-mute);
+  letter-spacing: 0;
+  line-height: 1.4;
 }
 
 .feat-list {
@@ -867,17 +901,16 @@ body::after {
 }
 .pe-body { padding: 14px 15px 16px; display: flex; flex-direction: column; flex: 1; }
 .pe-body h5 {
-  margin: 0 0 7px;
+  margin: 0 0 6px;
   font-size: 16px;
   font-weight: 600;
   color: var(--text-hi);
 }
 .pe-body > p {
-  margin: 0 0 12px;
+  margin: 0 0 6px;
   font-size: 12.5px;
   color: var(--text-mute);
-  line-height: 1.65;
-  flex: 1;
+  line-height: 1.6;
 }
 .pe-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .pe-tags .chip { font-size: 10.5px; padding: 3px 9px; }
@@ -1185,6 +1218,44 @@ body::after {
   transform: translateX(-50%) translateY(0);
 }
 .toast svg { color: var(--cyan-hi); }
+
+/* =========================================================
+   站点底部 footer · 文档流末尾，仅滚到底部时可见
+   ========================================================= */
+.site-footer {
+  margin: 0;
+  padding: 0 8px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1;
+  color: var(--text-mute);
+  letter-spacing: 0.02em;
+  padding: 3px 0;
+  white-space: nowrap;
+}
+.footer-links a {
+  color: var(--text-mute);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.footer-links a:active,
+.footer-links a:hover {
+  color: var(--brand-hi);
+}
+.footer-sep {
+  color: var(--text-dim);
+}
 
 /* =========================================================
    reveal 动画
@@ -1575,22 +1646,16 @@ body::after {
 <section class="section-tight scene-section" id="scenes" data-reveal>
   <div class="scene-head">
     <span class="eyebrow"> 02 · USE CASES</span>
-    <h2 class="display" style="font-size:22px;margin:10px 0 6px;">应用场景</h2>
-    <p class="lead" style="margin:0;">按产品 × 行业双维度筛选，找到你的最近落地路径</p>
+    <div class="scene-head-row">
+      <h2 class="display" style="font-size:22px;margin:0;">应用场景</h2>
+      <div class="scene-pagination" id="scenePagination" aria-label="场景分页"></div>
+    </div>
+    <p class="lead" style="margin:6px 0 0;">按行业场景筛选，找到你的最近落地路径</p>
   </div>
 
   <div class="scene-layout">
     <div class="scene-sidebar">
-      <div class="filter-group" id="filterProduct">
-        <div class="filter-label">产品</div>
-        <button class="filter-btn active" data-product="all">全部</button>
-        <button class="filter-btn" data-product="collection">采集</button>
-        <button class="filter-btn" data-product="annotation">标注</button>
-        <button class="filter-btn" data-product="dataset">数据集</button>
-        <button class="filter-btn" data-product="platform">平台</button>
-      </div>
       <div class="filter-group" id="filterIndustry">
-        <div class="filter-label">行业</div>
         <button class="filter-btn industry active" data-industry="all">全部</button>
         <button class="filter-btn industry" data-industry="llm">大模型</button>
         <button class="filter-btn industry" data-industry="auto">智驾</button>
@@ -1604,95 +1669,9 @@ body::after {
     </div>
 
     <div class="scene-content" id="sceneGrid">
-      <div class="scene-card" data-products="dataset annotation" data-industries="llm">
-        <div class="ic">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
-        </div>
-        <div class="card-body">
-          <h4>大模型对齐语料</h4>
-          <p>SFT / RLHF 高质量指令与偏好数据</p>
-          <div class="chip-row">
-            <span class="chip accent">数据集</span><span class="chip">大模型</span>
-          </div>
-        </div>
-      </div>
-      <div class="scene-card" data-products="collection dataset" data-industries="cs">
-        <div class="ic">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-7 9a7 7 0 0 0 14 0"/></svg>
-        </div>
-        <div class="card-body">
-          <h4>ASR 方言/远场</h4>
-          <p>20+ 方言、远场嘈杂环境语料</p>
-          <div class="chip-row">
-            <span class="chip accent">采集</span><span class="chip">客服</span>
-          </div>
-        </div>
-      </div>
-      <div class="scene-card" data-products="dataset annotation" data-industries="llm">
-        <div class="ic">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
-        </div>
-        <div class="card-body">
-          <h4>具身人</h4>
-          <p>运动健康 / UAV 多业务多场景</p>
-          <div class="chip-row">
-            <span class="chip accent">数据集</span><span class="chip">大模型</span><span class="chip">具身智能</span>
-          </div>
-        </div>
-      </div>
-      <div class="scene-card" data-products="dataset platform" data-industries="ent">
-        <div class="ic">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13M6 15a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
-        </div>
-        <div class="card-body">
-          <h4>TTS 多音色定制</h4>
-          <p>明星/虚拟人音色克隆与情感合成</p>
-          <div class="chip-row">
-            <span class="chip accent">数据集</span><span class="chip">文娱</span>
-          </div>
-        </div>
-      </div>
-      <div class="scene-card" data-products="annotation platform" data-industries="auto">
-        <div class="ic">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8M14 7h7v7"/></svg>
-        </div>
-        <div class="card-body">
-          <h4>自动驾驶 3D 标注</h4>
-          <p>点云融合 + 4D BBox 时序标注</p>
-          <div class="chip-row">
-            <span class="chip accent">标注</span><span class="chip">智驾</span>
-          </div>
-        </div>
-      </div>
-      <div class="scene-card" data-products="annotation dataset" data-industries="finance">
-        <div class="ic">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
-        </div>
-        <div class="card-body">
-          <h4>金融票据 OCR</h4>
-          <p>发票/合同/银行单据结构化标注</p>
-          <div class="chip-row">
-            <span class="chip accent">标注</span><span class="chip">金融</span>
-          </div>
-        </div>
-      </div>
-      <div class="scene-card" data-products="collection platform" data-industries="gov">
-        <div class="ic">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2zM14 2v5a1 1 0 0 0 1 1h5"/></svg>
-        </div>
-        <div class="card-body">
-          <h4>政务档案数字化</h4>
-          <p>历史档案 OCR + 知识图谱抽取</p>
-          <div class="chip-row">
-            <span class="chip accent">采集</span><span class="chip">政务</span>
-          </div>
-        </div>
-      </div>
       <div class="scene-empty" id="sceneEmpty" style="display:none;">// 当前筛选下暂无场景，试试其他组合</div>
     </div>
   </div>
-
-  <div class="scene-pagination" id="scenePagination" aria-label="场景分页"></div>
 </section>
 
 <div class="section-divider"></div>
@@ -1707,7 +1686,7 @@ body::after {
     <p class="lead" style="margin:0;">从需求到交付，标准化六步闭环</p>
   </div>
   <div class="flow-promise">
-    <b> SLA</b>　及时响应 · 最快交付 · 全过程留痕可审计
+    <b> SLA</b>　及时响应 · 高效交付 · 全过程留痕可审计
   </div>
   <div class="timeline-v2">
     <div class="flow-particle-track"><span></span><span></span><span></span></div>
@@ -1908,10 +1887,12 @@ body::after {
      08 · 工具平台
      ========================================================= -->
 <section class="section-tight" id="platform" data-reveal>
-  <div class="detail-head">
+  <div class="detail-head detail-head-inline">
     <span class="eyebrow"> 07 · PLATFORM</span>
-    <h2 class="display">工具 <span class="glow-text">平台</span></h2>
-    <p class="lead">自研采集、标注、阅读、评测四大工具链，支持私有化部署与企业级集成。</p>
+    <h2 class="display">
+      工具 <span class="glow-text">平台</span>
+      <span class="title-suffix">支持私有化部署与企业级集成</span>
+    </h2>
   </div>
   <div class="pe-wrap">
     <div class="pe-filters" id="peFilters"></div>
@@ -2069,6 +2050,17 @@ body::after {
 </div>
 
 <!-- =========================================================
+     站点底部
+     ========================================================= -->
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://www.data-baker.com/about/personRightFile" target="_blank" rel="noopener noreferrer">个人信息保护政策</a>
+    <span class="footer-sep">·</span>
+    <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" rel="noopener noreferrer">鲁ICP备2023038621号</a>
+  </div>
+</footer>
+
+<!-- =========================================================
      Toast
      ========================================================= -->
 <div class="toast" id="toast">
@@ -2077,6 +2069,31 @@ body::after {
 </div>
 
 <script>
+/* =========================================================
+   交互：动态测量悬浮栏 / 页脚高度，避免空白与遮挡
+   ========================================================= */
+(function(){
+  const fb = document.querySelector('.floating-bar');
+  const ft = document.querySelector('.site-footer');
+  if (!fb) return;
+  function adjust() {
+    const fbH = fb.offsetHeight;
+    document.documentElement.style.setProperty('--fb-h', fbH + 'px');
+    if (ft) {
+      const ftH = ft.offsetHeight;
+      document.documentElement.style.setProperty('--ft-h', ftH + 'px');
+    }
+  }
+  adjust();
+  window.addEventListener('resize', adjust);
+  window.addEventListener('orientationchange', adjust);
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(adjust);
+    ro.observe(fb);
+    if (ft) ro.observe(ft);
+  }
+})();
+
 /* =========================================================
    交互：导航抽屉
    ========================================================= */
@@ -2126,25 +2143,131 @@ body::after {
 })();
 
 /* =========================================================
-   交互：应用场景 · 左栏筛选
+   交互：应用场景 · 行业筛选 + 分页
    ========================================================= */
 (function(){
-  let curProduct = 'all';
+  const SCENES = [
+    // 大模型 llm
+    { t: '大模型对齐语料', d: 'SFT / RLHF 高质量指令与偏好数据', chips: ['SFT','RLHF'], inds: ['llm'] },
+    { t: '多模态预训练语料', d: '图文 / 视频 / 音频对齐预训练数据', chips: ['预训练','多模态'], inds: ['llm'] },
+    { t: '中文指令数据', d: '通用域中文 SFT 指令 100w+ 高质量样本', chips: ['SFT','中文'], inds: ['llm'] },
+    { t: '代码生成训练集', d: '多语言代码补全 / 解释 / Debug 训练对', chips: ['代码','SFT'], inds: ['llm'] },
+    { t: '长上下文 QA', d: '128K+ 长文档检索式问答对', chips: ['长文档','QA'], inds: ['llm'] },
+    { t: '红队对抗评测', d: '安全 / 价值对齐评测样本集', chips: ['评测','安全'], inds: ['llm'] },
+    { t: '多语言翻译语料', d: '50+ 语种平行翻译与术语对齐', chips: ['多语','翻译'], inds: ['llm'] },
+    { t: '数学推理 CoT', d: '小学到高考思维链推理过程数据', chips: ['推理','数学'], inds: ['llm'] },
+    { t: '工具调用 Agent', d: 'Function Call / 多步工具编排训练', chips: ['Agent','Tool'] , inds: ['llm'] },
+    { t: '角色扮演对话', d: '高拟真人物设定多轮对话语料', chips: ['对话','人设'], inds: ['llm'] },
+    // 智驾 auto
+    { t: '自动驾驶 3D 标注', d: '点云融合 + 4D BBox 时序标注', chips: ['3D','点云'], inds: ['auto'] },
+    { t: '车道线 / 高精地图', d: '车道线 / 箭头 / 导流多类几何标注', chips: ['车道线','分割'], inds: ['auto'] },
+    { t: '可行驶区域分割', d: '路面可行驶 / 障碍区域语义分割', chips: ['分割','感知'], inds: ['auto'] },
+    { t: '舱内驾驶员行为', d: '分心 / 疲劳 / 接管行为识别数据', chips: ['行为','舱内'], inds: ['auto'] },
+    { t: '夜间 / 极端天气', d: '雨雾雪 / 低光场景采集与标注', chips: ['采集','极端场景'], inds: ['auto'] },
+    { t: '信号灯标志识别', d: '红绿灯 / 交通标志检测训练集', chips: ['检测','标志'], inds: ['auto'] },
+    { t: '行人意图预测', d: '交互对象轨迹与意图标注', chips: ['预测','行人'], inds: ['auto'] },
+    { t: 'BEV 鸟瞰图', d: '多相机融合 BEV 视角标注训练集', chips: ['BEV','多相机'], inds: ['auto'] },
+    { t: '城市 NOA 数据', d: '复杂城区无图通勤场景采集', chips: ['NOA','城区'], inds: ['auto'] },
+    { t: '泊车场景库', d: '记忆泊车 / 自主代客泊车数据', chips: ['泊车','APA'], inds: ['auto'] },
+    // 具身智能 robot
+    { t: '机械臂抓取轨迹', d: '多视角抓取 / 操作技能采集', chips: ['抓取','轨迹'], inds: ['robot'] },
+    { t: '具身导航语料', d: '室内 / 室外移动机器人 VLN 数据', chips: ['VLN','导航'], inds: ['robot'] },
+    { t: '人体动作捕捉', d: '细粒度人体姿态与骨骼点数据', chips: ['姿态','动捕'], inds: ['robot'] },
+    { t: '触觉传感数据', d: '柔性触觉阵列力反馈采集', chips: ['触觉','力反馈'], inds: ['robot'] },
+    { t: 'VLA 指令对齐', d: '自然语言 → 动作序列 SFT 数据', chips: ['VLA','SFT'], inds: ['robot','llm'] },
+    { t: '室内 3D 场景', d: '家庭 / 工厂环境 3D 场景标注', chips: ['3D','场景'], inds: ['robot'] },
+    { t: '灵巧手操作', d: '多指灵巧手精细操作技能演示', chips: ['灵巧手','操作'], inds: ['robot'] },
+    { t: '双臂协同任务', d: '双臂协作装配 / 搬运动作数据', chips: ['双臂','协同'], inds: ['robot'] },
+    { t: 'Sim2Real 仿真', d: '物理仿真 → 真机迁移配套数据', chips: ['仿真','Sim2Real'], inds: ['robot'] },
+    { t: '长程任务规划', d: '多步骤家务 / 工业流程演示数据', chips: ['规划','长程'], inds: ['robot'] },
+    // 金融 finance
+    { t: '金融票据 OCR', d: '发票 / 合同 / 银行单据结构化标注', chips: ['OCR','金融'], inds: ['finance'] },
+    { t: '智能投顾 QA', d: '金融知识图谱 / 投研问答对', chips: ['QA','投研'], inds: ['finance'] },
+    { t: '风控反欺诈样本', d: '风控对抗样本与异常交易标注', chips: ['风控','反欺诈'], inds: ['finance'] },
+    { t: '研报摘要语料', d: '长篇研报 / 公告摘要训练数据', chips: ['摘要','研报'], inds: ['finance'] },
+    { t: '坐席合规质检', d: '电销 / 客服合规质检 ASR', chips: ['ASR','质检'], inds: ['finance','cs'] },
+    { t: '财经舆情情感', d: '财经新闻 / 社交媒体情感标注', chips: ['情感','舆情'], inds: ['finance'] },
+    { t: 'ESG 评级语料', d: '上市公司 ESG 报告抽取与评分', chips: ['ESG','评级'], inds: ['finance'] },
+    { t: '信贷合同抽取', d: '小微 / 消费贷合同关键信息抽取', chips: ['抽取','信贷'], inds: ['finance'] },
+    { t: '量化回测数据', d: '高频行情 / 因子库回测训练集', chips: ['量化','因子'], inds: ['finance'] },
+    { t: 'KYC 尽职调查', d: '客户身份核验 / 反洗钱标注', chips: ['KYC','反洗钱'], inds: ['finance'] },
+    // 政务 gov
+    { t: '档案数字化', d: '档案 OCR + 知识图谱抽取', chips: ['OCR','档案'], inds: ['gov'] },
+    { t: '12345 工单分类', d: '热线工单意图与情感分类', chips: ['分类','工单'], inds: ['gov'] },
+    { t: '记录仪转写', d: '音视频转写 + 事件抽取', chips: ['ASR','视频'], inds: ['gov'] },
+    { t: '城市治理影像', d: '街景 / 高空违章事件检测', chips: ['检测','城市'], inds: ['gov'] },
+    { t: '政策法规问答', d: '公文 / 法规库 QA 语料', chips: ['QA','法规'], inds: ['gov'] },
+    { t: '方言政务客服', d: '本地方言政务热线 ASR / TTS', chips: ['方言','政务'], inds: ['gov','cs'] },
+    { t: '应急指挥多模态', d: '突发事件音视频 / 文字联合标注', chips: ['多模态','应急'], inds: ['gov'] },
+    { t: '信访诉求分类', d: '群众来信诉求多级类目标注', chips: ['分类','信访'], inds: ['gov'] },
+    { t: '政务办事问答', d: '一网通办流程问答机器人语料', chips: ['QA','办事'], inds: ['gov'] },
+    { t: '城市视频检索', d: '海量监控以图搜图 / 事件检索', chips: ['检索','视频'], inds: ['gov'] },
+    // 教育 edu
+    { t: 'K12 学科题库', d: '中小学数理化题目 OCR + 解析', chips: ['题库','K12'], inds: ['edu'] },
+    { t: '英语口语评测', d: '发音准确度 / 流利度多维评分', chips: ['评测','口语'], inds: ['edu'] },
+    { t: '作文批改语料', d: '作文范文 / 错题 / 批语数据', chips: ['批改','作文'], inds: ['edu'] },
+    { t: '课堂行为分析', d: '学生专注度 / 互动行为识别', chips: ['行为','课堂'], inds: ['edu'] },
+    { t: '智能伴学对话', d: '学情对话 / 解题引导 SFT 数据', chips: ['SFT','对话'], inds: ['edu','llm'] },
+    { t: '名师课程切片', d: '教学视频转写 / 知识点切片', chips: ['转写','课程'], inds: ['edu'] },
+    { t: '数学公式 OCR', d: 'LaTeX 公式 / 几何图形识别数据', chips: ['OCR','公式'], inds: ['edu'] },
+    { t: '中高考真题集', d: '历年真题分章节解析标注', chips: ['真题','解析'], inds: ['edu'] },
+    { t: '听说读写评测', d: '小语种 / 中文综合能力测评数据', chips: ['评测','综合'], inds: ['edu'] },
+    { t: '教研知识图谱', d: '学科知识点关系图谱构建语料', chips: ['图谱','学科'], inds: ['edu'] },
+    // 文娱 ent
+    { t: 'TTS 多音色定制', d: '明星 / 虚拟人音色克隆与情感合成', chips: ['TTS','音色'], inds: ['ent'] },
+    { t: '短视频内容审核', d: '违规 / 敏感片段多模态识别', chips: ['审核','多模态'], inds: ['ent'] },
+    { t: '游戏 NPC 对话', d: '角色驱动 SFT / RLHF 数据', chips: ['SFT','游戏'], inds: ['ent','llm'] },
+    { t: '影视剧多语字幕', d: '多语种影视字幕与时间戳对齐', chips: ['字幕','多语'], inds: ['ent'] },
+    { t: '美颜美型数据', d: '人脸关键点 / 高清美图素材', chips: ['人脸','关键点'], inds: ['ent'] },
+    { t: '虚拟人动作库', d: '舞蹈 / 表演动捕大规模数据', chips: ['动捕','虚拟人'], inds: ['ent'] },
+    { t: '体育赛事解说', d: '多语种实时解说音视频语料', chips: ['解说','体育'], inds: ['ent'] },
+    { t: '直播弹幕情感', d: '高频弹幕 / 评论情感与意图标注', chips: ['情感','弹幕'], inds: ['ent'] },
+    { t: '漫画分镜结构', d: '漫画分镜 / 对白气泡识别数据', chips: ['分镜','漫画'], inds: ['ent'] },
+    { t: '音乐情感打标', d: '音乐流派 / 情感 / 场景多标签', chips: ['音乐','标签'], inds: ['ent'] },
+    // 客服 cs
+    { t: 'ASR 方言 / 远场', d: '20+ 方言、远场嘈杂环境语料', chips: ['ASR','方言'], inds: ['cs'] },
+    { t: '客服对话 SFT', d: '电信 / 电商 / 金融多领域客服问答', chips: ['SFT','对话'], inds: ['cs','llm'] },
+    { t: '智能外呼脚本', d: '外呼场景多轮对话生成数据', chips: ['外呼','多轮'], inds: ['cs'] },
+    { t: '工单意图分类', d: '客服工单意图 / 情感 / 升级判定', chips: ['分类','工单'], inds: ['cs'] },
+    { t: '坐席质检全流程', d: '坐席通话合规质检与话术抽取', chips: ['质检','坐席'], inds: ['cs'] },
+    { t: 'FAQ 知识库构建', d: 'FAQ 抽取 / 知识图谱客服语料', chips: ['知识库','FAQ'], inds: ['cs'] },
+    { t: '实时翻译客服', d: '跨语种实时翻译对话训练集', chips: ['翻译','跨语'], inds: ['cs'] },
+    { t: '复杂工单聚类', d: '海量工单主题挖掘与聚类标注', chips: ['聚类','挖掘'], inds: ['cs'] },
+    { t: '智能 IVR 对话', d: '语音导航多轮意图识别语料', chips: ['IVR','意图'], inds: ['cs'] },
+    { t: '售后情感安抚', d: '高情感场景同理心话术数据', chips: ['情感','售后'], inds: ['cs'] }
+  ];
+
+  const ICON_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>';
+
   let curIndustry = 'all';
   let curPage = 1;
-  const PAGE_SIZE = 3;
+  const PAGE_SIZE = 4;
   const grid = document.getElementById('sceneGrid');
   const empty = document.getElementById('sceneEmpty');
   const pager = document.getElementById('scenePagination');
 
+  // 渲染所有卡片到 DOM
+  SCENES.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'scene-card';
+    el.dataset.industries = s.inds.join(' ');
+    el.innerHTML =
+      '<div class="ic">' + ICON_SVG + '</div>' +
+      '<div class="card-body">' +
+        '<h4>' + s.t + '</h4>' +
+        '<p>' + s.d + '</p>' +
+        '<div class="chip-row">' +
+          s.chips.map((c, i) => '<span class="chip' + (i === 0 ? ' accent' : '') + '">' + c + '</span>').join('') +
+        '</div>' +
+      '</div>';
+    grid.insertBefore(el, empty);
+  });
+
   function getMatched() {
     const out = [];
     grid.querySelectorAll('.scene-card').forEach(card => {
-      const ps = (card.dataset.products || '').split(/\s+/);
       const is = (card.dataset.industries || '').split(/\s+/);
-      const matchP = curProduct === 'all' || ps.includes(curProduct);
-      const matchI = curIndustry === 'all' || is.includes(curIndustry);
-      if (matchP && matchI) out.push(card);
+      if (curIndustry === 'all' || is.includes(curIndustry)) out.push(card);
     });
     return out;
   }
@@ -2162,14 +2285,28 @@ body::after {
     prev.addEventListener('click', () => { if (curPage > 1) { curPage--; apply(); } });
     pager.appendChild(prev);
 
-    for (let i = 1; i <= totalPages; i++) {
+    // 窗口式：始终显示首页、末页、当前页及其相邻页，其余以省略号代替
+    const set = new Set([1, totalPages, curPage]);
+    if (curPage - 1 >= 1) set.add(curPage - 1);
+    if (curPage + 1 <= totalPages) set.add(curPage + 1);
+    const sorted = Array.from(set).sort((a, b) => a - b);
+
+    let last = 0;
+    sorted.forEach(p => {
+      if (p - last > 1) {
+        const ell = document.createElement('span');
+        ell.className = 'page-ellipsis';
+        ell.textContent = '…';
+        pager.appendChild(ell);
+      }
       const b = document.createElement('button');
       b.type = 'button';
-      b.className = 'page-btn' + (i === curPage ? ' active' : '');
-      b.textContent = String(i).padStart(2, '0');
-      b.addEventListener('click', () => { curPage = i; apply(); });
+      b.className = 'page-btn' + (p === curPage ? ' active' : '');
+      b.textContent = String(p).padStart(2, '0');
+      b.addEventListener('click', () => { curPage = p; apply(); });
       pager.appendChild(b);
-    }
+      last = p;
+    });
 
     const next = document.createElement('button');
     next.type = 'button';
@@ -2198,20 +2335,16 @@ body::after {
     grid.scrollTop = 0;
   }
 
-  function bindGroup(groupId, attr, setter) {
-    const group = document.getElementById(groupId);
-    group.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        group.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        setter(btn.dataset[attr]);
-        curPage = 1;
-        apply();
-      });
+  const group = document.getElementById('filterIndustry');
+  group.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      group.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      curIndustry = btn.dataset.industry;
+      curPage = 1;
+      apply();
     });
-  }
-  bindGroup('filterProduct', 'product', v => curProduct = v);
-  bindGroup('filterIndustry', 'industry', v => curIndustry = v);
+  });
   apply();
 })();
 
@@ -2326,40 +2459,40 @@ document.querySelectorAll('a[href="#contact"]').forEach(link => {
   const TOOLS = [
     { name: '图片标注', badge: '视觉标注台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_autonomous_driving_data_annotation_dark_mode/screen.png',
       desc: '面向自动驾驶与通用视觉的图像标注，支持目标检测框、车道线、可行驶区域等多类几何标注，AI 预标注一键采纳，框选效率成倍提升。',
-      tags: ['目标检测框', '车道线', '2D / 3D 框', '语义分割', 'AI 预标注'] },
+      tags: ['目标检测', '矩形框 / 多边形框', '语义分割', '实例分割', '全景分割', '图像分类', 'OCR 文本检测', 'AI 预标注'] },
     { name: '人脸骨骼点标注', badge: '关键点工作台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_face_landmark_and_skeleton_annotation_dark/screen.png',
       desc: '高精度人脸关键点与人体骨骼点标注，支持 68 / 106 / 240 点位面部与全身姿态打点，适用于美颜、表情驱动、动作捕捉等场景。',
-      tags: ['人脸关键点', '骨骼点', '姿态估计', '表情驱动', '动作捕捉'] },
+      tags: ['关键点标注 Keypoint', '人脸关键点', '68 / 106 / 240 点位', '人体骨骼点', '姿态估计', '表情驱动', '动作捕捉'] },
     { name: '语音识别', badge: '语音转写台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_speech_recognition_annotation_dark_mode_theme/screen.png',
       desc: '面向 ASR 训练的语音转写工具，支持音频波形划段、逐句转写与时间戳对齐，方言、噪声、远场语音均可精准切分标注。',
-      tags: ['划段转写', '时间戳对齐', '方言识别', '远场语音', 'ASR'] },
+      tags: ['ASR 自动语音识别', '音频转写 Audio-to-Text', '时间戳标注', '说话人分离 Diarization', '语种识别', '方言识别', '远场语音', '声音事件检测'] },
     { name: '点云标注', badge: '点云 3D 台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_point_cloud_annotation_dark_mode_theme_high/screen.png',
       desc: '激光点云 3D 标注工具，支持 2D 图像与 3D 点云融合标注，立体框与点云分割联动投影，自动驾驶感知训练首选。',
-      tags: ['3D 立体框', '2D / 3D 融合', '点云分割', '多帧追踪', '激光雷达'] },
+      tags: ['3D 目标检测', 'Cuboid 立体框', '点云语义分割', '点云实例分割', '多传感器融合', '轨迹跟踪', '激光雷达 LiDAR'] },
     { name: '4D 标注', badge: '4D 时空台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_4d_video_annotation_for_embodied_ai_dark_mode/screen.png',
       desc: '4D 时空序列标注，连续帧点云与图像联动，目标轨迹跨帧追踪、ID 保持，刻画动态场景在时间维度上的演化。',
-      tags: ['时空序列', '跨帧追踪', '轨迹标注', 'ID 保持', '4D 点云'] },
+      tags: ['时空序列', '4D 点云', '连续帧标注', '跨帧追踪', 'ID 保持', '轨迹标注', '多传感器融合'] },
     { name: '视频标注', badge: '视频事件台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_video_annotation_dark_mode/screen.png',
       desc: '面向多场景事件的视频标注，按时间戳切分动作片段，逐帧打点事件起止与交互对象，沉淀长时序行为数据。',
-      tags: ['时间戳事件', '动作切分', '逐帧打点', '时序行为'] },
+      tags: ['目标跟踪 Tracking', '时序行为标注', '视频分割', '时间戳事件', '动作切分', '逐帧打点', '场景分类'] },
     { name: '文本标注', badge: 'NLP 标注台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_text_entity_and_relation_annotation_dark_mode/screen.png',
       desc: 'NLP 文本标注工具，支持命名实体识别、实体关系抽取、事件与情感标注，可视化关系连线，构建高质量知识图谱语料。',
-      tags: ['实体识别', '关系抽取', '事件标注', '情感分析', '知识图谱'] },
+      tags: ['文本分类', '情感分析', '实体识别 NER', '关系抽取 RE', '事件抽取', '问答对构建', '意图 / 槽位识别', '知识图谱'] },
     { name: '文档转写', badge: 'OCR 转写台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_document_ocr_transcription_dark_mode_theme/screen.png',
       desc: '文档 OCR 转写工具，支持版面还原、表格结构化、手写与印刷体识别，复杂版式文档一键转为可编辑的结构化文本。',
-      tags: ['OCR', '版面还原', '表格结构化', '手写识别', '印刷体'] },
+      tags: ['OCR 文本检测 / 识别', '版面分析', '版面还原', '表格结构化', '手写识别', '印刷体识别', 'PDF / Word / PPT 解析'] },
     { name: '多模态标注', badge: '多模态台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_multi_modal_annotation_dark_mode_theme_high/screen.png',
       desc: '一体化多模态标注台，音频、视频、图像、文本同屏呈现，跨模态联合判断与信息抽取，服务多模态大模型训练。',
-      tags: ['跨模态', '联合判断', '信息抽取', '音视图文', '多模态大模型'] },
+      tags: ['图文匹配 / 对齐', '图文问答 VQA', '视频理解 / 描述', '音视频同步', '文档解析', '多模态指令', 'Agent 任务流程', '跨模态联合判断'] },
     { name: '对话标注', badge: '对话评估台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_dialogue_annotation_dark_mode_theme_high/screen.png',
       desc: '面向对话与大模型对齐的标注，支持多轮对话质量打分、答案两两排序与偏好选择，为 RLHF 沉淀高质量人类反馈。',
-      tags: ['多轮对话', '质量打分', '偏好排序', '答案对比', '人类反馈'] },
+      tags: ['多轮对话', '质量打分', '偏好排序', '两两对比', '人类反馈 RLHF', '意图 / 槽位', '问答对构建'] },
     { name: '大模型标注', badge: '大模型对齐台', img: 'images/stitch_ai/professional_ui_ux_illustration_of_llm_rlhf_reinforcement_learning_from_human/screen.png',
       desc: '大模型对齐标注流水线，覆盖 SFT 指令构造、RLHF 偏好标注与红队对抗评测，多维度对齐人类价值偏好。',
-      tags: ['RLHF', 'SFT', '偏好标注', '红队对抗', '价值对齐'] },
+      tags: ['SFT 指令构造', 'RLHF 偏好标注', '红队对抗评测', '价值对齐', '多模态指令', 'Agent 任务流程', '思维链 CoT'] },
     { name: '语音合成', badge: 'TTS 标注台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_speech_synthesis_tts_annotation_dark_mode/screen.png',
       desc: '面向 TTS 的语音合成标注，音频转写文本并标注多音字、词性与韵律停顿，打造自然流畅的高表现力发音库。',
-      tags: ['音频转写', '多音字', '词性标注', '韵律停顿', 'TTS'] }
+      tags: ['TTS 语音合成', '音字对应', '韵律标注', '停顿 / 重音 / 语调', '词性 POS', '音标 Phoneme', '多音字消歧', '情感语音标注'] }
   ];
   const N = TOOLS.length;
   const total = document.getElementById('peTotal');

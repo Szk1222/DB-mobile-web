@@ -466,9 +466,15 @@ body::after {
   box-shadow: 0 0 10px rgba(177,77,255,0.15);
 }
 
-.scene-content {
+/* 右栏容器：分页器 + 卡片列表 */
+.scene-main {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.scene-content {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -486,21 +492,14 @@ body::after {
 }
 .scene-content::-webkit-scrollbar-thumb:hover { background: rgba(76,201,240,0.5); }
 
-/* Scene head 行内布局：标题 + 紧凑分页 */
-.scene-head-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-/* Scene pagination — 紧凑窗口式 */
+/* Scene pagination — 紧凑窗口式，位于卡片上方，靠右对齐 */
 .scene-pagination {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 4px;
   flex-shrink: 0;
+  min-height: 22px;
 }
 .scene-pagination .page-btn {
   min-width: 22px;
@@ -1646,10 +1645,7 @@ body::after {
 <section class="section-tight scene-section" id="scenes" data-reveal>
   <div class="scene-head">
     <span class="eyebrow"> 02 · USE CASES</span>
-    <div class="scene-head-row">
-      <h2 class="display" style="font-size:22px;margin:0;">应用场景</h2>
-      <div class="scene-pagination" id="scenePagination" aria-label="场景分页"></div>
-    </div>
+    <h2 class="display" style="font-size:22px;margin:10px 0 0;">应用场景</h2>
     <p class="lead" style="margin:6px 0 0;">按行业场景筛选，找到你的最近落地路径</p>
   </div>
 
@@ -1668,8 +1664,11 @@ body::after {
       </div>
     </div>
 
-    <div class="scene-content" id="sceneGrid">
-      <div class="scene-empty" id="sceneEmpty" style="display:none;">// 当前筛选下暂无场景，试试其他组合</div>
+    <div class="scene-main">
+      <div class="scene-pagination" id="scenePagination" aria-label="场景分页"></div>
+      <div class="scene-content" id="sceneGrid">
+        <div class="scene-empty" id="sceneEmpty" style="display:none;">// 当前筛选下暂无场景，试试其他组合</div>
+      </div>
     </div>
   </div>
 </section>

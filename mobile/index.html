@@ -1389,6 +1389,54 @@ body::after {
   html, body { font-size: 13px; }
   .hero h1 { font-size: 28px; }
 }
+
+/* =========================================================
+   桌面端 · 模拟移动端 H5 预览
+   在宽屏（≥768px）下把页面收成 420px 居中的手机容器
+   ========================================================= */
+@media (min-width: 768px) {
+  html {
+    background:
+      radial-gradient(900px 600px at 50% 20%, rgba(4,105,207,0.18), transparent 60%),
+      radial-gradient(700px 500px at 80% 70%, rgba(177,77,255,0.10), transparent 60%),
+      #02040c;
+    min-height: 100vh;
+  }
+  body {
+    width: 420px;
+    max-width: 420px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+    /* 让 body 成为内部 position:fixed 元素的包含块 */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+    overflow-x: hidden;
+    box-shadow:
+      0 0 0 1px rgba(143,214,255,0.10),
+      0 0 60px rgba(0,0,0,0.7),
+      0 30px 80px rgba(0,0,0,0.55);
+  }
+  /* 让全屏背景仅覆盖手机容器范围 */
+  body::before, body::after { position: absolute; }
+
+  /* 顶栏 / 底部悬浮栏 / 抽屉 等 fixed 元素跟随容器 */
+  .m-topbar { width: 100%; }
+  .floating-bar { width: 100%; left: 0; right: 0; }
+  .nav-drawer-mask,
+  .drawer-mask { width: 100%; left: 0; right: 0; }
+  .nav-drawer { right: 0; }
+  .drawer { left: 0; right: 0; width: 100%; }
+
+  /* 横向滑动卡片以容器宽度为准，避免溢出 */
+  .pe-card {
+    flex: 0 0 calc(420px - 32px);
+    max-width: calc(420px - 32px);
+  }
+  .hero-glow { width: 360px; }
+  .toast { left: 50%; }
+}
 </style>
 </head>
 <body>

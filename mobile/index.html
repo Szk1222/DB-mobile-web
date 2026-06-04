@@ -749,32 +749,159 @@ body::after {
   margin-top: 2px;
 }
 
-/* 工具平台 4 个 */
-.tool-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  padding: 18px 16px 0;
+/* 工具平台 · 1/4 细栏 + 3/4 图文卡 */
+.pe-wrap { padding: 1px 0 0; }
+
+/* 类型筛选栏（多行换行） */
+.pe-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 0 16px 14px;
 }
-.tool-card {
-  padding: 12px 10px;
+.pe-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 12px;
   border: 1px solid var(--line);
-  border-radius: var(--r);
+  border-radius: 999px;
   background: rgba(7,13,32,0.5);
-}
-.tool-card .ic { color: var(--violet-hi); margin-bottom: 8px; }
-.tool-card h5 {
-  margin: 0 0 4px;
-  font-size: 13px;
-  color: var(--text-hi);
-  font-weight: 600;
-}
-.tool-card p {
-  margin: 0;
-  font-size: 11px;
   color: var(--text-mute);
-  line-height: 1.5;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  transition: all 0.2s ease;
 }
+.pe-chip .pe-chip-ix {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+.pe-chip.active {
+  border-color: rgba(177,77,255,0.5);
+  background: rgba(177,77,255,0.12);
+  color: var(--violet-hi);
+  box-shadow: 0 0 14px rgba(177,77,255,0.16);
+}
+.pe-chip.active .pe-chip-ix { color: var(--violet-hi); }
+
+/* 满屏卡片横向滑动 */
+.pe-viewport {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.pe-viewport::-webkit-scrollbar { display: none; }
+.pe-track {
+  display: flex;
+  gap: 12px;
+  padding: 0 16px 4px;
+}
+.pe-card {
+  scroll-snap-align: center;
+  flex: 0 0 calc(100vw - 32px);
+  max-width: calc(100vw - 32px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: linear-gradient(160deg, rgba(13,26,58,0.6), rgba(7,13,32,0.6));
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.pe-card.active {
+  border-color: rgba(177,77,255,0.4);
+  box-shadow: 0 0 0 1px rgba(177,77,255,0.18), var(--shadow-card);
+}
+.pe-shot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1200 / 720;
+  background: #0a142e;
+  overflow: hidden;
+}
+.pe-shot img {
+  position: relative; z-index: 1;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* 图片占位：插入真实图片后即被覆盖 */
+.pe-ph {
+  position: absolute; inset: 0; z-index: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(177,77,255,0.12), transparent 60%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.02) 0 12px, transparent 12px 24px),
+    #0a142e;
+  color: var(--text-dim);
+}
+.pe-ph svg { width: 30px; height: 30px; opacity: 0.7; color: var(--violet-hi); }
+.pe-ph span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; }
+.pe-shot::after {
+  content: "";
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(180deg, transparent 62%, rgba(7,13,32,0.6));
+  pointer-events: none;
+}
+.pe-badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  z-index: 3;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(7,13,32,0.7);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(177,77,255,0.35);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--violet-hi);
+}
+.pe-body { padding: 14px 15px 16px; display: flex; flex-direction: column; flex: 1; }
+.pe-body h5 {
+  margin: 0 0 7px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-hi);
+}
+.pe-body > p {
+  margin: 0 0 12px;
+  font-size: 12.5px;
+  color: var(--text-mute);
+  line-height: 1.65;
+  flex: 1;
+}
+.pe-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.pe-tags .chip { font-size: 10.5px; padding: 3px 9px; }
+
+/* 进度指示 */
+.pe-progress {
+  display: flex; align-items: center; gap: 10px;
+  margin: 13px 16px 0;
+}
+.pe-progress-track {
+  flex: 1; height: 3px; border-radius: 3px;
+  background: rgba(255,255,255,0.08); overflow: hidden;
+}
+.pe-progress-bar {
+  display: block; height: 100%; width: 8.3%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--violet-hi), #6aa8ff);
+  transition: width 0.3s ease;
+}
+.pe-count {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--text-dim); letter-spacing: 0.06em; white-space: nowrap;
+}
+.pe-count b { color: var(--violet-hi); font-weight: 600; }
 
 .detail-cta {
   display: inline-flex; align-items: center; gap: 6px;
@@ -1738,26 +1865,14 @@ body::after {
     <h2 class="display">工具 <span class="glow-text">平台</span></h2>
     <p class="lead">自研采集、标注、阅读、评测四大工具链，支持私有化部署与企业级集成。</p>
   </div>
-  <div class="tool-grid">
-    <div class="tool-card">
-      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg></div>
-      <h5>标贝易采</h5>
-      <p>多端任务下发，全球采集者协同</p>
+  <div class="pe-wrap">
+    <div class="pe-filters" id="peFilters"></div>
+    <div class="pe-viewport" id="peViewport">
+      <div class="pe-track" id="peTrack"></div>
     </div>
-    <div class="tool-card">
-      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg></div>
-      <h5>标注平台</h5>
-      <p>语音、图像、视频、点云、文本、大模型</p>
-    </div>
-    <div class="tool-card">
-      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-      <h5>数据集管理</h5>
-      <p>支持从小规模验证到百万级商用训练的全场景需求</p>
-    </div>
-    <div class="tool-card">
-      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h20v18H2zM2 9h20M8 3v18"/></svg></div>
-      <h5>标贝悦读</h5>
-      <p>大模型偏好排序 + 多模态评测</p>
+    <div class="pe-progress">
+      <div class="pe-progress-track"><span class="pe-progress-bar" id="peBar"></span></div>
+      <div class="pe-count"><b id="peIdx">01</b> / <span id="peTotal">12</span></div>
     </div>
   </div>
   <a class="detail-cta" href="#contact">申请平台体验
@@ -2146,6 +2261,151 @@ document.querySelectorAll('a[href="#contact"]').forEach(link => {
     form.reset();
     document.querySelectorAll('#needPicks .chip-btn.on').forEach(b => b.classList.remove('on'));
   });
+})();
+
+/* =========================================================
+   交互：工具平台 类型筛选 ↔ 满屏卡片 渐进滑动
+   ========================================================= */
+(function(){
+  const filters  = document.getElementById('peFilters');
+  const track    = document.getElementById('peTrack');
+  const viewport = document.getElementById('peViewport');
+  const bar      = document.getElementById('peBar');
+  const idxEl    = document.getElementById('peIdx');
+  if (!filters || !track || !viewport) return;
+
+  /* 各标注类型数据：img 为图片接口，替换为真实路径即可显示 */
+  const TOOLS = [
+    { name: '图片标注', badge: '视觉标注台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_autonomous_driving_data_annotation_dark_mode/screen.png',
+      desc: '面向自动驾驶与通用视觉的图像标注，支持目标检测框、车道线、可行驶区域等多类几何标注，AI 预标注一键采纳，框选效率成倍提升。',
+      tags: ['目标检测框', '车道线', '2D / 3D 框', '语义分割', 'AI 预标注'] },
+    { name: '人脸骨骼点标注', badge: '关键点工作台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_face_landmark_and_skeleton_annotation_dark/screen.png',
+      desc: '高精度人脸关键点与人体骨骼点标注，支持 68 / 106 / 240 点位面部与全身姿态打点，适用于美颜、表情驱动、动作捕捉等场景。',
+      tags: ['人脸关键点', '骨骼点', '姿态估计', '表情驱动', '动作捕捉'] },
+    { name: '语音识别', badge: '语音转写台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_speech_recognition_annotation_dark_mode_theme/screen.png',
+      desc: '面向 ASR 训练的语音转写工具，支持音频波形划段、逐句转写与时间戳对齐，方言、噪声、远场语音均可精准切分标注。',
+      tags: ['划段转写', '时间戳对齐', '方言识别', '远场语音', 'ASR'] },
+    { name: '点云标注', badge: '点云 3D 台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_point_cloud_annotation_dark_mode_theme_high/screen.png',
+      desc: '激光点云 3D 标注工具，支持 2D 图像与 3D 点云融合标注，立体框与点云分割联动投影，自动驾驶感知训练首选。',
+      tags: ['3D 立体框', '2D / 3D 融合', '点云分割', '多帧追踪', '激光雷达'] },
+    { name: '4D 标注', badge: '4D 时空台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_4d_video_annotation_for_embodied_ai_dark_mode/screen.png',
+      desc: '4D 时空序列标注，连续帧点云与图像联动，目标轨迹跨帧追踪、ID 保持，刻画动态场景在时间维度上的演化。',
+      tags: ['时空序列', '跨帧追踪', '轨迹标注', 'ID 保持', '4D 点云'] },
+    { name: '视频标注', badge: '视频事件台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_video_annotation_dark_mode/screen.png',
+      desc: '面向多场景事件的视频标注，按时间戳切分动作片段，逐帧打点事件起止与交互对象，沉淀长时序行为数据。',
+      tags: ['时间戳事件', '动作切分', '逐帧打点', '时序行为'] },
+    { name: '文本标注', badge: 'NLP 标注台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_text_entity_and_relation_annotation_dark_mode/screen.png',
+      desc: 'NLP 文本标注工具，支持命名实体识别、实体关系抽取、事件与情感标注，可视化关系连线，构建高质量知识图谱语料。',
+      tags: ['实体识别', '关系抽取', '事件标注', '情感分析', '知识图谱'] },
+    { name: '文档转写', badge: 'OCR 转写台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_document_ocr_transcription_dark_mode_theme/screen.png',
+      desc: '文档 OCR 转写工具，支持版面还原、表格结构化、手写与印刷体识别，复杂版式文档一键转为可编辑的结构化文本。',
+      tags: ['OCR', '版面还原', '表格结构化', '手写识别', '印刷体'] },
+    { name: '多模态标注', badge: '多模态台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_multi_modal_annotation_dark_mode_theme_high/screen.png',
+      desc: '一体化多模态标注台，音频、视频、图像、文本同屏呈现，跨模态联合判断与信息抽取，服务多模态大模型训练。',
+      tags: ['跨模态', '联合判断', '信息抽取', '音视图文', '多模态大模型'] },
+    { name: '对话标注', badge: '对话评估台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_dialogue_annotation_dark_mode_theme_high/screen.png',
+      desc: '面向对话与大模型对齐的标注，支持多轮对话质量打分、答案两两排序与偏好选择，为 RLHF 沉淀高质量人类反馈。',
+      tags: ['多轮对话', '质量打分', '偏好排序', '答案对比', '人类反馈'] },
+    { name: '大模型标注', badge: '大模型对齐台', img: 'images/stitch_ai/professional_ui_ux_illustration_of_llm_rlhf_reinforcement_learning_from_human/screen.png',
+      desc: '大模型对齐标注流水线，覆盖 SFT 指令构造、RLHF 偏好标注与红队对抗评测，多维度对齐人类价值偏好。',
+      tags: ['RLHF', 'SFT', '偏好标注', '红队对抗', '价值对齐'] },
+    { name: '语音合成', badge: 'TTS 标注台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_speech_synthesis_tts_annotation_dark_mode/screen.png',
+      desc: '面向 TTS 的语音合成标注，音频转写文本并标注多音字、词性与韵律停顿，打造自然流畅的高表现力发音库。',
+      tags: ['音频转写', '多音字', '词性标注', '韵律停顿', 'TTS'] }
+  ];
+  const N = TOOLS.length;
+  const total = document.getElementById('peTotal');
+  if (total) total.textContent = String(N).padStart(2, '0');
+
+  const PH_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>';
+
+  TOOLS.forEach((t, i) => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'pe-chip' + (i === 0 ? ' active' : '');
+    chip.dataset.idx = i;
+    chip.innerHTML = '<span class="pe-chip-ix">' + String(i + 1).padStart(2, '0') + '</span>' + t.name;
+    filters.appendChild(chip);
+
+    const card = document.createElement('article');
+    card.className = 'pe-card' + (i === 0 ? ' active' : '');
+    card.dataset.idx = i;
+    card.innerHTML =
+      '<div class="pe-shot">'
+        + '<span class="pe-badge">' + t.badge + '</span>'
+        + '<div class="pe-ph">' + PH_ICON + '<span>示意图待插入</span></div>'
+        + '<img src="' + t.img + '" alt="' + t.name + '示意图" loading="lazy" onerror="this.style.display=\'none\'">'
+      + '</div>'
+      + '<div class="pe-body">'
+        + '<h5>' + t.name + '</h5>'
+        + '<p>' + t.desc + '</p>'
+        + '<div class="pe-tags">' + t.tags.map(x => '<span class="chip">' + x + '</span>').join('') + '</div>'
+      + '</div>';
+    track.appendChild(card);
+  });
+
+  const chips = Array.from(filters.children);
+  const cards = Array.from(track.children);
+
+  let programmatic = false, animId = null;
+
+  function setActive(idx) {
+    chips.forEach((c, i) => c.classList.toggle('active', i === idx));
+    cards.forEach((c, i) => c.classList.toggle('active', i === idx));
+    if (bar) bar.style.width = ((idx + 1) / N * 100) + '%';
+    if (idxEl) idxEl.textContent = String(idx + 1).padStart(2, '0');
+  }
+
+  // 自定义渐进滑动：scroll-snap mandatory 会吞掉原生 smooth，故用 rAF 手动缓动
+  function slideTo(idx) {
+    const card = cards[idx];
+    if (!card) return;
+    const vp = viewport.getBoundingClientRect();
+    const cr = card.getBoundingClientRect();
+    const target = viewport.scrollLeft + (cr.left + cr.width / 2) - (vp.left + vp.width / 2);
+    const start = viewport.scrollLeft;
+    const dist = target - start;
+    if (Math.abs(dist) < 1) return;
+
+    programmatic = true;
+    if (animId) cancelAnimationFrame(animId);
+    viewport.style.scrollSnapType = 'none';
+    const dur = 420, t0 = performance.now();
+    function step(now) {
+      const p = Math.min(1, (now - t0) / dur);
+      const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; // easeInOutQuad
+      viewport.scrollLeft = start + dist * e;
+      if (p < 1) {
+        animId = requestAnimationFrame(step);
+      } else {
+        animId = null;
+        viewport.style.scrollSnapType = '';
+        programmatic = false;
+      }
+    }
+    animId = requestAnimationFrame(step);
+  }
+
+  chips.forEach((chip, i) => chip.addEventListener('click', () => { setActive(i); slideTo(i); }));
+
+  // 横向滑动卡片时反向同步类型筛选高亮（取最接近视口中心的卡片）
+  let rafId = null;
+  viewport.addEventListener('scroll', () => {
+    if (programmatic) return;
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => {
+      rafId = null;
+      const vp = viewport.getBoundingClientRect();
+      const center = vp.left + vp.width / 2;
+      let best = 0, bestDist = Infinity;
+      cards.forEach((c, i) => {
+        const cr = c.getBoundingClientRect();
+        const dist = Math.abs((cr.left + cr.width / 2) - center);
+        if (dist < bestDist) { bestDist = dist; best = i; }
+      });
+      setActive(best);
+    });
+  }, { passive: true });
 })();
 
 /* =========================================================

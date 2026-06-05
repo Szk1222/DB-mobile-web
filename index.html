@@ -2783,22 +2783,72 @@ document.querySelectorAll('a[href="#contact"]').forEach(link => {
 });
 
 /* =========================================================
-   交互：留言表单提交（假成功）
+   交互：留言表单提交 → POST uploadV2
    ========================================================= */
 (function(){
   const form = document.getElementById('leadForm');
-  form.addEventListener('submit', (e) => {
+  const submitBtn = form.querySelector('[type="submit"]');
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = new FormData(form);
-    const name = (data.get('name') || '').toString().trim();
+    const name    = (data.get('name')    || '').toString().trim();
     const contact = (data.get('contact') || '').toString().trim();
+    const company = (data.get('company') || '').toString().trim();
+
     if (!name || !contact) {
       showToast('请填写姓名与联系方式');
       return;
     }
-    leaveDrawer.close();
-    setTimeout(() => showToast('已收到，我们将在 1 个工作日内联系您'), 280);
-    form.reset();
+
+    submitBtn.disabled = true;
+    const origText = submitBtn.textContent;
+    submitBtn.textContent = '提交中…';
+
+    try {
+      const payload = {
+        customerName:       name,
+        customerGender:     2,
+        customerMobile:     contact,
+        customerCompany:    company,
+        customerEmail:      (data.get('email')    || '').toString().trim(),
+        customerPosition:   (data.get('position') || '').toString().trim(),
+        demandContent:      (data.get('msg')      || '').toString().trim(),
+        conversionTypeList: [],
+        formType:           7,
+        sourceInfo:         '移动端留言',
+        sourceLanguage:     1
+      };
+
+      const resp = await fetch(
+        'https://www.data-baker.com/official-website/v1/customer/demand/uploadV2',
+        {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload)
+        }
+      );
+
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const result = await resp.json();
+
+      const code = result.code !== undefined ? Number(result.code) : 0;
+      if (!isNaN(code) && code !== 0 && code !== 200) {
+        throw new Error(result.message || result.msg || '提交失败');
+      }
+
+      leaveDrawer.close();
+      setTimeout(() => showToast('已收到，我们将在 1 个工作日内联系您'), 280);
+      form.reset();
+    } catch (err) {
+      const msg = (err.message === 'Failed to fetch' || err.name === 'TypeError')
+        ? '网络异常，请稍后重试'
+        : (err.message || '提交失败，请稍后重试');
+      showToast(msg);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = origText;
+    }
   });
 })();
 

@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
 <meta name="theme-color" content="#050813" />
 <title>标贝科技 · 数据业务（移动端）</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
 /* =========================================================
    M 端 · 数据业务页 · 设计 Token（独立于 /web，可单独打包）
@@ -41,10 +38,10 @@
   --shadow-card: 0 12px 28px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(143,214,255,0.06);
   --glow-cyan:   0 0 18px rgba(63, 171, 204, 0.684);
 
-  --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
-  --font-tech: "Orbitron", "Rajdhani", "JetBrains Mono", var(--font-cn);
-  --font-mono: "JetBrains Mono", "SF Mono", Consolas, monospace;
-  --font-display: "Rajdhani", "Orbitron", var(--font-cn);
+  --font-cn: "Times New Roman", SimHei, "STHeiti", "黑体", serif;
+  --font-tech: "Times New Roman", SimHei, "STHeiti", "黑体", serif;
+  --font-mono: "Times New Roman", SimHei, "STHeiti", monospace;
+  --font-display: "Times New Roman", SimHei, "STHeiti", "黑体", serif;
 
   --r-sm: 8px;
   --r: 12px;
@@ -1870,7 +1867,7 @@ body::after {
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       </div>
       <h3>数据标注</h3>
-      <p>精准标注，质检严控，保障每条数据可用</p>
+      <p>精准标注，质检严控，保障数据安全可用</p>
       <div class="chip-row">
         <span class="chip">BBox</span><span class="chip">转写</span><span class="chip">评测</span>
       </div>
@@ -2016,6 +2013,13 @@ body::after {
       <div class="body">
         <h5>智能合规交付</h5>
         <p>采集授权、隐私脱敏、过程留痕与质量检查共同构成可验收的数据链路。</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="num">04</div>
+      <div class="body">
+        <h5>多场景采集</h5>
+        <p>具身智能、运动健康、音频识别、语音合成、图片数据、视频数据、文本数据。</p>
       </div>
     </div>
   </div>
@@ -2394,7 +2398,7 @@ body::after {
   const SCENES = [
     // 具身 robot
     { t: '机械臂抓取', d: '目标物体位置、姿态与抓取轨迹标注', chips: ['3DBox','事件理解'], inds: ['robot'] },
-    { t: '人体动作采集', d: '全身动作数据采集用于机器人模仿学习', chips: ['动作捕捉','关键点'], inds: ['robot'] },
+    { t: '动作采集', d: '全身动作数据采集用于机器人模仿学习', chips: ['动作捕捉','关键点'], inds: ['robot'] },
     { t: '场景理解', d: '室内环境物体分类与空间关系标注', chips: ['语义分割','事件标注'], inds: ['robot'] },
     { t: '人机协作', d: '人与机器人交互行为数据采集标注', chips: ['视频标注','标签'], inds: ['robot'] },
     { t: '手势识别', d: '操作指令与控制动作采集与人机交互标注', chips: ['手势','关键点'], inds: ['robot'] },
@@ -2402,12 +2406,12 @@ body::after {
     { t: '步态识别', d: '行走、跑步、搬运等步态数据标注', chips: ['骨骼点','行为识别'], inds: ['robot'] },
     { t: '灵巧手操作', d: '精细操作任务中手部动作数据采集标注', chips: ['关键点','动作捕捉'], inds: ['robot'] },
     { t: '多模态指令', d: '语言 + 图像 + 动作融合指令数据标注', chips: ['多模态','指令微调'], inds: ['robot'] },
-    { t: '情感交互', d: '服务机器人人脸情绪与表情数据采集', chips: ['表情识别','关键点'], inds: ['robot'] },
+    { t: '情感交互', d: '服务机器人情绪与表情数据采集', chips: ['表情识别','关键点'], inds: ['robot'] },
     // 智驾 auto
     { t: '目标检测', d: '自动驾驶场景内障碍物识别与标注', chips: ['3DBox','2D框','伪3D框'], inds: ['auto'] },
     { t: 'BEV 视角标注', d: '道路结构、标线、设施要素数据生产', chips: ['低空','4D','盲感'], inds: ['auto'] },
     { t: '车道线标注', d: '道路修复、导流线、可行驶区域细标注', chips: ['多边形','线段'], inds: ['auto'] },
-    { t: '疲劳监测', d: '驾驶员人脸与行为状态采集与生产', chips: ['行为标注','数据采集'], inds: ['auto'] },
+    { t: '疲劳监测', d: '驾驶员状态采集与生产', chips: ['行为标注','数据采集'], inds: ['auto'] },
     { t: '人机对话', d: '车舱交互唤醒词及行车指令', chips: ['ASR','TTS'], inds: ['auto'] },
     { t: '交通标志识别', d: '各类路牌、限速、警示标识图像数据标注', chips: ['图像标注','分类'], inds: ['auto'] },
     { t: '行人检测', d: '复杂路况下行人姿态与轨迹标注', chips: ['关键点','轨迹标注'], inds: ['auto'] },
@@ -2431,15 +2435,15 @@ body::after {
     { t: '广告审核', d: '广告创意合规识别与标注', chips: ['内容审核','分类'], inds: ['internet'] },
     { t: '短视频标签', d: '视频内容分类、主题与标签标注', chips: ['视频标注','分类'], inds: ['internet'] },
     { t: 'OCR 数据采集', d: '网络图片文字识别数据生产', chips: ['OCR','数据采集'], inds: ['internet'] },
-    { t: '人脸检测', d: '社交、直播场景人脸检测与属性标注', chips: ['人脸','关键点'], inds: ['internet'] },
+    { t: '用户行为识别', d: '互联网内容平台用户操作与偏好行为分类标注', chips: ['行为标注','分类'], inds: ['internet'] },
     { t: '语音客服数据', d: '客服对话场景 ASR 语料采集', chips: ['ASR','对话'], inds: ['internet'] },
     { t: '多语言翻译', d: '互联网内容多语种翻译平行语料', chips: ['翻译','多语种'], inds: ['internet'] },
-    { t: '图像分类标注', d: '商品、场景、人物图片分类标注', chips: ['图像分类','标注'], inds: ['internet'] },
+    { t: '图像分类标注', d: '商品、场景、物品图片多标签分类标注', chips: ['图像分类','标注'], inds: ['internet'] },
     { t: '实体识别语料', d: '文章中品牌、地点、人名实体标注', chips: ['NER','NLP'], inds: ['internet'] },
     // 医疗 medical
-    { t: '医学影像标注', d: '病灶区域精细标注', chips: ['医学影像','分类'], inds: ['medical'] },
-    { t: '病理切片分析', d: '细胞、组织病理图像分类与标注', chips: ['病理','图像标注'], inds: ['medical'] },
-    { t: '电子病历结构化', d: '非结构化病历文本信息抽取标注', chips: ['NLP','实体识别'], inds: ['medical'] },
+    { t: '医学图像标注', d: '医疗设备输出图像的目标检测与区域分割标注', chips: ['医学影像','分割'], inds: ['medical'] },
+    { t: '医学图谱标注', d: '医学教学图谱与示例图像的分类识别标注', chips: ['图像标注','分类'], inds: ['medical'] },
+    { t: '医疗文献结构化', d: '医学指南、文献摘要关键信息抽取与标注', chips: ['NLP','实体识别'], inds: ['medical'] },
     { t: '医学问答语料', d: '医生对话问诊 QA 数据采集生产', chips: ['QA对','对话'], inds: ['medical'] },
     { t: '手术操作视频', d: '手术操作步骤与器械识别标注', chips: ['视频标注','分类'], inds: ['medical'] },
     { t: '皮肤病图像', d: '多肤色、多类型皮肤病灶图像采集', chips: ['图像采集','分类'], inds: ['medical'] },
@@ -2449,35 +2453,35 @@ body::after {
     { t: '康复动作采集', d: '患者康复训练动作数据采集标注', chips: ['关键点','行为识别'], inds: ['medical'] },
     // 金融 finance
     { t: '合同信息抽取', d: '金融合同关键条款与实体信息标注', chips: ['NER','文档理解'], inds: ['finance'] },
-    { t: '风险事件识别', d: '新闻、公告中风险信号文本标注', chips: ['分类','情感分析'], inds: ['finance'] },
+    { t: '金融舆情分类', d: '公开金融文本的风险倾向分类与关键词标注', chips: ['分类','情感分析'], inds: ['finance'] },
     { t: '票据识别', d: '发票、单据、票证 OCR 数据生产', chips: ['OCR','文档标注'], inds: ['finance'] },
-    { t: '反欺诈语料', d: '欺诈话术、诈骗短信文本数据集', chips: ['分类','安全'], inds: ['finance'] },
+    { t: '风险文本语料', d: '金融风险信号与异常行为文本分类标注数据集', chips: ['分类','安全'], inds: ['finance'] },
     { t: '金融问答数据', d: '理财、保险、贷款场景 QA 对生产', chips: ['QA对','指令微调'], inds: ['finance'] },
-    { t: '情绪分析语料', d: '财报、研报情感倾向人工标注', chips: ['情感分析','NLP'], inds: ['finance'] },
+    { t: '金融情感语料', d: '金融领域文本情感倾向分类与标注数据生产', chips: ['情感分析','NLP'], inds: ['finance'] },
     { t: '语音客服采集', d: '银行、保险电话客服语音数据采集', chips: ['ASR','数据采集'], inds: ['finance'] },
-    { t: '身份证件识别', d: '多种证件版式数据采集与结构化标注', chips: ['OCR','图像标注'], inds: ['finance'] },
+    { t: '金融单据识别', d: '合同、申请表、业务单据文档 OCR 数据生产', chips: ['OCR','文档标注'], inds: ['finance'] },
     { t: '信用评估语料', d: '用户描述与信用风险评级标注语料', chips: ['分类','标注'], inds: ['finance'] },
-    { t: '多模态财报分析', d: '图表、文字、数据混合财报数据集', chips: ['多模态','文档标注'], inds: ['finance'] },
+    { t: '金融文档结构化', d: '图表、表格与正文混合金融文档多模态标注', chips: ['多模态','文档标注'], inds: ['finance'] },
     // 教育 edu
     { t: '口语测评采集', d: '多年龄段、多口音口语数据采集', chips: ['ASR','数据采集'], inds: ['edu'] },
     { t: '手写识别数据', d: '学生手写文字、公式图像数据采集', chips: ['OCR','图像采集'], inds: ['edu'] },
     { t: '教学视频标注', d: '课堂行为、学生状态识别标注', chips: ['视频标注','行为识别'], inds: ['edu'] },
     { t: '数学公式识别', d: '手写与印刷数学公式图像采集', chips: ['OCR','图像标注'], inds: ['edu'] },
-    { t: '儿童语音采集', d: '3-12 岁儿童多场景语音数据采集', chips: ['ASR','数据采集'], inds: ['edu'] },
+    { t: '学生口语数据采集', d: '多年级学生朗读与跟读语音数据采集', chips: ['ASR','数据采集'], inds: ['edu'] },
     { t: '错题分析语料', d: '常见错误纠正与解析对照数据集生产', chips: ['QA对','标注'], inds: ['edu'] },
     { t: '阅读理解语料', d: '多文本与问题-答案对高质量数据生产', chips: ['QA对','NLP'], inds: ['edu'] },
     { t: '情绪识别数据', d: '课堂学生注意度与情绪状态标注', chips: ['表情识别','分类'], inds: ['edu'] },
-    { t: '多语言教材语料', d: '多语言教材对照文本翻译与采集', chips: ['翻译','多语种'], inds: ['edu'] },
-    { t: '绘画作品标注', d: '学生美术作品风格与质量评估标注', chips: ['图像分类','评分'], inds: ['edu'] },
+    { t: '多语种翻译语料', d: '教育场景多语言平行文本数据采集与标注', chips: ['翻译','多语种'], inds: ['edu'] },
+    { t: '教学图像标注', d: '教材插图与板书图形符号的分类与识别标注', chips: ['图像分类','标注'], inds: ['edu'] },
     // 安防 security
-    { t: '人脸识别数据', d: '多角度、多光照、多遮挡人脸采集标注', chips: ['人脸','关键点'], inds: ['security'] },
+    { t: '行人检测数据', d: '多角度、多光照、多遮挡条件下行人检测与跟踪标注', chips: ['2D框','轨迹标注'], inds: ['security'] },
     { t: '异常行为识别', d: '打架、跌倒、翻越等危险行为标注', chips: ['视频标注','行为识别'], inds: ['security'] },
-    { t: '人群密度采集', d: '公共场所人群密度图像与视频采集', chips: ['密度图','图像标注'], inds: ['security'] },
-    { t: '车牌识别数据', d: '多角度、多天气车牌图像采集与标注', chips: ['OCR','图像采集'], inds: ['security'] },
+    { t: '人群计数标注', d: '场景人群数量估计与密度分布图像标注', chips: ['密度图','图像标注'], inds: ['security'] },
+    { t: '车辆检测数据', d: '多角度、多天气条件下车辆图像采集与标注', chips: ['2D框','图像标注'], inds: ['security'] },
     { t: '夜视图像标注', d: '红外、低光照场景目标检测数据集', chips: ['图像标注','2D框'], inds: ['security'] },
-    { t: '人体属性识别', d: '性别、年龄、着装等行人属性标注', chips: ['属性标注','分类'], inds: ['security'] },
+    { t: '行人外观标注', d: '着装、体态等行人外观特征分类与标注', chips: ['属性标注','分类'], inds: ['security'] },
     { t: '烟火识别数据', d: '烟雾、火焰场景视频采集标注', chips: ['图像标注','分割'], inds: ['security'] },
-    { t: '口罩 / 遮挡识别', d: '各类遮挡物下人脸检测数据采集', chips: ['人脸','分类'], inds: ['security'] },
+    { t: '着装合规识别', d: '安全帽、工服、护具等规范穿戴检测数据采集', chips: ['图像标注','分类'], inds: ['security'] },
     { t: '武器检测标注', d: '刀具、危险品 X 光图像标注采集', chips: ['图像标注','2D框'], inds: ['security'] },
     { t: '周界入侵检测', d: '围栏、禁区越界行为视频标注', chips: ['视频标注','行为识别'], inds: ['security'] },
     // 工业 industry
@@ -2497,7 +2501,7 @@ body::after {
     { t: '商品评论语料', d: '电商多品类评论情感与标签标注', chips: ['情感分析','NLP'], inds: ['retail'] },
     { t: '无人收银数据', d: '商品拿取放置动作视频数据标注', chips: ['视频标注','行为识别'], inds: ['retail'] },
     { t: '价签识别数据', d: '多场景商品价格标签 OCR 标注', chips: ['OCR','图像采集'], inds: ['retail'] },
-    { t: '人脸支付采集', d: '多角度、多光照支付场景人脸采集', chips: ['人脸','数据采集'], inds: ['retail'] },
+    { t: '扫码结算数据', d: '商品扫码与智能收银流程视频数据标注', chips: ['图像标注','数据采集'], inds: ['retail'] },
     { t: '商品图文对', d: '商品名称与商品图文配对训练数据', chips: ['多模态','图文对'], inds: ['retail'] },
     { t: '导购对话采集', d: '购物咨询场景多轮对话采集生产', chips: ['对话','QA对'], inds: ['retail'] },
     { t: '货架陈列标注', d: '商品摆放合规检测图像标注', chips: ['图像标注','分类'], inds: ['retail'] },
@@ -2811,40 +2815,40 @@ document.querySelectorAll('a[href="#contact"]').forEach(link => {
 
   /* 各标注类型数据：img 为图片接口，替换为真实路径即可显示 */
   const TOOLS = [
-    { name: '图片标注', badge: '视觉标注台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_autonomous_driving_data_annotation_dark_mode/screen.png',
+    { name: '图片标注', badge: '视觉标注台', img: 'images/stitch_ai/figure.png',
       desc: '面向自动驾驶与通用视觉的图像标注，支持目标检测框、车道线、可行驶区域等多类几何标注，AI 预标注一键采纳，框选效率成倍提升。',
       tags: ['目标检测', '矩形框','多边形框', '语义分割', '实例分割', '全景分割', '图像分类', 'OCR 文本检测'] },
-    { name: '人脸骨骼点标注', badge: '关键点工作台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_face_landmark_and_skeleton_annotation_dark/screen.png',
-      desc: '高精度人脸关键点与人体骨骼点标注，支持 68 / 106 / 240 点位面部与全身姿态打点，适用于美颜、表情驱动、动作捕捉等场景。',
-      tags: ['关键点标注', '人脸关键点', '68 / 106 / 240 点位', '人体骨骼点', '姿态估计', '表情驱动', '动作捕捉'] },
-    { name: '语音识别', badge: '语音转写台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_speech_recognition_annotation_dark_mode_theme/screen.png',
+    { name: '骨骼点标注', badge: '关键点工作台', img: 'images/stitch_ai/face.png',
+      desc: '高精度关键点与骨骼点标注，支持 68 / 106 / 240 点位面部与全身姿态打点，适用于美颜、表情驱动、动作捕捉等场景。',
+      tags: ['关键点标注', '关键点', '68 / 106 / 240 点位', '骨骼点', '姿态估计', '表情驱动', '动作捕捉'] },
+    { name: '语音识别', badge: '语音转写台', img: 'images/stitch_ai/speech_recognition.png',
       desc: '面向 ASR 训练的语音转写工具，支持音频波形划段、逐句转写与时间戳对齐，方言、噪声、远场语音均可精准切分标注。',
       tags: ['语音识别', '音频转写', '时间戳标注', '说话人分离', '语种识别', '方言识别', '声音事件检测'] },
-    { name: '点云标注', badge: '点云 3D 台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_point_cloud_annotation_dark_mode_theme_high/screen.png',
+    { name: '点云标注', badge: '点云 3D 台', img: 'images/stitch_ai/point_cloud.png',
       desc: '激光点云 3D 标注工具，支持 2D 图像与 3D 点云融合标注，立体框与点云分割联动投影，自动驾驶感知训练首选。',
       tags: ['目标检测', '立体框', '点云语义分割', '点云实例分割', '多传感器融合', '轨迹跟踪', '激光雷达'] },
-    { name: '4D 标注', badge: '4D 时空台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_4d_video_annotation_for_embodied_ai_dark_mode/screen.png',
+    { name: '4D 标注', badge: '4D 时空台', img: 'images/stitch_ai/4D_video.png',
       desc: '4D 时空序列标注，连续帧点云与图像联动，目标轨迹跨帧追踪、ID 保持，刻画动态场景在时间维度上的演化。',
       tags: ['时空序列', '4D 点云', '轨迹标注', '多传感器融合'] },
-    { name: '视频标注', badge: '视频事件台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_video_annotation_dark_mode/screen.png',
+    { name: '视频标注', badge: '视频事件台', img: 'images/stitch_ai/video.png',
       desc: '面向多场景事件的视频标注，按时间戳切分动作片段，逐帧打点事件起止与交互对象，沉淀长时序行为数据。',
       tags: ['目标跟踪', '时序行为标注', '视频分割', '时间戳事件', '动作切分', '逐帧打点', '场景分类'] },
-    { name: '文本标注', badge: 'NLP 标注台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_text_entity_and_relation_annotation_dark_mode/screen.png',
+    { name: '文本标注', badge: 'NLP 标注台', img: 'images/stitch_ai/text.png',
       desc: 'NLP 文本标注工具，支持命名实体识别、实体关系抽取、事件与情感标注，可视化关系连线，构建高质量知识图谱语料。',
       tags: ['文本分类', '情感分析', '实体识别 NER', '关系抽取 RE', '事件抽取', '问答对构建', '意图 / 槽位识别', '知识图谱'] },
-    { name: '文档转写', badge: 'OCR 转写台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_document_ocr_transcription_dark_mode_theme/screen.png',
+    { name: '文档转写', badge: 'OCR 转写台', img: 'images/stitch_ai/document_OCR.png',
       desc: '文档 OCR 转写工具，支持版面还原、表格结构化、手写与印刷体识别，复杂版式文档一键转为可编辑的结构化文本。',
       tags: ['OCR 识别', '版面分析', '版面还原', '表格结构化', '手写识别', '印刷体识别'] },
-    { name: '多模态标注', badge: '多模态台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_multi_modal_annotation_dark_mode_theme_high/screen.png',
+    { name: '多模态标注', badge: '多模态台', img: 'images/stitch_ai/multimodal.png',
       desc: '一体化多模态标注台，音频、视频、图像、文本同屏呈现，跨模态联合判断与信息抽取，服务多模态大模型训练。',
       tags: ['图文匹配 / 对齐', '图文问答 VQA', '视频理解 / 描述', '音视频同步', '文档解析', '多模态指令', '跨模态联合判断'] },
-    { name: '对话标注', badge: '对话评估台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_dialogue_annotation_dark_mode_theme_high/screen.png',
+    { name: '对话标注', badge: '对话评估台', img: 'images/stitch_ai/dialogue.png',
       desc: '面向对话与大模型对齐的标注，支持多轮对话质量打分、答案两两排序与偏好选择，为 RLHF 沉淀高质量人类反馈。',
       tags: ['多轮对话', '质量打分', '偏好排序', '两两对比', '人类反馈 RLHF', '意图 / 槽位', '问答对构建'] },
-    { name: '大模型标注', badge: '大模型对齐台', img: 'images/stitch_ai/professional_ui_ux_illustration_of_llm_rlhf_reinforcement_learning_from_human/screen.png',
+    { name: '大模型标注', badge: '大模型对齐台', img: 'images/stitch_ai/LLM.png',
       desc: '大模型对齐标注流水线，覆盖 SFT 指令构造、RLHF 偏好标注与红队对抗评测，多维度对齐人类价值偏好。',
       tags: ['SFT 指令构造', 'RLHF 偏好标注', '价值对齐', '多模态指令'] },
-    { name: '语音合成', badge: 'TTS 标注台', img: 'images/stitch_ai/professional_ui_ux_dashboard_for_speech_synthesis_tts_annotation_dark_mode/screen.png',
+    { name: '语音合成', badge: 'TTS 标注台', img: 'images/stitch_ai/TTS.png',
       desc: '面向 TTS 的语音合成标注，音频转写文本并标注多音字、词性与韵律停顿，打造自然流畅的高表现力发音库。',
       tags: ['TTS 语音合成', '音字对应', '韵律标注', '停顿 / 重音 / 语调', '词性', '音标', '多音字消歧', '情感语音标注'] }
   ];

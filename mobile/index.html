@@ -1914,8 +1914,8 @@ body::after {
     <div class="scene-sidebar">
       <div class="filter-group" id="filterIndustry">
         <button class="filter-btn industry active" data-industry="all">全部</button>
+        <button class="filter-btn industry" data-industry="robot">具身</button>        
         <button class="filter-btn industry" data-industry="auto">智驾</button>
-        <button class="filter-btn industry" data-industry="robot">具身</button>
         <button class="filter-btn industry" data-industry="llm">大模型</button>
         <button class="filter-btn industry" data-industry="internet">互联网</button>
         <button class="filter-btn industry" data-industry="medical">医疗</button>
@@ -1930,7 +1930,7 @@ body::after {
     <div class="scene-main">
       <div class="scene-pagination" id="scenePagination" aria-label="场景分页"></div>
       <div class="scene-content" id="sceneGrid">
-        <div class="scene-empty" id="sceneEmpty" style="display:none;">// 当前筛选下暂无场景，试试其他组合</div>
+        <div class="scene-empty" id="sceneEmpty" style="display:none;">当前筛选下暂无场景，试试其他组合</div>
       </div>
     </div>
   </div>
@@ -2392,17 +2392,6 @@ body::after {
    ========================================================= */
 (function(){
   const SCENES = [
-    // 智驾 auto
-    { t: '目标检测', d: '自动驾驶场景内障碍物识别与标注', chips: ['3DBox','2D框','伪3D框'], inds: ['auto'] },
-    { t: 'BEV 视角标注', d: '道路结构、标线、设施要素数据生产', chips: ['低空','4D','盲感'], inds: ['auto'] },
-    { t: '车道线标注', d: '道路修复、导流线、可行驶区域细标注', chips: ['多边形','线段'], inds: ['auto'] },
-    { t: '疲劳监测', d: '驾驶员人脸与行为状态采集与生产', chips: ['行为标注','数据采集'], inds: ['auto'] },
-    { t: '人机对话', d: '车舱交互唤醒词及行车指令', chips: ['ASR','TTS'], inds: ['auto'] },
-    { t: '交通标志识别', d: '各类路牌、限速、警示标识图像数据标注', chips: ['图像标注','分类'], inds: ['auto'] },
-    { t: '行人检测', d: '复杂路况下行人姿态与轨迹标注', chips: ['关键点','轨迹标注'], inds: ['auto'] },
-    { t: '停车场景', d: '泊车过程中障碍与车位纹理标注', chips: ['语义分割','2D框'], inds: ['auto'] },
-    { t: '车内监控', d: '乘客行为与姿态数据采集标注', chips: ['视频标注','关键点'], inds: ['auto'] },
-    { t: '多摄像头融合', d: '环视摄像头多通道数据同步标注', chips: ['多通道','传感器融合'], inds: ['auto'] },
     // 具身 robot
     { t: '机械臂抓取', d: '目标物体位置、姿态与抓取轨迹标注', chips: ['3DBox','事件理解'], inds: ['robot'] },
     { t: '人体动作采集', d: '全身动作数据采集用于机器人模仿学习', chips: ['动作捕捉','关键点'], inds: ['robot'] },
@@ -2414,6 +2403,17 @@ body::after {
     { t: '灵巧手操作', d: '精细操作任务中手部动作数据采集标注', chips: ['关键点','动作捕捉'], inds: ['robot'] },
     { t: '多模态指令', d: '语言 + 图像 + 动作融合指令数据标注', chips: ['多模态','指令微调'], inds: ['robot'] },
     { t: '情感交互', d: '服务机器人人脸情绪与表情数据采集', chips: ['表情识别','关键点'], inds: ['robot'] },
+    // 智驾 auto
+    { t: '目标检测', d: '自动驾驶场景内障碍物识别与标注', chips: ['3DBox','2D框','伪3D框'], inds: ['auto'] },
+    { t: 'BEV 视角标注', d: '道路结构、标线、设施要素数据生产', chips: ['低空','4D','盲感'], inds: ['auto'] },
+    { t: '车道线标注', d: '道路修复、导流线、可行驶区域细标注', chips: ['多边形','线段'], inds: ['auto'] },
+    { t: '疲劳监测', d: '驾驶员人脸与行为状态采集与生产', chips: ['行为标注','数据采集'], inds: ['auto'] },
+    { t: '人机对话', d: '车舱交互唤醒词及行车指令', chips: ['ASR','TTS'], inds: ['auto'] },
+    { t: '交通标志识别', d: '各类路牌、限速、警示标识图像数据标注', chips: ['图像标注','分类'], inds: ['auto'] },
+    { t: '行人检测', d: '复杂路况下行人姿态与轨迹标注', chips: ['关键点','轨迹标注'], inds: ['auto'] },
+    { t: '停车场景', d: '泊车过程中障碍与车位纹理标注', chips: ['语义分割','2D框'], inds: ['auto'] },
+    { t: '车内监控', d: '乘客行为与姿态数据采集标注', chips: ['视频标注','关键点'], inds: ['auto'] },
+    { t: '多摄像头融合', d: '环视摄像头多通道数据同步标注', chips: ['多通道','传感器融合'], inds: ['auto'] },    
     // 大模型 llm
     { t: '指令微调数据', d: '覆盖多任务的高质量指令-回答对生产', chips: ['指令微调','SFT'], inds: ['llm'] },
     { t: '人类反馈标注', d: '模型输出质量排序与偏好标注', chips: ['RLHF','偏好标注'], inds: ['llm'] },

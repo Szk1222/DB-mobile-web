@@ -440,7 +440,7 @@ body::after {
   border-radius: var(--r-sm);
   background: transparent;
   color: var(--text-mute);
-  font-size: 11px;
+  font-size: 13px;
   margin-bottom: 4px;
   transition: all 0.2s ease;
   white-space: nowrap;
@@ -502,7 +502,7 @@ body::after {
   background: rgba(7,13,32,0.5);
   color: var(--text-mute);
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 11px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -527,7 +527,7 @@ body::after {
 .scene-pagination .page-ellipsis {
   color: var(--text-dim);
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 11px;
   padding: 0 3px;
   user-select: none;
 }
@@ -752,6 +752,10 @@ body::after {
   border: 1px solid var(--line);
   border-radius: var(--r);
   background: linear-gradient(160deg, rgba(13,26,58,0.6), rgba(7,13,32,0.6));
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .ds-card .ic { color: var(--cyan-hi); margin-bottom: 8px; }
 .ds-card h5 {
@@ -925,7 +929,7 @@ body::after {
 
 /* 标注 mini 流程 */
 .mini-flow {
-  display: flex; align-items: center;
+  display: flex; align-items: center; justify-content: center;
   gap: 4px;
   margin: 18px 16px 0;
   padding: 12px 8px;
@@ -934,6 +938,7 @@ body::after {
   background: rgba(7,13,32,0.45);
   overflow-x: auto;
   scrollbar-width: none;
+  flex-wrap: wrap;
 }
 .mini-flow::-webkit-scrollbar { display: none; }
 .mini-flow .step {
@@ -2102,7 +2107,7 @@ body::after {
       <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0"/></svg></div>
       <h5>ASR 语音识别</h5>
       <b>数百万 小时</b>
-      <span>多国家/多场景/多设备/多通道</span>
+      <span>多国家 / 多场景 / 多设备 / 多通道</span>
     </div>
     <div class="ds-card">
       <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/></svg></div>

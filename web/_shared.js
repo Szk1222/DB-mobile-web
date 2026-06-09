@@ -29,6 +29,14 @@
     { href: 'tool_reader.html', name: '标贝悦读', en: 'YueReader' },
   ];
 
+  /* 工具平台：纵向四个工具 */
+  const TOOLS_PLATFORMS = [
+    { href: 'tools_overview.html',   name: '标注平台', en: 'Annotation' },
+    { href: 'tool_collection.html',  name: '采集平台', en: 'Collection' },
+    { href: 'tool_reader.html',      name: '标贝悦读', en: 'YueReader' },
+    { href: 'tool_openplatform.html',name: '开放平台', en: 'Open Platform' },
+  ];
+
   const SOL_DATA_PRODUCT = [
     { href: 'solution_tts.html',  name: '语音合成',      en: 'TTS' },
     { href: 'solution_asr.html',  name: '语音识别',      en: 'ASR' },
@@ -120,23 +128,10 @@
       ${megaCol('文本 & 大模型', '', [DATASETS[4], DATASETS[5]], 'datasets_overview.html')}
     </div>`;
 
-    /* 工具平台 mega */
-    const toolsMega = `<div class="nav-mega" style="min-width:520px;">
-      <div class="mega-col" style="min-width:140px;">
-        ${sectionTitle('标注平台', 'tools_overview.html')}
-        ${TOOLS_ANNOTATION.map(it => `<a href="${it.href}">${IC}<span>${it.name}</span></a>`).join('')}
-      </div>
-      <div class="mega-col" style="min-width:120px;">
-        ${sectionTitle('采集平台', 'tools_overview.html')}
-        ${TOOLS_COLLECTION.map(it => `<a href="${it.href}">${IC}<span>${it.name}</span></a>`).join('')}
-      </div>
-      <div class="mega-col" style="min-width:120px;">
-        ${sectionTitle('标贝悦读', 'tools_overview.html')}
-        ${TOOLS_READER.map(it => `<a href="${it.href}">${IC}<span>${it.name}</span></a>`).join('')}
-      </div>
-      <div class="mega-col" style="min-width:120px;">
-        ${sectionTitle('开放平台', 'tools_overview.html')}
-        ${TOOLS_OPENPLATFORM.map(it => `<a href="${it.href}">${IC}<span>${it.name}</span></a>`).join('')}
+    /* 工具平台 mega：纵向四个二级标题（与其它栏目二级标题样式一致，无三级） */
+    const toolsMega = `<div class="nav-mega" style="min-width:188px;">
+      <div class="mega-col mega-col-vertical" style="min-width:168px;border-right:0;padding-right:16px;">
+        ${TOOLS_PLATFORMS.map(it => sectionTitle(it.name, it.href)).join('')}
       </div>
     </div>`;
 
@@ -296,9 +291,9 @@
           <div class="footer-bottom">
             <div class="fb-links">
               <a href="#">标贝科技服务声明</a>
-              <a href="#">个人信息保护政策</a>
+              <a href="https://www.data-baker.com/m/#/about/personRightFile " target="_blank" rel="noopener noreferrer">个人信息保护政策</a>
               <a href="#">意见反馈</a>
-              <span>鲁ICP备2023038621号</span>
+              <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" rel="noopener noreferrer">鲁ICP备2023038621号</a>
             </div>
             <span>© 2025 DataBaker Technology · All rights reserved.</span>
           </div>
@@ -421,10 +416,14 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </div>
         <p>您好！欢迎咨询标贝科技，我们的专属顾问将在工作时间内尽快回复。</p>
-        <div class="cp-tel">
+        <button class="cp-human" onclick="openHumanChat()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          转人工客服
+        </button>
+        <a class="cp-tel" href="tel:4008982016">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.59 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2z"/></svg>
           400 898 2016
-        </div>
+        </a>
       </div>`;
 
     /* 留言弹窗 */
@@ -502,34 +501,90 @@
     const m = document.getElementById('messageModal');
     if (m) m.classList.remove('is-open');
   };
-  window.submitMessageForm = (ev) => {
+  /* 留言提交 → DataBakerAPI.submitForm（接口与移动端一致：
+     POST /customer/demand/uploadV2，含 bd_vid 转化跟踪与手机号校验，
+     参考原官网 footerForm.vue / mobile/js/api.js） */
+  const LEAD_FORM_TYPE = 7;            // formType：与官网“留资”表单一致
+  const LEAD_SOURCE_INFO = 'PC端留言'; // sourceInfo：会自动按 bd_vid 加 “SEM-” 前缀
+
+  window.submitMessageForm = async (ev) => {
     ev.preventDefault();
     const form = ev.target;
-    const fields = ['content','name','phone','org'];
+    const get = n => (form.elements[n] && form.elements[n].value || '').trim();
+    const lead = {
+      customerName:    get('name'),
+      customerMobile:  get('phone'),
+      customerCompany: get('org'),
+      customerEmail:   get('email'),
+      demandContent:   get('content')
+    };
+
+    /* 前端必填高亮（content/name/phone/org），手机号交由 DataBakerAPI.validateLead 校验 */
     let firstInvalid = null;
-    fields.forEach(n => {
+    [['content', !!lead.demandContent],
+     ['name',    !!lead.customerName],
+     ['phone',   /^1[3456789]\d{9}$/.test(lead.customerMobile)],
+     ['org',     !!lead.customerCompany]].forEach(([n, ok]) => {
       const el = form.elements[n];
       if (!el) return;
-      const v = (el.value || '').trim();
-      const ok = v && (n !== 'phone' || /^[0-9+\-\s()]{6,20}$/.test(v));
       el.closest('.msg-field').classList.toggle('is-invalid', !ok);
       if (!ok && !firstInvalid) firstInvalid = el;
     });
-    if (firstInvalid) { firstInvalid.focus(); return false; }
-    /* 模拟提交：实际项目可在此处替换为接口调用 */
+
+    const api = window.DataBakerAPI;
+    /* 校验（照搬原官网顺序与文案） */
+    const err = api ? api.validateLead(lead) : (firstInvalid ? '请完整填写必填项' : '');
+    if (err || firstInvalid) {
+      if (firstInvalid) firstInvalid.focus();
+      if (err) alert(err);
+      return false;
+    }
+
     const btn = form.querySelector('.msg-submit');
     const old = btn.textContent;
     btn.disabled = true; btn.textContent = '提交中…';
-    setTimeout(() => {
+
+    try {
+      if (!api) throw new Error('接口未就绪，请稍后重试');
+      await api.submitForm(lead, { formType: LEAD_FORM_TYPE, sourceInfo: LEAD_SOURCE_INFO });
       btn.textContent = '✓ 提交成功';
       setTimeout(() => {
         form.reset();
+        form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
         btn.disabled = false; btn.textContent = old;
         window.closeMessageModal();
       }, 900);
-    }, 500);
+    } catch (e) {
+      alert((e && e.message) || '提交失败，请稍后重试');
+      btn.disabled = false; btn.textContent = old;
+    }
     return false;
   };
+
+  /* 在线咨询「转人工客服」→ 唤起百度商桥/爱番番（与移动端一致），
+     页内组件未就绪时回退到商桥对话页（参考 mobile/index.html openHumanChat） */
+  const QIAO_URL = 'https://p.qiao.baidu.com/cps/chat?siteId=14907061&userId=30234502';
+  window.openHumanChat = function () {
+    try {
+      const im = window.AffIm;
+      if (im) {
+        if (typeof im.openIm === 'function') { im.openIm(); return; }
+        if (typeof im.open   === 'function') { im.open();   return; }
+        if (typeof im.show   === 'function') { im.show();   return; }
+      }
+    } catch (e) { /* ignore，走回退 */ }
+    window.open(QIAO_URL, '_blank', 'noopener');
+  };
+
+  /* 动态加载接口封装与百度商桥脚本（无需逐页修改 HTML） */
+  function loadOnce(src) {
+    if (document.querySelector(`script[data-shared-src="${src}"]`)) return;
+    const s = document.createElement('script');
+    s.src = src; s.defer = true; s.setAttribute('data-shared-src', src);
+    document.head.appendChild(s);
+  }
+  loadOnce('js/api.js');
+  loadOnce('js/baidu.js');
   /* ESC 关闭留言弹窗 */
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {

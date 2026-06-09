@@ -4,9 +4,6 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>标贝科技 · AI 数据基础设施</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="_shared.css" />
 <style>
 /* =========================================================
@@ -41,10 +38,12 @@
   --shadow-card: 0 18px 40px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(143,214,255,0.06);
   --glow-cyan:   0 0 24px rgba(76,201,240,0.35);
 
-  --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
-  --font-tech: "Orbitron", "Rajdhani", "JetBrains Mono", var(--font-cn);
-  --font-mono: "JetBrains Mono", "SF Mono", Consolas, monospace;
-  --font-display: "Rajdhani", "Orbitron", var(--font-cn);
+  /* 全局字体：英文 Times New Roman，中文 黑体（SimHei）。
+     Times New Roman 不含中文字形，中文自动回退到 黑体/SimHei。 */
+  --font-cn: "Times New Roman", "SimHei", "黑体", serif;
+  --font-tech: "Times New Roman", "SimHei", "黑体", serif;
+  --font-mono: "Times New Roman", "SimHei", "黑体", serif;
+  --font-display: "Times New Roman", "SimHei", "黑体", serif;
 
   --r-sm: 6px;
   --r: 10px;
@@ -674,14 +673,14 @@ h2.display, h1.display {
     <div class="hero-copy">
       <div class="hero-meta" data-reveal>
         <i></i>
-        <span>// SYS-INIT · v2.6.0</span>
+        <span> SYS-INIT · v2.6.0</span>
         <span>·</span>
         <span data-decode>AI DATA INFRASTRUCTURE</span>
       </div>
       <span class="eyebrow" data-reveal>AI Data Infrastructure</span>
       <h1 class="slogan-text">
       优质<em>数据生产力</em>，<br/>
-      让 AI 落地更高效。
+      让 AI 赋能数字世界。
       </h1>
       <p class="lead" data-reveal>
         标贝科技围绕语音、视觉、文本与大模型场景，提供从数据采集、标注到数据集交付的全流程服务，帮助 AI 团队更快获得可训练、可验收、可追溯的数据资产。
@@ -758,14 +757,14 @@ h2.display, h1.display {
 <section class="section" id="services">
   <div class="container">
     <div class="section-head" data-reveal>
-      <span class="eyebrow">// 02 · Service Matrix</span>
+      <span class="eyebrow"> 02 · Service Matrix</span>
       <h2 class="display">从原始数据到模型可用数据<br/><span class="glow-text">一站式组织交付</span></h2>
       <p>采集、标注、数据集——三个引擎协同支撑你的模型训练 / 评测全链路。</p>
     </div>
 
     <div class="svc-grid">
       <a class="svc-card" href="data_service_collection.html" data-tilt data-reveal>
-        <div class="svc-num">// 001 <em>—</em> COLLECTION</div>
+        <div class="svc-num"> 001 <em>—</em> COLLECTION</div>
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>
         </div>
@@ -780,7 +779,7 @@ h2.display, h1.display {
       </a>
 
       <a class="svc-card" href="data_service_annotation.html" data-tilt data-reveal>
-        <div class="svc-num">// 002 <em>—</em> ANNOTATION</div>
+        <div class="svc-num"> 002 <em>—</em> ANNOTATION</div>
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15.7 21.3a1 1 0 0 1-1.4 0l-1.6-1.6a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l1.6 1.6a1 1 0 0 1 0 1.4z"/><path d="m18 13-1.4-6.9a1 1 0 0 0-.7-.8L3.2 2a1 1 0 0 0-1.2 1.2l3.3 12.6a1 1 0 0 0 .8.8L13 18"/><circle cx="11" cy="11" r="2"/></svg>
         </div>
@@ -795,7 +794,7 @@ h2.display, h1.display {
       </a>
 
       <a class="svc-card" href="dataset_speech_asr.html" data-tilt data-reveal>
-        <div class="svc-num">// 003 <em>—</em> DATASETS</div>
+        <div class="svc-num"> 003 <em>—</em> DATASETS</div>
         <div class="svc-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/></svg>
         </div>
@@ -817,7 +816,7 @@ h2.display, h1.display {
   <div class="container">
     <div class="flow-grid" data-reveal>
       <div class="flow-copy">
-        <span class="eyebrow">// 03 · Data Collection</span>
+        <span class="eyebrow"> 03 · Data Collection</span>
         <h2 class="display">构建全球化、多模态的 <span class="glow-text">AI 数据基座</span></h2>
         <p>从样本招募、设备规范、场景脚本到回收交付，每一步留痕可追溯。</p>
         <div class="flow-feat">
@@ -840,25 +839,25 @@ h2.display, h1.display {
       <div class="flow-viz" data-tilt>
         <div class="viz-title-bar">
           <span class="dots"><i></i><i></i><i></i></span>
-          <span class="title">// data-collection / runtime</span>
+          <span class="title"> data-collection / runtime</span>
           <span class="badge">LIVE</span>
         </div>
         <div class="viz-collect-row">
           <div class="viz-mod">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
-            <span class="nm">语音</span><span class="ct">// 4,820</span>
+            <span class="nm">语音</span><span class="ct"> 4,820</span>
           </div>
           <div class="viz-mod">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>
-            <span class="nm">图像</span><span class="ct">// 12,330</span>
+            <span class="nm">图像</span><span class="ct"> 12,330</span>
           </div>
           <div class="viz-mod">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2zM14 2v5a1 1 0 0 0 1 1h5M10 9H8M16 13H8M16 17H8"/></svg>
-            <span class="nm">文本</span><span class="ct">// 28,440</span>
+            <span class="nm">文本</span><span class="ct"> 28,440</span>
           </div>
           <div class="viz-mod">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
-            <span class="nm">视频</span><span class="ct">// 1,920</span>
+            <span class="nm">视频</span><span class="ct"> 1,920</span>
           </div>
         </div>
 
@@ -892,7 +891,7 @@ h2.display, h1.display {
       <div class="flow-viz" data-tilt>
         <div class="viz-title-bar">
           <span class="dots"><i></i><i></i><i></i></span>
-          <span class="title">// annotation-workspace / vision</span>
+          <span class="title"> annotation-workspace / vision</span>
           <span class="badge">AI · ASSIST</span>
         </div>
         <div class="viz-anno">
@@ -911,7 +910,7 @@ h2.display, h1.display {
           </div>
           <div class="viz-anno-foot">
             <span class="led"></span>
-            <span>// AI 辅助识别已完成 3 处预标注 · 等待人工复核</span>
+            <span> AI 辅助识别已完成 3 处预标注 · 等待人工复核</span>
           </div>
         </div>
         <div class="viz-progress" style="margin-top: 14px;">
@@ -921,7 +920,7 @@ h2.display, h1.display {
       </div>
 
       <div class="flow-copy">
-        <span class="eyebrow">// 04 · Data Annotation</span>
+        <span class="eyebrow"> 04 · Data Annotation</span>
         <h2 class="display">让 AI 更懂视界、听觉与 <span class="glow-text">行业语义</span></h2>
         <p>规范沉淀、试标校准、批量生产、抽检返修、验收报告——形成完整闭环。</p>
         <div class="flow-feat">
@@ -949,7 +948,7 @@ h2.display, h1.display {
   <div class="container">
     <div class="cap-grid" data-reveal>
       <div>
-        <span class="eyebrow">// 05 · Capability</span>
+        <span class="eyebrow"> 05 · Capability</span>
         <h2 class="display" style="margin-top: 18px;">围绕多模态模型<br/>把数据生产变成 <span class="glow-text">工程能力</span></h2>
         <p style="color: var(--text-mute); margin-top: 18px; max-width: 480px;">三大方向并行推进——稳定的工程化交付是模型可持续优化的前提。</p>
       </div>
@@ -987,7 +986,7 @@ h2.display, h1.display {
 <section class="section" id="voice">
   <div class="container">
     <div class="section-head" data-reveal>
-      <span class="eyebrow">// 06 · Voice Model</span>
+      <span class="eyebrow"> 06 · Voice Model</span>
       <h2 class="display">在线感受 <span class="glow-text">声波 × 模型</span> 的精度边界</h2>
       <p>ASR、TTS、音色克隆共享同一展示框架，切换标签查看不同任务的实时回路。</p>
     </div>
@@ -1058,7 +1057,7 @@ h2.display, h1.display {
 <section class="section" id="datasets">
   <div class="container">
     <div class="section-head" data-reveal>
-      <span class="eyebrow">// 07 · Datasets</span>
+      <span class="eyebrow"> 07 · Datasets</span>
       <h2 class="display">六大数据集入口 · <span class="glow-text">即开即用</span></h2>
       <p>从语音识别到大模型微调，每一类数据集都附带详尽的样本统计与试用通道。</p>
     </div>
@@ -1119,7 +1118,7 @@ h2.display, h1.display {
 <section class="section" id="news" style="padding-top:0;">
   <div class="container">
     <div class="section-head" data-reveal>
-      <span class="eyebrow">// 06 · News &amp; Insights</span>
+      <span class="eyebrow"> 08 · News &amp; Insights</span>
       <h2 class="display">新闻<span class="glow-text">资讯</span></h2>
       <p>洞察 AI 数据行业前沿动态，了解标贝科技最新产品与合作进展。</p>
     </div>
@@ -1128,7 +1127,7 @@ h2.display, h1.display {
       <!-- 置顶大图新闻 -->
       <article class="news-card news-featured">
         <div class="news-thumb">
-          <span class="news-thumb-label">// FEATURED</span>
+          <span class="news-thumb-label"> FEATURED</span>
         </div>
         <div class="news-tag">公司动态</div>
         <div class="news-date">2025 · 05 · 08</div>
@@ -1182,16 +1181,13 @@ h2.display, h1.display {
   <div class="container">
     <div class="cta-card" data-reveal>
       <div class="cta-inner">
-        <span class="eyebrow">// 08 · Get Started</span>
+        <span class="eyebrow"> 09 · Get Started</span>
         <h2>把第一版原型推进为<br/><span class="glow-text">可上线、可扩展的官网</span></h2>
         <p>项目已按 SSG 架构组织，可直接部署到静态托管环境；后续接入 CMS、案例页或多语言时都有清晰扩展点。</p>
         <div class="cta-actions">
           <a class="btn btn-primary" href="mailto:contact@databaker.com" data-magnetic>
             联系我们 contact@databaker.com
             <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <a class="btn btn-ghost" href="#services" data-magnetic>
-            了解采集服务
           </a>
         </div>
       </div>

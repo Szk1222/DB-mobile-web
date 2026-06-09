@@ -1325,6 +1325,28 @@ body::after {
   padding: 6px 16px 0;
   letter-spacing: 0.04em;
 }
+/* 转人工客服按钮（跳转百度商桥真人对话） */
+.drawer-chat .chat-human-bar {
+  padding: 2px 16px 0;
+}
+.drawer-chat .chat-human-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--grad-cta);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 14px rgba(4,105,207,0.32);
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+.drawer-chat .chat-human-btn:active { transform: scale(0.98); }
+.drawer-chat .chat-human-btn svg { width: 16px; height: 16px; }
 
 /* =========================================================
    抽屉：联系我们（带图标表单）
@@ -2241,6 +2263,12 @@ body::after {
     <button type="button" class="quick-reply">你们是怎么收费的呢</button>
     <button type="button" class="quick-reply">现在有优惠活动吗</button>
   </div>
+  <div class="chat-human-bar">
+    <button type="button" class="chat-human-btn" id="chatHumanBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+      转人工客服
+    </button>
+  </div>
   <div class="chat-input-bar">
     <a href="tel:15652306519" class="chat-phone-icon" title="电话联系" aria-label="电话联系">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.72 3.06a2 2 0 0 1-.45 2.11L8.09 10.4a16 16 0 0 0 6 6l1.51-1.27a2 2 0 0 1 2.11-.45c.99.35 2.01.59 3.06.72a2 2 0 0 1 1.72 2z"/></svg>
@@ -2317,6 +2345,8 @@ body::after {
   <span id="toastMsg">已收到，我们将在 1 个工作日内联系您</span>
 </div>
 
+<!-- 接口封装（参考原官网 api/index.js + footerForm.vue） -->
+<script src="js/api.js"></script>
 <script>
 /* =========================================================
    交互：动态测量悬浮栏 / 页脚高度，避免空白与遮挡
@@ -2628,7 +2658,24 @@ body::after {
   const input    = document.getElementById('chatInput');
   const sendBtn  = document.getElementById('chatSendBtn');
   const quicks   = document.getElementById('quickReplies');
+  const humanBtn = document.getElementById('chatHumanBtn');
   if (!body || !input || !sendBtn) return;
+
+  // 百度商桥真人客服对话链接（siteId / userId 取自官网商桥账号）
+  // 优先唤起页内嵌入的爱番番组件（带轮询/继续对话/在线留言），未就绪时回退新标签页
+  const QIAO_URL = 'https://p.qiao.baidu.com/cps/chat?siteId=14907061&userId=30234502';
+  function openHumanChat() {
+    try {
+      const im = window.AffIm;
+      if (im) {
+        if (typeof im.openIm === 'function') { im.openIm(); return; }
+        if (typeof im.open   === 'function') { im.open();   return; }
+        if (typeof im.show   === 'function') { im.show();   return; }
+      }
+    } catch (e) { /* ignore，走回退 */ }
+    window.open(QIAO_URL, '_blank', 'noopener');
+  }
+  if (humanBtn) humanBtn.addEventListener('click', openHumanChat);
 
   // 开始沟通时间
   if (timeEl) {
@@ -2665,7 +2712,7 @@ body::after {
     for (const r of REPLIES) {
       if (r.kw.some(k => t.includes(k.toLowerCase()))) return r.msg;
     }
-    return '已收到您的消息，方案顾问会尽快为您解答。您也可以直接拨打 <a href="tel:15652306519">15652306519</a> 或加客服微信 <b>15652306519</b>。';
+    return '已收到您的消息，方案顾问会尽快为您解答。您也可以点击下方 <b>转人工客服</b> 与真人对话，或直接拨打 <a href="tel:15652306519">15652306519</a>、加客服微信 <b>15652306519</b>。';
   }
 
   function scrollBottom() {
@@ -2783,68 +2830,48 @@ document.querySelectorAll('a[href="#contact"]').forEach(link => {
 });
 
 /* =========================================================
-   交互：留言表单提交 → POST uploadV2
+   交互：留言表单提交 → DataBakerAPI.submitForm（参考原官网 footerForm.vue）
+   接口与 payload 构造在 js/api.js，含 bd_vid 转化跟踪与手机号校验
    ========================================================= */
 (function(){
   const form = document.getElementById('leadForm');
   const submitBtn = form.querySelector('[type="submit"]');
 
+  // 该留言入口的来源标记（对应 footerForm.vue 的 type / info 两个 prop）
+  const LEAD_FORM_TYPE = 7;            // formType：与官网“留资”表单一致
+  const LEAD_SOURCE_INFO = '移动端留言'; // sourceInfo：会自动按 bd_vid 加 “SEM-” 前缀
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const data = new FormData(form);
-    const name    = (data.get('name')    || '').toString().trim();
-    const contact = (data.get('contact') || '').toString().trim();
-    const company = (data.get('company') || '').toString().trim();
 
-    if (!name || !contact) {
-      showToast('请填写姓名与联系方式');
-      return;
-    }
+    const data = new FormData(form);
+    const lead = {
+      customerName:     (data.get('name')     || '').toString().trim(),
+      customerMobile:   (data.get('contact')  || '').toString().trim(),
+      customerCompany:  (data.get('company')  || '').toString().trim(),
+      customerEmail:    (data.get('email')    || '').toString().trim(),
+      customerPosition: (data.get('position') || '').toString().trim(),
+      demandContent:    (data.get('msg')      || '').toString().trim()
+    };
+
+    // 校验（照搬原官网顺序与文案）
+    const err = window.DataBakerAPI.validateLead(lead);
+    if (err) { showToast(err); return; }
 
     submitBtn.disabled = true;
     const origText = submitBtn.textContent;
     submitBtn.textContent = '提交中…';
 
     try {
-      const payload = {
-        customerName:       name,
-        customerGender:     2,
-        customerMobile:     contact,
-        customerCompany:    company,
-        customerEmail:      (data.get('email')    || '').toString().trim(),
-        customerPosition:   (data.get('position') || '').toString().trim(),
-        demandContent:      (data.get('msg')      || '').toString().trim(),
-        conversionTypeList: [],
-        formType:           7,
-        sourceInfo:         '移动端留言',
-        sourceLanguage:     1
-      };
-
-      const resp = await fetch(
-        'https://www.data-baker.com/official-website/v1/customer/demand/uploadV2',
-        {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify(payload)
-        }
-      );
-
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
-      const result = await resp.json();
-
-      const code = result.code !== undefined ? Number(result.code) : 0;
-      if (!isNaN(code) && code !== 0 && code !== 200) {
-        throw new Error(result.message || result.msg || '提交失败');
-      }
-
+      await window.DataBakerAPI.submitForm(lead, {
+        formType: LEAD_FORM_TYPE,
+        sourceInfo: LEAD_SOURCE_INFO
+      });
       leaveDrawer.close();
-      setTimeout(() => showToast('已收到，我们将在 1 个工作日内联系您'), 280);
+      setTimeout(() => showToast('留言成功，我们将尽快联系您'), 280);
       form.reset();
-    } catch (err) {
-      const msg = (err.message === 'Failed to fetch' || err.name === 'TypeError')
-        ? '网络异常，请稍后重试'
-        : (err.message || '提交失败，请稍后重试');
-      showToast(msg);
+    } catch (err2) {
+      showToast(err2.message || '提交失败，请稍后重试');
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = origText;
@@ -3041,5 +3068,8 @@ document.querySelectorAll('a[href="#contact"]').forEach(link => {
   document.getElementById('partnersTrack2').innerHTML = b + b;
 })();
 </script>
+
+<!-- 百度统计 / 爱番番在线咨询 / OCPC 转化跟踪（参考原官网 plugins/baidu.js） -->
+<script src="js/baidu.js"></script>
 </body>
 </html>

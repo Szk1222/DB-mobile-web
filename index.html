@@ -1683,46 +1683,33 @@ body::after {
    Partners Carousel
    ========================================================= */
 .partners-section { padding: 40px 0 30px; }
-.m-carousel {
+/* 合作伙伴：四条 logo 图横向轮播（白色卡片，区块保持深色背景） */
+.m-logorow {
   position: relative;
   overflow: hidden;
-  padding: 10px 0;
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  padding: 5px 0;
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
 }
-.m-carousel + .m-carousel { padding-top: 0; }
-.m-carousel-track {
+.m-logorow-track {
   display: flex;
-  gap: 10px;
   width: max-content;
-  animation: m-marquee var(--dur, 40s) linear infinite;
+  align-items: center;
+  will-change: transform;
 }
-@keyframes m-marquee { to { transform: translateX(calc(-50% - 5px)); } }
-.m-partner-card {
-  flex: 0 0 110px;
-  height: 56px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-sm);
-  background: linear-gradient(180deg, rgba(20,36,72,0.55), rgba(10,20,46,0.55));
-  display: grid;
-  place-items: center;
-  text-align: center;
-  line-height: 1.15;
-}
-.m-partner-card b {
+.m-logorow-track img {
+  height: 46px;
+  width: auto;
   display: block;
-  color: var(--text-hi);
-  font-size: 12px;
-  font-weight: 600;
+  flex: 0 0 auto;
+  margin-right: 11px;   /* 与图内卡片间距一致，避免首尾相贴 */
 }
-.m-partner-card small {
-  display: block;
-  color: var(--text-dim);
-  font-family: var(--font-mono);
-  font-size: 8px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-top: 2px;
+@keyframes m-row-left  { from { transform: translateX(0); }   to { transform: translateX(-50%); } }
+@keyframes m-row-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.m-logorow-track.is-left  { animation: m-row-left  var(--dur, 60s) linear infinite; }
+.m-logorow-track.is-right { animation: m-row-right var(--dur, 60s) linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .m-logorow-track { animation: none; }
 }
 
 /* Drawer contact form */
@@ -1790,6 +1777,58 @@ body::after {
   .hero-glow { width: 360px; }
   .toast { left: 50%; }
 }
+
+/* =========================================================
+   首屏动态图 · Mhero 主视觉浮动 + AI 标注动画（取代原 hero.gif）
+   ========================================================= */
+@keyframes hv-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes hv-ping { 0% { transform: scale(1); opacity:.9; } 70%,100% { transform: scale(2); opacity:0; } }
+@keyframes hv-scan { 0% { transform: translateY(-45%); opacity:0; } 12% { opacity:.6; } 88% { opacity:.6; } 100% { transform: translateY(150%); opacity:0; } }
+@keyframes hv-chip-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+.hv-img {
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; display:block;
+  animation: hv-float 5.5s ease-in-out infinite;
+}
+.hv-scan {
+  position:absolute; left:0; right:0; top:0; height:38%;
+  background: linear-gradient(to bottom, transparent, rgba(103,232,249,.16) 46%, rgba(103,232,249,.34) 50%, rgba(103,232,249,.16) 54%, transparent);
+  mix-blend-mode: screen; pointer-events:none;
+  animation: hv-scan 4.4s cubic-bezier(.4,0,.2,1) infinite;
+}
+.hv-box {
+  position:absolute; border:1.5px solid var(--cyan-hi);
+  background: rgba(103,232,249,.05);
+  box-shadow: 0 0 14px rgba(103,232,249,.35);
+  border-radius:4px; pointer-events:none;
+}
+.hv-dot {
+  position:absolute; width:10px; height:10px;
+  background: var(--cyan-hi); border-radius:50%;
+  box-shadow: 0 0 8px rgba(103,232,249,.9);
+  animation: hv-ping 2.2s cubic-bezier(0,0,.2,1) infinite;
+}
+.hv-tag {
+  position:absolute; top:-17px; left:-1px;
+  font: 700 10px/1 "JetBrains Mono", ui-monospace, monospace;
+  letter-spacing:.06em; color: var(--cyan-hi);
+  background: rgba(5,8,19,.85); padding:2px 5px; border-radius:3px; white-space:nowrap;
+}
+.hv-chip {
+  position:absolute; display:grid; place-items:center;
+  width:30px; height:30px; border-radius:50%;
+  background: rgba(13,26,58,.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border:1px solid rgba(103,232,249,.28);
+  box-shadow: 0 0 16px rgba(103,232,249,.28);
+  color: var(--cyan-hi); pointer-events:none;
+  animation: hv-chip-float 4.6s ease-in-out infinite;
+}
+.hv-chip svg { width:15px; height:15px; }
+@media (prefers-reduced-motion: reduce) {
+  .hv-img, .hv-scan, .hv-dot, .hv-chip { animation: none; }
+  .hv-scan { display:none; }
+}
 </style>
 </head>
 <body>
@@ -1846,9 +1885,27 @@ body::after {
       </h1>
       <p class="lead">成就客户 · 专注专业<br/>创新驱动 · 持续精进<br/>成为全球化的人工智能领跑者</p>
     </div>
-    <div class="hero-visual" style="position:relative; width:100%; overflow:hidden; aspect-ratio: 341 / 616; border-radius: 28px; -webkit-mask-image: radial-gradient(ellipse 90% 92% at center, #000 58%, rgba(0,0,0,0.35) 88%, transparent 100%); mask-image: radial-gradient(ellipse 90% 92% at center, #000 58%, rgba(0,0,0,0.35) 88%, transparent 100%);">
-      <!-- 原 GIF 为 1024×616，容器宽度 = 1/3 原宽。img 用绝对定位 + height:100% width:auto 自然铺满，再水平居中露出中间 1/3。max-width:none 绕过全局 img max-width:100% 的限制。border-radius + radial mask 让四周柔化虚化、转角更圆润 -->
-      <img src="images/hero.gif" alt="AI 数据基础设施" style="position:absolute; top:0; left:50%; height:100%; width:auto; max-width:none; transform:translateX(-50%); display:block;" />
+    <div class="hero-visual" style="position:relative; width:100%; overflow:hidden; aspect-ratio: 800 / 1100; border-radius: 28px; -webkit-mask-image: radial-gradient(ellipse 90% 92% at center, #000 58%, rgba(0,0,0,0.35) 88%, transparent 100%); mask-image: radial-gradient(ellipse 90% 92% at center, #000 58%, rgba(0,0,0,0.35) 88%, transparent 100%);">
+      <!-- 首屏动态图：Mhero 主视觉 + 浮动 / 扫描 / AI 标注动画（取代原 hero.gif，来自 stitch_neural_data_layer 设计） -->
+      <img class="hv-img" src="images/Mhero.png" alt="AI 数据基础设施" />
+      <!-- 扫描光带 -->
+      <div class="hv-scan"></div>
+      <!-- 标注脉冲点 -->
+      <span class="hv-dot" style="top:21%; right:18%;"></span>
+      <span class="hv-dot" style="top:58%; left:19%; animation-delay:1.1s;"></span>
+      <!-- 浮动行业图标：智驾 / 具身智能 / 大模型 -->
+      <!-- 智驾：方向盘 -->
+      <div class="hv-chip" style="top:7%; right:7%;" title="智驾">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 14.5V21M9.8 11 2.9 7.8M14.2 11l6.9-3.2"/></svg>
+      </div>
+      <!-- 具身智能：机器人 -->
+      <div class="hv-chip" style="top:45%; left:5%; animation-delay:.9s;" title="具身智能">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="2"/><path d="M12 8V4.2"/><circle cx="12" cy="3.2" r="1.2"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M2 12v3M22 12v3"/></svg>
+      </div>
+      <!-- 大模型：神经网络节点 -->
+      <div class="hv-chip" style="bottom:12%; right:9%; animation-delay:1.8s;" title="大模型">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.2"/><circle cx="5" cy="6" r="1.8"/><circle cx="19" cy="6" r="1.8"/><circle cx="5" cy="18" r="1.8"/><circle cx="19" cy="18" r="1.8"/><path d="M10.3 10.6 6.4 7.4M13.7 10.6l3.9-3.2M10.3 13.4l-3.9 3.2M13.7 13.4l3.9 3.2"/></svg>
+      </div>
     </div>
   </div>
   <div class="data-row">
@@ -2019,29 +2076,36 @@ body::after {
     <div class="feat-item">
       <div class="num">01</div>
       <div class="body">
-        <h5>全球资源覆盖</h5>
-        <p>按语种、设备、人群画像组织采集任务，全球范围快速补齐稀缺样本。</p>
+        <h5>语音数据采集</h5>
+        <p>多语种、多方言、多设备真人语音原始数据，覆盖 ASR / TTS 训练链路。</p>
       </div>
     </div>
     <div class="feat-item">
       <div class="num">02</div>
       <div class="body">
-        <h5>全模态数据获取</h5>
-        <p>语音、图像、视频、文本统一进入任务流，便于后续清洗、质检和版本管理。</p>
+        <h5>视觉与多模态采集</h5>
+        <p>图像、视频、文本多模态原始样本，按场景与人群画像定制采集。</p>
       </div>
     </div>
     <div class="feat-item">
       <div class="num">03</div>
       <div class="body">
-        <h5>智能合规交付</h5>
-        <p>采集授权、隐私脱敏、过程留痕与质量检查共同构成可验收的数据链路。</p>
+        <h5>具身智能</h5>
+        <p>机器人动作、灵巧手操作、人机协作等场景的多模态行为数据采集。</p>
       </div>
     </div>
     <div class="feat-item">
       <div class="num">04</div>
       <div class="body">
-        <h5>多场景采集</h5>
-        <p>具身智能、运动健康、音频识别、语音合成、图片数据、视频数据、文本数据。</p>
+        <h5>自动驾驶</h5>
+        <p>路采、车内监控与驾驶员状态等多传感器同步数据采集。</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="num">05</div>
+      <div class="body">
+        <h5>全球资源 · 合规闭环</h5>
+        <p>样本设计、采集授权、隐私脱敏、过程留痕与质量检查构成可验收链路。</p>
       </div>
     </div>
   </div>
@@ -2210,11 +2274,29 @@ body::after {
     <h2 class="display" style="font-size:22px;margin:10px 0 6px;">合作伙伴</h2>
     <p class="lead" style="margin:0;">与全球领先企业和机构携手共建 AI 数据生态</p>
   </div>
-  <div class="m-carousel" style="--dur:45s; margin-top:18px;">
-    <div class="m-carousel-track" id="partnersTrack1"></div>
+  <div class="m-logorow" style="margin-top:18px;">
+    <div class="m-logorow-track is-left" style="--dur:32s;">
+      <img src="images/partners_rows/partnership-01-new.png" alt="合作伙伴" loading="lazy" />
+      <img src="images/partners_rows/partnership-01-new.png" alt="" aria-hidden="true" loading="lazy" />
+    </div>
   </div>
-  <div class="m-carousel" style="--dur:55s;">
-    <div class="m-carousel-track" id="partnersTrack2"></div>
+  <div class="m-logorow">
+    <div class="m-logorow-track is-left" style="--dur:36s;">
+      <img src="images/partners_rows/partnership-02.png" alt="合作伙伴" loading="lazy" />
+      <img src="images/partners_rows/partnership-02.png" alt="" aria-hidden="true" loading="lazy" />
+    </div>
+  </div>
+  <div class="m-logorow">
+    <div class="m-logorow-track is-left" style="--dur:34s;">
+      <img src="images/partners_rows/partnership-03.png" alt="合作伙伴" loading="lazy" />
+      <img src="images/partners_rows/partnership-03.png" alt="" aria-hidden="true" loading="lazy" />
+    </div>
+  </div>
+  <div class="m-logorow">
+    <div class="m-logorow-track is-left" style="--dur:38s;">
+      <img src="images/partners_rows/partnership-04.png" alt="合作伙伴" loading="lazy" />
+      <img src="images/partners_rows/partnership-04.png" alt="" aria-hidden="true" loading="lazy" />
+    </div>
   </div>
 </section>
 
@@ -3023,50 +3105,6 @@ document.querySelectorAll('a[href="#contact"]').forEach(link => {
   }, { passive: true });
 })();
 
-/* =========================================================
-   交互：合作伙伴轮播
-   ========================================================= */
-(function(){
-  const PARTNERS_A = [
-    { cn: '阿里巴巴', en: 'ALIBABA' },
-    { cn: '腾讯',     en: 'TENCENT' },
-    { cn: '百度',     en: 'BAIDU' },
-    { cn: '网易',     en: 'NETEASE' },
-    { cn: '京东',     en: 'JD.COM' },
-    { cn: '联想',     en: 'LENOVO' },
-    { cn: '华为',     en: 'HUAWEI' },
-    { cn: '小米',     en: 'XIAOMI' },
-    { cn: '搜狗',     en: 'SOGOU' },
-    { cn: '滴滴',     en: 'DIDI' },
-    { cn: '美的',     en: 'MIDEA' },
-    { cn: '快手',     en: 'KUAISHOU' },
-    { cn: '三星',     en: 'SAMSUNG' },
-    { cn: 'OPPO',     en: 'OPPO' },
-  ];
-  const PARTNERS_B = [
-    { cn: '微软',     en: 'MICROSOFT' },
-    { cn: '微信',     en: 'WECHAT' },
-    { cn: '中国移动', en: 'CHINA MOBILE' },
-    { cn: '中国联通', en: 'CHINA UNICOM' },
-    { cn: '喜马拉雅', en: 'XIMALAYA' },
-    { cn: '贝壳',     en: 'KE.COM' },
-    { cn: '信雅达',   en: 'SUNYARD' },
-    { cn: '虎盾',     en: 'HUDUN' },
-    { cn: '出门问问', en: 'MOBVOI' },
-    { cn: '长虹',     en: 'CHANGHONG' },
-    { cn: '新华网',   en: 'XINHUA NET' },
-    { cn: '北京大学', en: 'PEKING UNIV' },
-    { cn: '清华大学', en: 'TSINGHUA UNIV' },
-    { cn: 'E 代驾',   en: 'E-DAIJIA' },
-  ];
-  function card(p) {
-    return '<div class="m-partner-card"><b>' + p.cn + '</b><small>' + p.en + '</small></div>';
-  }
-  var a = PARTNERS_A.map(card).join('');
-  var b = PARTNERS_B.map(card).join('');
-  document.getElementById('partnersTrack1').innerHTML = a + a;
-  document.getElementById('partnersTrack2').innerHTML = b + b;
-})();
 </script>
 
 <!-- 百度统计 / 爱番番在线咨询 / OCPC 转化跟踪（参考原官网 plugins/baidu.js） -->

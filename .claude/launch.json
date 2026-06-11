@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "mobile-preview",
+      "name": "mobile-static",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-p", "3300", "."],
-      "port": 3300
+      "runtimeArgs": ["-y", "serve", "-l", "4178", "."],
+      "port": 4178
     }
   ]
 }

@@ -41,6 +41,8 @@
     if (isNaN(form.customerMobile)) return '请输入正确的手机号';
     if (!/^1[3456789]\d{9}$/.test(form.customerMobile)) return '手机号格式不正确';
     if (!form.customerCompany) return '请填写您的公司名称';
+    if (!form.customerEmail) return '请填写您的企业邮箱';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.customerEmail)) return '邮箱格式不正确';
     return '';
   }
 
